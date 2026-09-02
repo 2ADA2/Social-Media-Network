@@ -1,5 +1,5 @@
-import {Header} from "@/widgets/header";
-import {Footer} from "@/widgets/footer";
+import { Header } from "@/widgets/header";
+import { Footer } from "@/widgets/footer";
 
 
 export const MainPage = () => {
