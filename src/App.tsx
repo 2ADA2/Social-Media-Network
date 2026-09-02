@@ -1,7 +1,8 @@
+import { MainPage } from "./pages/main";
 import "../global.css";
 
 function App() {
-  return <div> social media </div>;
+  return <MainPage/>;
 }
 
 export default App;
