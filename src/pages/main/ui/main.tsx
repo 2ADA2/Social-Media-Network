@@ -1,8 +1,15 @@
+import {Header} from "@/widgets/header";
+import {Footer} from "@/widgets/footer";
+
 
 export const MainPage = () => {
   return (
     <>
-      main
+      <Header/>
+      <main>
+        main
+      </main>
+      <Footer/>
     </>
   );
 };
