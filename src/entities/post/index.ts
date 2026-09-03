@@ -1,1 +1,1 @@
-export { Post } from "./ui/post.tsx"
+export { Post } from "./ui/post.tsx";

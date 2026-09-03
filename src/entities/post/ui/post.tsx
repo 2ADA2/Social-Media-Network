@@ -1,17 +1,19 @@
+import { useState } from "react";
+import HeartIcon from "@/shared/assets/icons/heart.svg?react";
+import CommentIcon from "@/shared/assets/icons/comment.svg?react";
+import { CoverButton } from "@/shared/cover-button/ui/coverButton.tsx";
 import "./post.css";
-import { HeartIcon } from "@/shared/assets/icons/heart.svg?react";
-import { CommentIcon } from "@/shared/assets/icons/comment.svg?react";
 
 interface PostProps {
-  title: string,
-  author: string,
-  avatarUrl: string,
-  date: string,
-  description: string,
-  imgUrl: string,
-  alt?: string,
-  likes: number,
-  comments: number,
+  title: string;
+  author: string;
+  avatarUrl: string;
+  date: string;
+  description: string;
+  imgUrl: string;
+  alt?: string;
+  likes: number;
+  comments: number;
 }
 
 export const Post = ({
@@ -25,29 +27,50 @@ export const Post = ({
                        likes = 0,
                        comments = 0,
                      }: PostProps) => {
+  const [liked, setLiked] = useState(false);
+
+  const toggleLike = () => {
+    setLiked((prev) => !prev);
+  };
+
   return (
     <article className="post">
-      <div className="post-header">
-        <img src={ avatarUrl } alt={ author + " avatar" }/>
+      <header className="post-header">
+        <img
+          className="author-avatar"
+          src={avatarUrl}
+          alt={`${author} avatar`}
+        />
         <div className="header-data">
-          <div>{ author }</div>
-          <small>{ date }</small>
+          <div>{author}</div>
+          <small>{date}</small>
         </div>
-      </div>
+      </header>
 
-      <img loading="lazy" src={ imgUrl } alt={ alt }/>
-      <p>{ description }</p>
+      <img
+        className="post-image"
+        loading="lazy"
+        src={imgUrl}
+        alt={alt}
+      />
 
-      <div className="post-control">
-        <div className="likes">
-          <HeartIcon/>
-          <small>{ likes } likes</small>
-        </div>
-        <div className="comments">
-          <CommentIcon/>
-          <small>{ comments } comments</small>
-        </div>
-      </div>
+      <p>{description}</p>
+
+      <footer className="post-control">
+        <CoverButton click={toggleLike}>
+          <div>
+            <HeartIcon className={liked ? "active" : ""} />
+            <small>{liked ? likes + 1 : likes} likes</small>
+          </div>
+        </CoverButton>
+
+        <CoverButton>
+          <div>
+            <CommentIcon />
+            <small>{comments} comments</small>
+          </div>
+        </CoverButton>
+      </footer>
     </article>
   );
 };

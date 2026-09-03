@@ -1,7 +1,7 @@
 import "../global.css";
 import { Post } from "./entities/post";
 
-const data = {
+const POST_DATA = {
   title: "Title",
   author: "Author",
   date: "2 min ago",
@@ -13,7 +13,7 @@ const data = {
 };
 
 function App() {
-  return <Post { ...data }/>;
+  return <Post { ...POST_DATA }/>;
 }
 
 export default App;
