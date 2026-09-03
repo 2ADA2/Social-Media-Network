@@ -1,6 +1,7 @@
 @import "normalize.css";
 
 body {
+  height: 100vh;
   font-family: var(--font-family-primary), serif;
 }
 
