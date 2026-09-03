@@ -1,4 +1,4 @@
-import "./authButtons.module.css";
+import "./authButtons.css";
 
 export const AuthButtons = () => {
   return (

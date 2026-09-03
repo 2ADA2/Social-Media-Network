@@ -1,8 +1,8 @@
-import styles from "./footer.module.css";
+import "./footer.css";
 
 export const Footer = () => {
   return (
-    <footer className={ styles.footer }>
+    <footer className="footer">
       <small>&copy; 2026 Sidekick</small>
     </footer>
   );

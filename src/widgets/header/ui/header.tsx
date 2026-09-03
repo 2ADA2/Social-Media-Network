@@ -1,4 +1,4 @@
-import styles from "./header.module.css";
+import "./header.css";
 import SidekickLogo from "@/shared/assets/icons/sidekick-logo.svg?react";
 import { useState } from "react";
 import { BurgerMenu } from "@/widgets/header/ui/burgerMenu/burgerMenu.tsx";
@@ -8,8 +8,8 @@ export const Header = () => {
   const [auth] = useState<boolean>(true); // useAuth hook ( useContext ) in future
 
   return (
-    <header className={ styles.header }>
-      <div className={ styles.headerLogo }>
+    <header className="header">
+      <div className="headerLogo">
         <SidekickLogo/>
         <span>sidekick</span>
       </div>
