@@ -1,0 +1,32 @@
+.post {
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 12px;
+}
+
+.post img {
+  border-radius: 4px;
+}
+
+.post-header {
+  display: flex;
+  height: 3rem;
+  gap: 12px;
+}
+
+.post-header small {
+  color: var(--color-muted);
+}
+
+.header-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.post-control {
+  display: flex;
+  gap: 1rem;
+}
