@@ -1,4 +1,6 @@
 import "./post.css";
+import { HeartIcon } from "@/shared/assets/icons/heart.svg?react";
+import { CommentIcon } from "@/shared/assets/icons/comment.svg?react";
 
 interface PostProps {
   title: string,
@@ -38,9 +40,11 @@ export const Post = ({
 
       <div className="post-control">
         <div className="likes">
+          <HeartIcon/>
           <small>{ likes } likes</small>
         </div>
         <div className="comments">
+          <CommentIcon/>
           <small>{ comments } comments</small>
         </div>
       </div>
