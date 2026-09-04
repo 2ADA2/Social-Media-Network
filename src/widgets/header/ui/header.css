@@ -1,0 +1,20 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-family-secondary), serif;
+  background-color: var(--bg-primary);
+  padding: 0.5rem 1rem;
+}
+
+.headerLogo {
+  display: flex;
+  font-size: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  gap:4px;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

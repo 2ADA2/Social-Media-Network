@@ -1,5 +1,10 @@
 @import "normalize.css";
 
+body {
+  height: 100vh;
+  font-family: var(--font-family-primary), serif;
+}
+
 :root {
   --font-family-primary: 'Inter', system-ui, -apple-system, sans-serif;
   --font-family-secondary: 'Poppins', system-ui, -apple-system, sans-serif;

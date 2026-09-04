@@ -1,0 +1,11 @@
+.burgerMenuButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.burgerMenuIcon {
+  fill: var(--color-primary);
+  width: 2rem;
+  height: 2rem;
+}
