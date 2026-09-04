@@ -3,7 +3,7 @@ import "./burgerMenu.css";
 
 export const BurgerMenu = () => {
   return (
-    <button className="burgerMenuButton">
+    <button className="burgerMenuButton" type="button">
       <BurgerMenuIcon className="burgerMenuIcon"/>
     </button>
   );
