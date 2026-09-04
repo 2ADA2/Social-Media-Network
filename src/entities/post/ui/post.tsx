@@ -28,9 +28,14 @@ export const Post = ({
                        comments = 0,
                      }: PostProps) => {
   const [liked, setLiked] = useState(false);
+  const [showComments, setShowComments] = useState(false);
 
   const toggleLike = () => {
     setLiked((prev) => !prev);
+  };
+
+  const toggleComments = () => {
+    setShowComments(prev => !prev);
   };
 
   return (
@@ -38,39 +43,40 @@ export const Post = ({
       <header className="post-header">
         <img
           className="author-avatar"
-          src={avatarUrl}
-          alt={`${author} avatar`}
+          src={ avatarUrl }
+          alt={ `${ author } avatar` }
         />
         <div className="header-data">
-          <div>{author}</div>
-          <small>{date}</small>
+          <div>{ author }</div>
+          <small>{ date }</small>
         </div>
       </header>
 
       <img
         className="post-image"
         loading="lazy"
-        src={imgUrl}
-        alt={alt}
+        src={ imgUrl }
+        alt={ alt }
       />
 
-      <p>{description}</p>
+      <p>{ description }</p>
 
       <footer className="post-control">
-        <CoverButton click={toggleLike}>
+        <CoverButton onClick={ toggleLike }>
           <div>
-            <HeartIcon className={liked ? "active" : ""} />
-            <small>{liked ? likes + 1 : likes} likes</small>
+            <HeartIcon className={ liked ? "active" : "" }/>
+            <small>{ liked ? likes + 1 : likes } likes</small>
           </div>
         </CoverButton>
 
-        <CoverButton>
+        <CoverButton onClick={ toggleComments }>
           <div>
-            <CommentIcon />
-            <small>{comments} comments</small>
+            <CommentIcon/>
+            <small>{ comments } comments</small>
           </div>
         </CoverButton>
       </footer>
+      { showComments && <div>comments</div> }
     </article>
   );
 };
