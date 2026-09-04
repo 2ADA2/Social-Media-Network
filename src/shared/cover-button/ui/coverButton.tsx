@@ -3,12 +3,12 @@ import "./coverButton.css";
 
 interface CoverButtonProps {
   children: React.ReactNode,
-  click?: () => void;
+  onClick: () => void,
 }
 
-export const CoverButton = ({ children, click }: CoverButtonProps) => {
+export const CoverButton = ({ children, onClick }: CoverButtonProps) => {
   return (
-    <button className="cover-button" onClick={ click }>
+    <button className="cover-button" onClick = { onClick }>
       { children }
     </button>
   );
