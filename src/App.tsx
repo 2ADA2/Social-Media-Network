@@ -1,8 +1,8 @@
-import { MainPage } from "./pages/main";
 import "../global.css";
+import { RouterProvider } from "@/app/providers/RouterProvider";
 
 function App() {
-  return <MainPage/>;
+  return <RouterProvider/>;
 }
 
 export default App;
