@@ -25,6 +25,7 @@ export const Header = ({ hiddenNav = false }: HeaderProps) => {
         <SidekickLogo/>
         <span>sidekick</span>
       </div>
+
       { renderNav() }
     </header>
   );
