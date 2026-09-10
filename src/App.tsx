@@ -1,3 +1,4 @@
+import { MainPage } from "./pages/main";
 import "../global.css";
 import { Post } from "./entities/post";
 
@@ -13,7 +14,7 @@ const POST_DATA = {
 };
 
 function App() {
-  return <Post { ...POST_DATA }/>;
+  return <MainPage/>;
 }
 
 export default App;
