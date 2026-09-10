@@ -3,6 +3,8 @@
 body {
   height: 100vh;
   font-family: var(--font-family-primary), serif;
+  color: var(--color-primary);
+  background-color: var(--bg-secondary);
 }
 
 :root {
@@ -25,6 +27,8 @@ body {
 
   --color-accent: #FF8811;
   --color-danger: #FF554A;
+
+  --transition-primary: 200ms;
 }
 
 [data-theme="dark"] {
