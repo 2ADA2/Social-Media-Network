@@ -6,8 +6,6 @@ body {
 }
 
 :root {
-  --mobile-width: 768px;
-
   --font-family-primary: 'Inter', system-ui, -apple-system, sans-serif;
   --font-family-secondary: 'Poppins', system-ui, -apple-system, sans-serif;
 
@@ -40,3 +38,4 @@ body {
   --bg-secondary: #0E1223;
   --bg-border: #384162;
 }
+

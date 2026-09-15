@@ -18,7 +18,7 @@ export const NavBar = ({ setNavBar }: NavBarProps) => {
           <span>sidekick</span>
         </div>
 
-        { auth ? (
+        { !auth ? (
           <>
             <a href='/sign-in'>Sign in</a>
             <a href='/sign-in'>Sign up</a>

@@ -18,3 +18,17 @@
     height: 1.5rem;
   }
 }
+
+.desktop-nav{
+  display: none;
+}
+
+@media(min-width: 768px) {
+  .desktop-nav{
+    display: flex;
+  }
+
+  .mobile-nav{
+    display: none;
+  }
+}
