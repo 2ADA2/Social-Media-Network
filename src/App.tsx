@@ -1,8 +1,8 @@
-import { MainPage } from "./pages/main";
 import "../global.css";
+import { SignIn } from "@/pages/signin";
 
 function App() {
-  return <MainPage/>;
+  return <SignIn/>;
 }
 
 export default App;

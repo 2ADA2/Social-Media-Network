@@ -11,6 +11,7 @@ body {
   --font-family-primary: 'Inter', system-ui, -apple-system, sans-serif;
   --font-family-secondary: 'Poppins', system-ui, -apple-system, sans-serif;
 
+  --color-primary-static: #FFFFFF;
   --color-primary: #1B2037;
   --color-inverse: #FFFFFF;
   --color-muted: #667085;
@@ -28,6 +29,9 @@ body {
 
   --color-accent: #FF8811;
   --color-danger: #FF554A;
+
+  --input-border: #c9c9c9;
+  --input-border-active: #7c7c7c;
 }
 
 [data-theme="dark"] {
@@ -38,4 +42,7 @@ body {
   --bg-primary: #1B2037;
   --bg-secondary: #0E1223;
   --bg-border: #384162;
+
+  --input-border: #384162;
+  --input-border-active: #384162;
 }
