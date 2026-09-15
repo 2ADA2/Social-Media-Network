@@ -21,19 +21,25 @@ export const SignIn = () => {
           type='email'
           placeholder='Enter email'
           icon={ <MailIcon/> }
-          ref = {inputRef}
+          ref={ inputRef }
         />
         <Input
           label='Password'
           type='password'
           placeholder='Enter password'
           icon={ <EyeIcon/> }
-          ref = {inputRef}
+          ref={ inputRef }
         />
         <Button>
           Sign in
         </Button>
       </form>
+      <p className='auth-form-footer'>
+        Forgot to create an account?{ ' ' }
+        <a href='/sign-up'>
+          Sign up
+        </a>
+      </p>
     </section>
   );
 };
