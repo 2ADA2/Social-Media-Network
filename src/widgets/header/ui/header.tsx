@@ -3,7 +3,8 @@ import SidekickLogo from "@/shared/assets/icons/sidekick-logo.svg?react";
 import { useState } from "react";
 import { BurgerMenu } from "@/widgets/header/ui/burgerMenu/burgerMenu.tsx";
 import { AuthButtons } from "@/widgets/header/ui/authButtons/authButtons.tsx";
-import { NavBar } from "@/widgets/navbar/ui/NavBar.tsx";
+import { NavBar } from "@/widgets/navbar";
+import { UserNav } from "@/entities/UserNav";
 
 export const Header = () => {
     const [auth] = useState<boolean>(true); // useAuth hook ( useContext ) in future
@@ -20,7 +21,16 @@ export const Header = () => {
           <span>sidekick</span>
         </div>
 
-        { auth ? <BurgerMenu onClick={ setNavBar }/> : <AuthButtons/> }
+
+        <div className='mobile-nav'>
+          <BurgerMenu onClick={ setNavBar }/>
+        </div>
+
+        <div className='desktop-nav'>
+          {auth ? <UserNav/>: <AuthButtons/>}
+        </div>
+
+
         { isNavBar && <NavBar setNavBar={ () => setNavBar() }/> }
       </header>
     );
