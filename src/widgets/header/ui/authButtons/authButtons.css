@@ -1,4 +1,16 @@
 .header-auth-nav {
   display: flex;
-  gap: 1rem;
+  gap: 32px;
+  margin-right: 32px;
+
+  a {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: var(--color-primary);
+  }
+
+  a:hover {
+    color: var(--color-accent);
+    background-color: var(--bg-primary);
+  }
 }
