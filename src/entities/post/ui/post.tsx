@@ -13,7 +13,7 @@ interface PostProps {
   imgUrl: string;
   alt?: string;
   likes: number;
-  comments: number;
+  comments: string[];
 }
 
 export const Post = ({
@@ -25,7 +25,7 @@ export const Post = ({
                        description,
                        alt = title,
                        likes = 0,
-                       comments = 0,
+                       comments = [],
                      }: PostProps) => {
   const [liked, setLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -72,11 +72,15 @@ export const Post = ({
         <CoverButton onClick={ toggleComments }>
           <div>
             <CommentIcon/>
-            <small>{ comments } comments</small>
+            <small>{ comments.length } comments</small>
           </div>
         </CoverButton>
       </footer>
-      { showComments && <div>comments</div> }
+      { showComments && <ol className='post-comments'>
+        { comments.map(
+          (comment, i) => <li key={ i }>{ comment }</li>,
+        ) }
+      </ol> }
     </article>
   );
 };

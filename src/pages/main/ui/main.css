@@ -1,8 +1,10 @@
 .main {
   min-height: calc(100vh - 7rem);
   display: flex;
+  flex-direction: column;
+  gap:16px;
+  padding: 16px 0;
   align-items: center;
   justify-content: center;
-  font-size: 5rem;
   color: var(--color-muted);
 }
