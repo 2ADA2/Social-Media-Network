@@ -7,7 +7,7 @@ import { NavBar } from "@/widgets/navbar";
 import { UserNav } from "@/entities/UserNav";
 
 export const Header = () => {
-    const [auth] = useState<boolean>(true); // useAuth hook ( useContext ) in future
+    const [auth] = useState<boolean>(false); // useAuth hook ( useContext ) in future
     const [isNavBar, setIsNavBar] = useState(false);
 
     const setNavBar = () => {
