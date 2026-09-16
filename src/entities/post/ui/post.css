@@ -32,14 +32,14 @@
   }
 
   p {
-    padding: 0 1rem;
+    margin: 0;
+    padding: 0 8px;
   }
 }
 
 .post-control {
   display: flex;
   gap: 1rem;
-  padding: 0 1rem;
 
   div {
     display: flex;
@@ -61,5 +61,24 @@
     path {
       stroke: red;
     }
+  }
+}
+
+.post-comments {
+  list-style: none;
+  counter-reset: item;
+  padding: 0;
+  margin:0;
+
+  li {
+    counter-increment: item;
+    margin-bottom: 8px;
+    color: var(--color-primary);
+    font-size: 0.8rem;
+  }
+
+  li::before {
+    content: "#" counter(item) ". ";
+    color: var(--color-primary);
   }
 }
