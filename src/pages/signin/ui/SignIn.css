@@ -32,4 +32,8 @@
     color: var(--color-primary);
     font-weight: bold;
   }
+
+  input {
+    color: var(--color-primary);
+  }
 }

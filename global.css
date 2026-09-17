@@ -1,7 +1,7 @@
 @import "normalize.css";
 
 body {
-  min-height: 100vh;
+  height: 100vh;
   font-family: var(--font-family-primary), serif;
   color: var(--color-primary);
   background-color: var(--bg-secondary);
@@ -18,6 +18,8 @@ body {
 
   --bg-primary: #FAFAFA;
   --bg-secondary: #eeeeee;
+
+  --hover-primary: #dcdcdc;
 
   --button-hover: #08B94E;
   --button-pressed: #6236CC;
@@ -46,6 +48,8 @@ body {
   --bg-primary: #1B2037;
   --bg-secondary: #0E1223;
   --bg-border: #384162;
+
+  --hover-primary: #151a2c;
 
   --toggle-bg: #151A2D;
 

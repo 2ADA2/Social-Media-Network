@@ -5,48 +5,48 @@ import { BurgerMenu } from "@/widgets/header/ui/burgerMenu/burgerMenu.tsx";
 import { AuthButtons } from "@/widgets/header/ui/authButtons/authButtons.tsx";
 import { NavBar } from "@/widgets/navbar";
 import { UserNav } from "@/entities/UserNav";
+import { useAuth } from "@/features/auth";
 
 export interface HeaderProps {
   hiddenNav?: boolean;
 }
 
 export const Header = ({ hiddenNav = false }: HeaderProps) => {
-    const [auth] = useState<boolean>(true); // useAuth hook ( useContext ) in future
-    const [isNavBar, setIsNavBar] = useState(false);
+  const auth = useAuth();
+  const [isNavBar, setIsNavBar] = useState(false);
 
-    const setNavBar = () => {
-      setIsNavBar(!isNavBar);
-    };
+  const setNavBar = () => {
+    setIsNavBar(!isNavBar);
+  };
 
-    const hideNav = (): ReactNode => {
-      if (hiddenNav) {
-        return <div></div>;
-      }
-
-      return (
-        <>
-          <div className='mobile-nav'>
-            <BurgerMenu onClick={ setNavBar }/>
-          </div>
-
-          <div className='desktop-nav'>
-            { auth ? <UserNav/> : <AuthButtons/> }
-          </div>
-        </>
-      );
-    };
+  const hideNav = (): ReactNode => {
+    if (hiddenNav) {
+      return <div></div>;
+    }
 
     return (
-      <header className="header">
-        <div className="headerLogo">
-          <SidekickLogo/>
-          <span>sidekick</span>
+      <>
+        <div className='mobile-nav'>
+          <BurgerMenu onClick={ setNavBar }/>
         </div>
 
-        {hideNav()}
-
-        { isNavBar && <NavBar setNavBar={ () => setNavBar() }/> }
-      </header>
+        <div className='desktop-nav'>
+          { auth ? <UserNav/> : <AuthButtons/> }
+        </div>
+      </>
     );
-  }
-;
+  };
+
+  return (
+    <header className="header">
+      <div className="headerLogo">
+        <SidekickLogo/>
+        <span>sidekick</span>
+      </div>
+
+      { hideNav() }
+
+      { isNavBar && <NavBar setNavBar={ () => setNavBar() }/> }
+    </header>
+  );
+};

@@ -9,7 +9,6 @@ function App() {
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
   }, []);
 
-  return <MainPage/>;
   return (
     <UserProvider >
       <RouterProvider/>

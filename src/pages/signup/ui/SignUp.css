@@ -39,4 +39,8 @@
     max-width: 250px;
     text-align: center;
   }
+
+  input {
+    color: var(--color-primary);
+  }
 }

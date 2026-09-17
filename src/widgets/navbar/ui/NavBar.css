@@ -45,6 +45,6 @@
 }
 
 a:hover{
-  background-color: var(--button-pressed-border);
+  background-color: var(--hover-primary);
 }
 
