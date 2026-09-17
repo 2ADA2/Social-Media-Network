@@ -9,11 +9,14 @@
 
   .post-header {
     display: flex;
-    height: 2.5rem;
+    height: 42px;
     gap: 12px;
 
     .author-avatar {
       border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      object-fit: cover;
     }
   }
 
