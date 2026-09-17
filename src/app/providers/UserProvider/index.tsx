@@ -11,7 +11,7 @@ const USER_DATA: User = {
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user] = useState<User | null>(USER_DATA);
-  const [isAuth] = useState<boolean>(false);
+  const [isAuth] = useState<boolean>(true);
 
   return (
     <UserContext.Provider value={ { isAuth, user } }>
