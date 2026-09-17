@@ -31,7 +31,7 @@ export const SignUp = () => {
           ref={ inputRef }
         />
         <Button>
-          Sign in
+          Sign up
         </Button>
       </form>
       <small>By clicking continue, you agree to our <b>Terms of Service</b> and <b>Privacy Policy</b></small>
