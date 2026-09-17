@@ -1,7 +1,7 @@
 import { useState } from "react";
 import HeartIcon from "@/shared/assets/icons/heart.svg?react";
 import CommentIcon from "@/shared/assets/icons/comment.svg?react";
-import { CoverButton } from "@/shared/cover-button/ui/coverButton.tsx";
+import { CoverButton } from "@/shared/ui/CoverButton/CoverButton.tsx";
 import "./post.css";
 
 interface PostProps {
