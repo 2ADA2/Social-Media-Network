@@ -3,11 +3,11 @@
 body {
   min-height: 100vh;
   font-family: var(--font-family-primary), serif;
+  color: var(--color-primary);
+  background-color: var(--bg-secondary);
 }
 
 :root {
-  --mobile-width: 768px;
-
   --font-family-primary: 'Inter', system-ui, -apple-system, sans-serif;
   --font-family-secondary: 'Poppins', system-ui, -apple-system, sans-serif;
 
@@ -32,6 +32,8 @@ body {
   --color-accent-active: #e87c0f;
   --color-danger: #FF554A;
 
+  --transition-primary: 200ms;
+
   --input-border: #c9c9c9;
   --input-border-active: #7c7c7c;
 }
@@ -44,6 +46,8 @@ body {
   --bg-primary: #1B2037;
   --bg-secondary: #0E1223;
   --bg-border: #384162;
+
+  --toggle-bg: #151A2D;
 
   --input-border: #384162;
   --input-border-active: #384162;
