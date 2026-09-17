@@ -3,8 +3,8 @@
   flex-direction: column;
   gap: 12px;
   max-width: 400px;
-  margin: 2rem auto auto auto;
-  padding: 1rem;
+  width: 95%;
+  padding: 8px;
   background: var(--bg-primary); /* delete in future */
 
   .post-header {
@@ -25,8 +25,8 @@
     flex-direction: column;
     justify-content: center;
 
-    small {
-      color: var(--color-muted);
+    div {
+      color: var(--color-primary);
     }
   }
 
@@ -42,11 +42,16 @@
 
 .post-control {
   display: flex;
-  gap: 1rem;
+  gap: 8px;
 
   div {
     display: flex;
     gap: 8px;
+    align-items: center;
+  }
+
+  small {
+    font-size: 0.6rem;
   }
 
   svg {
@@ -63,6 +68,13 @@
 
     path {
       stroke: red;
+    }
+  }
+
+  .arrow-icon {
+    path {
+      fill: var(--color-primary);
+      stroke: var(--bg-secondary);
     }
   }
 }
@@ -83,5 +95,13 @@
   li::before {
     content: "#" counter(item) ". ";
     color: var(--color-primary);
+  }
+}
+
+@media(min-width: 400px) {
+  .post-control {
+    small {
+      font-size: 0.8rem;
+    }
   }
 }

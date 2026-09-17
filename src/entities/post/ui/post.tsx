@@ -1,6 +1,8 @@
 import { useState } from "react";
 import HeartIcon from "@/shared/assets/icons/heart.svg?react";
 import CommentIcon from "@/shared/assets/icons/comment.svg?react";
+import ArrowDown from "@/shared/assets/icons/arrow-down.svg?react";
+import ArrowUp from "@/shared/assets/icons/arrow-up.svg?react";
 import { CoverButton } from "@/shared/cover-button/ui/coverButton.tsx";
 import "./post.css";
 
@@ -27,6 +29,8 @@ export const Post = ({
                        likes = 0,
                        comments = [],
                      }: PostProps) => {
+  const [isAuth] = useState(false); // useAuth in future
+
   const [liked, setLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);
 
@@ -72,11 +76,17 @@ export const Post = ({
         <CoverButton onClick={ toggleComments }>
           <div>
             <CommentIcon/>
-            <small>{ comments.length } comments</small>
+            <small>{
+              isAuth ? ` ${ comments.length } Comments` : "You have to login to see the comments"
+            } </small>
+            {
+              isAuth &&
+              (showComments ? <ArrowDown className='arrow-icon'/> : <ArrowUp className={ 'arrow-icon' }/>)
+            }
           </div>
         </CoverButton>
       </footer>
-      { showComments && <ol className='post-comments'>
+      { isAuth && showComments && <ol className='post-comments'>
         { comments.map(
           (comment, i) => <li key={ i }>{ comment }</li>,
         ) }
