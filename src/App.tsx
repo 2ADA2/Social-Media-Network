@@ -4,7 +4,7 @@ import { UserProvider } from "@/app/providers/UserProvider";
 
 function App() {
   return (
-    <UserProvider>
+    <UserProvider >
       <RouterProvider/>
     </UserProvider>
   );

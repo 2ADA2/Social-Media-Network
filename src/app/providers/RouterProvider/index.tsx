@@ -4,15 +4,14 @@ import { MainPage } from "@/pages/main";
 import { MainLayout } from "@/app/layouts/MainLayout";
 import { ProfilePage } from "@/pages/profile";
 import { NotFoundPage } from "@/pages/not-found";
-import { useUser } from "@/features/auth";
+import { useAuth } from "@/features/auth";
 import { ProtectedRoute } from "./ProtectedRoute.tsx";
 import { SignIn } from "@/pages/signin";
 import { SignUp } from "@/pages/signup";
 
 
 export const RouterProvider = () => {
-  const userContext = useUser();
-  const isAuth = userContext.isAuth;
+  const isAuth = useAuth();
 
   return (
     <BrowserRouter>
