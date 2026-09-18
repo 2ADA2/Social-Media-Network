@@ -24,22 +24,23 @@ export const ProfilePage = () => {
       <div className='tabs-container'>
         <Tabs tabs={ TABS } activeTab={ activeTab } onChange={ setActiveTab }/>
       </div>
+      <div className='profile-grid'>
+        <div className='profile-column'>
+          <section>
+            <h2>Preferences</h2>
+            <div className='switcher-container'>
+              <ThemeSwitcher/> Dark theme
+            </div>
+          </section>
+          <section>
+            <h2>Actions</h2>
+            <Button className='logout-button' onClick={ logout }>Logout</Button>
+          </section>
+        </div>
 
-      <div className='profile-column'>
-        <section>
-          <h2>Preferences</h2>
-          <div className='switcher-container'>
-            <ThemeSwitcher/> Dark theme
-          </div>
-        </section>
-        <section>
-          <h2>Actions</h2>
-          <Button onClick={ logout }>Logout</Button>
-        </section>
-      </div>
-
-      <div className='profile-column'>
-        <EditProfile/>
+        <div className='profile-edit-section'>
+          <EditProfile/>
+        </div>
       </div>
     </div>
   );
