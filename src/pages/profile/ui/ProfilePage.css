@@ -7,6 +7,11 @@
 .profile-page {
   padding: 8px 16px;
 
+  .profile-grid {
+    max-width: 1000px;
+    margin: auto;
+  }
+
   h2 {
     font-size: 18px;
   }
@@ -22,8 +27,8 @@
   .profile-grid {
     gap: 32px;
     display: grid;
-    grid-template-columns:1fr 1fr;
-    grid-template-rows:1fr 1fr;
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: 1fr 1fr;
   }
 
   .profile-edit-section {
