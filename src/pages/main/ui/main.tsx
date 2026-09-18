@@ -1,4 +1,6 @@
 import "./main.css";
+import { Header } from "@/widgets/header";
+import { Footer } from "@/widgets/footer";
 import { Post } from "@/entities/post";
 
 const POST_DATA = {
@@ -15,11 +17,13 @@ const POST_DATA = {
 export const MainPage = () => {
   return (
     <>
-      <main className="main-page">
+      <Header/>
+      <main className="main">
         <Post {...POST_DATA}/>
         <Post {...POST_DATA}/>
         <Post {...POST_DATA}/>
       </main>
+      <Footer/>
     </>
   );
 };
