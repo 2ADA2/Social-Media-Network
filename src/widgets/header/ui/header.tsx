@@ -1,10 +1,11 @@
 import "./header.css";
 import SidekickLogo from "@/shared/assets/icons/sidekick-logo.svg?react";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import { BurgerMenu } from "@/widgets/header/ui/burgerMenu/burgerMenu.tsx";
 import { AuthButtons } from "@/widgets/header/ui/authButtons/authButtons.tsx";
 import { NavBar } from "@/widgets/navbar";
 import { UserNav } from "@/entities/UserNav";
+
 
 export const Header = () => {
     const [auth] = useState<boolean>(true); // useAuth hook ( useContext ) in future
