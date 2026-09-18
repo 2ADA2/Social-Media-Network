@@ -1,13 +1,12 @@
-import { type InputHTMLAttributes, type ReactNode, type Ref } from "react";
+import { type InputHTMLAttributes, type ReactNode } from "react";
 import "./Input.css";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   icon?: ReactNode;
-  ref?: Ref<HTMLInputElement>;
 }
 
-export const Input = ({ icon, label, ref, ...props }: InputProps) => {
+export const Input = ({ icon, label, ...props }: InputProps) => {
   return (
     <label className="input-label">
       <div>
@@ -15,7 +14,7 @@ export const Input = ({ icon, label, ref, ...props }: InputProps) => {
         <span>{label}</span>
       </div>
 
-      <input ref={ref} {...props} />
+      <input {...props} />
     </label>
   );
 };

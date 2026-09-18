@@ -14,6 +14,14 @@ export const SignUp = () => {
     console.log({ email, password });
   };
 
+  const changeEmail = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const changePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
   return (
     <section className='auth'>
       <h1>Create an account</h1>
@@ -22,23 +30,23 @@ export const SignUp = () => {
         to sign up for this app
       </p>
 
-      <form className='auth-form' onSubmit={handleSubmit}>
+      <form className='auth-form' onSubmit={ handleSubmit }>
         <Input
           label="Email"
           type="email"
           placeholder="Enter email"
-          icon={<MailIcon />}
-          value={email}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+          icon={ <MailIcon/> }
+          value={ email }
+          onChange={ changeEmail }
           required
         />
         <Input
           label="Password"
           type="password"
           placeholder="Enter password"
-          icon={<EyeIcon />}
-          value={password}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+          icon={ <EyeIcon/> }
+          value={ password }
+          onChange={ changePassword }
           required
         />
         <Button type='submit'>
