@@ -1,9 +1,9 @@
 import "./ProfilePage.css";
 import { Tabs } from "@/shared/ui/Tabs";
 import { useState } from "react";
-import { ThemeSwitcher } from "@/features/ui/ThemeSwitcher";
-import { Button } from "@/shared/ui/Button";
-import { EditProfile } from "@/widgets/editProfile";
+import { ProfileInfo } from "@/pages/profile/ui/ProfileInfo/ProfileInfo.tsx";
+import { Statistics } from "@/pages/profile/ui/Statistics/Statistics.tsx";
+import { useLocation } from "react-router-dom";
 
 const TABS = [
   { id: 'info', label: 'Profile Info' },
@@ -11,11 +11,13 @@ const TABS = [
 ];
 
 export const ProfilePage = () => {
-  const [activeTab, setActiveTab] = useState('info');
+  const location = useLocation();
 
-  const logout = () => {
-    console.log("Logout");
-  };
+  const [activeTab, setActiveTab] = useState(() => {
+    const params = new URLSearchParams(location.search);
+    return params.get('tab') === 'stats' ? 'stats' : 'info';
+  });
+
 
   return (
     <div className='profile-page'>
@@ -24,24 +26,10 @@ export const ProfilePage = () => {
       <div className='tabs-container'>
         <Tabs tabs={ TABS } activeTab={ activeTab } onChange={ setActiveTab }/>
       </div>
-      <div className='profile-grid'>
-        <div className='profile-column'>
-          <section>
-            <h2>Preferences</h2>
-            <div className='switcher-container'>
-              <ThemeSwitcher/> Dark theme
-            </div>
-          </section>
-          <section>
-            <h2>Actions</h2>
-            <Button className='logout-button' onClick={ logout }>Logout</Button>
-          </section>
-        </div>
 
-        <div className='profile-edit-section'>
-          <EditProfile/>
-        </div>
-      </div>
+      { activeTab === 'info' && <ProfileInfo/> }
+      { activeTab === 'stats' && <Statistics/> }
+
     </div>
   );
 };
