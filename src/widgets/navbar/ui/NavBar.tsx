@@ -1,13 +1,14 @@
 import "./NavBar.css";
-import { useState } from "react";
 import SidekickLogo from "@/shared/assets/icons/sidekick-logo.svg?react";
+import { useAuth } from "@/features/auth";
+import { ROUTES } from "@/shared/config/routes.ts";
 
 interface NavBarProps {
   setNavBar: () => void;
 }
 
 export const NavBar = ({ setNavBar }: NavBarProps) => {
-  const [auth] = useState<boolean>(true); // use Auth
+  const auth = useAuth();
 
   return (
     <>
@@ -20,13 +21,13 @@ export const NavBar = ({ setNavBar }: NavBarProps) => {
 
         { !auth ? (
           <>
-            <a href='/sign-in'>Sign in</a>
-            <a href='/sign-in'>Sign up</a>
+            <a href={ ROUTES.SIGNIN }>Sign in</a>
+            <a href={ ROUTES.SIGNUP }>Sign up</a>
           </>
         ) : (
           <>
-            <a href='/sign-in'>Profile</a>
-            <a href='/sign-in'>Statistics</a>
+            <a href={ ROUTES.PROFILE }>Profile</a>
+            <a href={ ROUTES.STATISTICS }>Statistics</a>
           </>
         ) }
       </nav>

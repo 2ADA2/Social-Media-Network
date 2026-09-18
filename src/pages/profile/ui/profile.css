@@ -1,0 +1,17 @@
+.tabs-container {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-page {
+  padding-top: 16px;
+
+  .profile-grid {
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+}
+

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import HeartIcon from "@/shared/assets/icons/heart.svg?react";
 import CommentIcon from "@/shared/assets/icons/comment.svg?react";
+import { CoverButton } from "@/shared/ui/CoverButton/CoverButton.tsx";
 import ArrowDown from "@/shared/assets/icons/arrow-down.svg?react";
 import ArrowUp from "@/shared/assets/icons/arrow-up.svg?react";
-import { CoverButton } from "@/shared/cover-button/ui/coverButton.tsx";
 import "./post.css";
+import { useAuth } from "@/features/auth";
 
 interface PostProps {
   title: string;
@@ -29,7 +30,7 @@ export const Post = ({
                        likes = 0,
                        comments = [],
                      }: PostProps) => {
-  const [isAuth] = useState(false); // useAuth in future
+  const isAuth = useAuth();
 
   const [liked, setLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);

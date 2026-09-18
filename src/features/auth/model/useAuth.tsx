@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { UserContext } from '@/entities/user';
 
-export const useUser = () => {
+export const useAuth = () => {
   const context = useContext(UserContext);
 
-  if (!context?.user) {
+  if (!context) {
     throw new Error('Cannot get userContext');
   }
 
-  return context.user;
+  return context.isAuth;
 };

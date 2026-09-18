@@ -37,6 +37,7 @@
   p {
     margin: 0;
     padding: 0 8px;
+    color: var(--color-primary);
   }
 }
 
@@ -52,6 +53,7 @@
 
   small {
     font-size: 0.6rem;
+    color: var(--color-primary);
   }
 
   svg {
@@ -59,7 +61,7 @@
     height: 1rem;
 
     path {
-      stroke: black;
+      stroke: var(--color-primary);
     }
   }
 

@@ -1,7 +1,7 @@
 @import "normalize.css";
 
 body {
-  min-height: 100vh;
+  height: 100dvh;
   font-family: var(--font-family-primary), serif;
   color: var(--color-primary);
   background-color: var(--bg-secondary);
@@ -11,12 +11,15 @@ body {
   --font-family-primary: 'Inter', system-ui, -apple-system, sans-serif;
   --font-family-secondary: 'Poppins', system-ui, -apple-system, sans-serif;
 
+  --color-primary-static: #FFFFFF;
   --color-primary: #1B2037;
   --color-inverse: #FFFFFF;
   --color-muted: #667085;
 
   --bg-primary: #FAFAFA;
   --bg-secondary: #eeeeee;
+
+  --hover-primary: #dcdcdc;
 
   --button-hover: #08B94E;
   --button-pressed: #6236CC;
@@ -25,11 +28,16 @@ body {
   --button-disabled-border: #9DA6CB;
 
   --toggle-bg: #F0F1F3;
+  --toggle-bg-active: #151A2D;
 
   --color-accent: #FF8811;
+  --color-accent-active: #e87c0f;
   --color-danger: #FF554A;
 
   --transition-primary: 200ms;
+
+  --input-border: #c9c9c9;
+  --input-border-active: #7c7c7c;
 }
 
 [data-theme="dark"] {
@@ -40,8 +48,11 @@ body {
   --bg-primary: #1B2037;
   --bg-secondary: #0E1223;
   --bg-border: #384162;
-}
 
+  --hover-primary: #151a2c;
 
   --toggle-bg: #151A2D;
+
+  --input-border: #384162;
+  --input-border-active: #384162;
 }

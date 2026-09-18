@@ -1,9 +1,11 @@
-.main-page {
+.main {
+  min-height: calc(100dvh - 7rem);
   display: flex;
   flex-direction: column;
-  gap:16px;
+  gap:2px;
   padding: 16px 0;
   align-items: center;
   justify-content: center;
+  font-size: 5rem;
   color: var(--color-muted);
 }

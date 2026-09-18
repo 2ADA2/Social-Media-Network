@@ -1,0 +1,14 @@
+.btn {
+  background-color: var(--color-accent);
+  color: var(--color-primary-static);
+  border: none;
+  width: 250px;
+  height: 32px;
+  padding: 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.btn:hover{
+  background-color: var(--color-accent-active);
+}

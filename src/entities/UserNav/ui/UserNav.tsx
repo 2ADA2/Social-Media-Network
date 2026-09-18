@@ -1,12 +1,8 @@
 import "./UserNav.css";
+import { useUser } from "@/features/auth";
 
 export const UserNav = () => {
-  // const user = useUser()
-  const user = {
-    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnoYbJQK0m8Se7zRczq-j0L6JAb5074pVZjfoTFd0wNQ&s=10",
-    name: "Rami",
-    surname: "Malek",
-  };
+  const user = useUser();
 
   return (
     <a className="user-nav">
