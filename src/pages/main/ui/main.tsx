@@ -7,9 +7,6 @@ export const MainPage = () => {
   return (
     <>
       <Header/>
-      <main className="main">
-        MAIN
-      </main>
       <Footer/>
     </>
   );
