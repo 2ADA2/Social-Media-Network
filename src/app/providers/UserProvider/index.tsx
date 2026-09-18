@@ -7,6 +7,8 @@ const USER_DATA: User = {
   surname: "Malek",
   id: "35qb375r94",
   email: "rami-malek@gmail.com",
+  username: "ramiMalek228",
+  description:"Rami Said Malek (born May 12, 1981) is an American actor best known for his breakthrough roles as hacker Elliot Alderson in the thriller series Mr. Robot",
 };
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {

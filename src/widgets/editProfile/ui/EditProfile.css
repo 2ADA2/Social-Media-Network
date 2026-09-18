@@ -1,0 +1,49 @@
+.edit-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--color-primary);
+
+  .profile-avatar {
+    display: flex;
+    gap: 16px;
+
+    img {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+
+      small {
+        color: var(--color-muted);
+      }
+
+      small:hover {
+        color: var(--color-primary);
+      }
+    }
+  }
+
+  label {
+    width: 100%;
+  }
+}
+
+@media (min-width: 500px) {
+  .edit-profile {
+    label {
+      width: 60%
+    }
+  }
+
+  textarea {
+    width: 100%;
+  }
+}

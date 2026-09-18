@@ -28,7 +28,9 @@ export const ProfilePage = () => {
       <div className='profile-column'>
         <section>
           <h2>Preferences</h2>
-          <ThemeSwitcher/>
+          <div className='switcher-container'>
+            <ThemeSwitcher/> Dark theme
+          </div>
         </section>
         <section>
           <h2>Actions</h2>

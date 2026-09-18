@@ -2,7 +2,6 @@
   display: inline-flex;
   gap: 4px;
   justify-content: center;
-  margin-bottom: 40px;
   padding: 4px;
   background: var(--bg-primary);
 }
