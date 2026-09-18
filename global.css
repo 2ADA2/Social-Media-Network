@@ -1,15 +1,13 @@
 @import "normalize.css";
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   font-family: var(--font-family-primary), serif;
   color: var(--color-primary);
   background-color: var(--bg-secondary);
 }
 
 :root {
-  --mobile-width: 768px;
-
   --font-family-primary: 'Inter', system-ui, -apple-system, sans-serif;
   --font-family-secondary: 'Poppins', system-ui, -apple-system, sans-serif;
 
@@ -18,6 +16,7 @@ body {
   --color-muted: #667085;
 
   --bg-primary: #FAFAFA;
+  --bg-secondary: #eeeeee;
 
   --button-hover: #08B94E;
   --button-pressed: #6236CC;
@@ -41,6 +40,8 @@ body {
   --bg-primary: #1B2037;
   --bg-secondary: #0E1223;
   --bg-border: #384162;
+}
+
 
   --toggle-bg: #151A2D;
 }

@@ -3,30 +3,37 @@ import SidekickLogo from "@/shared/assets/icons/sidekick-logo.svg?react";
 import { type ReactNode, useState } from "react";
 import { BurgerMenu } from "@/widgets/header/ui/burgerMenu/burgerMenu.tsx";
 import { AuthButtons } from "@/widgets/header/ui/authButtons/authButtons.tsx";
+import { NavBar } from "@/widgets/navbar";
+import { UserNav } from "@/entities/UserNav";
 
-export interface HeaderProps {
-  hiddenNav?: boolean;
-}
 
-export const Header = ({ hiddenNav = false }: HeaderProps) => {
-  const [auth] = useState<boolean>(true); // useAuth hook ( useContext ) in future
+export const Header = () => {
+    const [auth] = useState<boolean>(true); // useAuth hook ( useContext ) in future
+    const [isNavBar, setIsNavBar] = useState(false);
 
-  const renderNav: () => ReactNode | null = () => {
-    if (hiddenNav) {
-      return null;
-    }
+    const setNavBar = () => {
+      setIsNavBar(!isNavBar);
+    };
 
-    return auth ? <BurgerMenu/> : <AuthButtons/>;
-  };
+    return (
+      <header className="header">
+        <div className="headerLogo">
+          <SidekickLogo/>
+          <span>sidekick</span>
+        </div>
 
-  return (
-    <header className="header">
-      <div className="headerLogo">
-        <SidekickLogo/>
-        <span>sidekick</span>
-      </div>
 
-      { renderNav() }
-    </header>
-  );
-};
+        <div className='mobile-nav'>
+          <BurgerMenu onClick={ setNavBar }/>
+        </div>
+
+        <div className='desktop-nav'>
+          {auth ? <UserNav/>: <AuthButtons/>}
+        </div>
+
+
+        { isNavBar && <NavBar setNavBar={ () => setNavBar() }/> }
+      </header>
+    );
+  }
+;
