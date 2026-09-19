@@ -20,6 +20,10 @@
     background: var(--bg-secondary);
     padding: 8px;
   }
+
+  a:hover{
+    background-color: var(--hover-primary);
+  }
 }
 
 .nav-background {
@@ -43,8 +47,3 @@
     height: 1rem;
   }
 }
-
-a:hover{
-  background-color: var(--hover-primary);
-}
-
