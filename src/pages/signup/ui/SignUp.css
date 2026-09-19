@@ -16,7 +16,6 @@
   color: var(--color-primary);
   font-family: var(--font-family-secondary);
   font-size: 14px;
-  padding: 24px;
 
   .sign-up-header {
     display: flex;
