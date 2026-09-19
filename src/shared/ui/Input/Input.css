@@ -20,13 +20,13 @@
   input {
     box-sizing: border-box;
     height: 48px;
-    background: var(--bg-primary);
+    background: var(--input-bg);
     border: 1px solid var(--input-border);
     padding: 4px 10px;
   }
 
   input::placeholder {
-    color: var(--bg-secondary);
+    color: var(--placehloder-color);
   }
 
   input:focus{
