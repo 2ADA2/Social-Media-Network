@@ -23,41 +23,46 @@ export const SignIn = () => {
   };
 
   return (
-    <section className="sign-in">
-      <h1>Sign in into an account</h1>
-      <p>
-        Enter your email and password <br/>
-        to sign in into this app
-      </p>
+    <div className='auth-container'>
+      <section className="sign-in">
+        <div className='sign-up-header'>
+          <h1>Sign in into an account</h1>
+          <p>
+            Enter your email and password <br/>
+            to sign in into this app
+          </p>
+        </div>
 
-      <form className="auth-form" onSubmit={ handleSubmit }>
-        <Input
-          label="Email"
-          type="email"
-          placeholder="Enter email"
-          icon={ <MailIcon/> }
-          value={ email }
-          onChange={ changeEmail }
-          required
-        />
-        <Input
-          label="Password"
-          type="password"
-          placeholder="Enter password"
-          icon={ <EyeIcon/> }
-          value={ password }
-          onChange={ changePassword }
-          required
-        />
-        <Button type="submit">
-          Sign in
-        </Button>
-      </form>
+        <form className="auth-form" onSubmit={ handleSubmit }>
+          <Input
+            label="Email"
+            type="email"
+            placeholder="Enter email"
+            icon={ <MailIcon/> }
+            value={ email }
+            onChange={ changeEmail }
+            required
+          />
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Enter password"
+            minLength={6}
+            icon={ <EyeIcon/> }
+            value={ password }
+            onChange={ changePassword }
+            required
+          />
+          <Button type="submit">
+            Sign in
+          </Button>
+        </form>
 
-      <p className="auth-form-footer">
-        Forgot to create an account?{ ' ' }
-        <a href="/sign-up">Sign up</a>
-      </p>
-    </section>
+        <p className="auth-form-footer">
+          Forgot to create an account?{ ' ' }
+          <a href="/sign-up">Sign up</a>
+        </p>
+      </section>
+    </div>
   );
 };

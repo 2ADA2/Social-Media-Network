@@ -50,6 +50,7 @@ export const SignUp = () => {
               placeholder="Enter password"
               icon={ <EyeIcon/> }
               value={ password }
+              minLength={6}
               onChange={ changePassword }
               required
             />
