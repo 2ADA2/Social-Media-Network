@@ -23,7 +23,7 @@ export const SignIn = () => {
   };
 
   return (
-    <section className="auth">
+    <section className="sign-in">
       <h1>Sign in into an account</h1>
       <p>
         Enter your email and password <br/>

@@ -23,39 +23,45 @@ export const SignUp = () => {
   };
 
   return (
-    <section className='auth'>
-      <h1>Create an account</h1>
-      <p>
-        Enter your email and password <br/>
-        to sign up for this app
-      </p>
+    <section className='sign-up'>
+      <div className='sign-up-header'>
+        <h1>Create an account</h1>
+        <p>
+          Enter your email and password <br/>
+          to sign up for this app
+        </p>
+      </div>
 
       <form className='auth-form' onSubmit={ handleSubmit }>
-        <Input
-          label="Email"
-          type="email"
-          placeholder="Enter email"
-          icon={ <MailIcon/> }
-          value={ email }
-          onChange={ changeEmail }
-          required
-        />
-        <Input
-          label="Password"
-          type="password"
-          placeholder="Enter password"
-          icon={ <EyeIcon/> }
-          value={ password }
-          onChange={ changePassword }
-          required
-        />
+        <div className='input-container'>
+          <Input
+            label="Email"
+            type="email"
+            placeholder="Enter email"
+            icon={ <MailIcon/> }
+            value={ email }
+            onChange={ changeEmail }
+            required
+          />
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Enter password"
+            icon={ <EyeIcon/> }
+            value={ password }
+            onChange={ changePassword }
+            required
+          />
+        </div>
         <Button type='submit'>
-          Sign in
+          Sign up
         </Button>
       </form>
+
       <small>By clicking continue, you agree to our <b>Terms of Service</b> and <b>Privacy Policy</b></small>
+
       <p className='auth-form-footer'>
-        Forgot to create an account?{ ' ' }
+        Already have an account?{ ' ' }
         <a href='/sign-in'>
           Sign in
         </a>
