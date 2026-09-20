@@ -6,6 +6,7 @@ import ArrowDown from "@/shared/assets/icons/arrow-down.svg?react";
 import ArrowUp from "@/shared/assets/icons/arrow-up.svg?react";
 import "./post.css";
 import { useAuth } from "@/features/auth";
+import { Avatar } from "@/shared/ui/Avatar/Avatar.tsx";
 
 interface PostProps {
   title: string;
@@ -46,11 +47,7 @@ export const Post = ({
   return (
     <article className="post">
       <header className="post-header">
-        <img
-          className="author-avatar"
-          src={ avatarUrl }
-          alt={ `${ author } avatar` }
-        />
+        <Avatar src={ avatarUrl } alt={ alt } size={ 48 }/>
         <div className="header-data">
           <div>{ author }</div>
           <div className='post-date'>{ date }</div>

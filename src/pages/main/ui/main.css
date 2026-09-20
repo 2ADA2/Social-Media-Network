@@ -4,21 +4,25 @@
   gap:2px;
   align-items: center;
   justify-content: center;
-  margin-top:8px;
+  margin: 8px 0;
   color: var(--color-muted);
 }
 
 .posts-container{
   width: 100%;
+
+  .post:last-child{
+    border: none;
+  }
 }
 
 @media (min-width: 768px) {
   .main-page {
-    margin-top: 16px;
+    margin: 16px 0;
   }
   .posts-container {
     width: auto;
-    border: 1px solid var(--input-border);
+    border: 2px solid var(--input-border);
   }
 }
 

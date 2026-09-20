@@ -5,13 +5,14 @@ import { BurgerMenu } from "@/widgets/header/ui/burgerMenu/burgerMenu.tsx";
 import { AuthButtons } from "@/widgets/header/ui/authButtons/authButtons.tsx";
 import { NavBar } from "@/widgets/navbar";
 import { UserNav } from "@/entities/UserNav";
+import { useAuth } from "@/features/auth";
 
 export interface HeaderProps {
   hiddenNav?: boolean;
 }
 
 export const Header = ({ hiddenNav = false }: HeaderProps) => {
-    const [auth] = useState<boolean>(true); // useAuth hook ( useContext ) in future
+    const auth = useAuth();
     const [isNavBar, setIsNavBar] = useState(false);
 
     const setNavBar = () => {
