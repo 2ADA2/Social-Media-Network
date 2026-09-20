@@ -2,18 +2,16 @@ import { Modal } from "@/shared/ui/Modal";
 import { Input } from "@/shared/ui/Input";
 import { Button } from "@/shared/ui/Button";
 import { type ChangeEvent, useState } from "react";
+import MailIcon from "@/shared/assets/icons/mail.svg?react";
+import PenIcon from "@/shared/assets/icons/pen.svg?react";
+import "./create-post-modal.css";
+
 
 const MAX_SIZE = 10 * 1024 * 1024;
 
 export interface CreateModalProps {
   isOpen: boolean;
   onClose: () => void;
-}
-
-export interface CreatePostInterface {
-  title: string;
-  description: string;
-  file: File | null;
 }
 
 export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
@@ -56,18 +54,33 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
   };
 
   const submitForm = () => {
-    console.log("submit");
+    console.log(file);
     setTitle("");
     setDescription("");
     setFile(null);
   };
 
   return (
-    <Modal isOpen={ isOpen } onClose={ onClose }>
+    <Modal isOpen={ isOpen } onClose={ onClose } className = "create-post-modal">
       <form onSubmit={ submitForm }>
-        <Input value={ title } onChange={ changeTitle } minLength={ 3 }/>
-        <Input value={ description } onChange={ changeDescription } minLength={ 3 }/>
-        <input type='file' onChange={ changeFile }/> // shared component
+        <div>Create a new post</div>
+        <Input
+          icon={ <MailIcon/> }
+          label='Post Title'
+          placeholder='Enter post title'
+          value={ title }
+          onChange={ changeTitle }
+          minLength={ 3 }
+        />
+        <Input
+          icon={ <PenIcon/> }
+          label='Description'
+          placeholder='Write description here...'
+          value={ description }
+          onChange={ changeDescription }
+          minLength={ 3 }
+        />
+        <input type='file' onChange={ changeFile }/>
         <Button type='submit'>Create</Button>
       </form>
     </Modal>

@@ -6,9 +6,10 @@ export interface ModalProps {
   children: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
+  className?: string;
 }
 
-export const Modal = ({ children, isOpen, onClose }: ModalProps) => {
+export const Modal = ({ children, isOpen, onClose, className = '' }: ModalProps) => {
   if (!isOpen) {
     return <></>;
   }
@@ -16,7 +17,7 @@ export const Modal = ({ children, isOpen, onClose }: ModalProps) => {
   return (
     <>
       <div className='modal-background'></div>
-      <div className='modal-window'>
+      <div className={ 'modal-window ' + className }>
         <button className='modal-close' onClick={ onClose }>
           <CrossIcon/>
         </button>
