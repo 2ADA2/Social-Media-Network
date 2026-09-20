@@ -2,6 +2,7 @@ import "./NavBar.css";
 import SidekickLogo from "@/shared/assets/icons/sidekick-logo.svg?react";
 import { useAuth } from "@/features/auth";
 import { ROUTES } from "@/shared/config/routes.ts";
+import { Link } from "react-router-dom";
 
 interface NavBarProps {
   setNavBar: () => void;
@@ -21,13 +22,14 @@ export const NavBar = ({ setNavBar }: NavBarProps) => {
 
         { !auth ? (
           <>
-            <a href={ ROUTES.SIGNIN }>Sign in</a>
-            <a href={ ROUTES.SIGNUP }>Sign up</a>
+            <Link to={ ROUTES.SIGNIN }>Sign in</Link>
+            <Link to={ ROUTES.SIGNUP }>Sign up</Link>
           </>
         ) : (
           <>
-            <a href={ ROUTES.PROFILE }>Profile</a>
-            <a href={ ROUTES.STATISTICS }>Statistics</a>
+            <Link to={ ROUTES.PROFILE }>Profile</Link>
+            <Link to={ ROUTES.STATISTICS }>Statistics</Link>
+
           </>
         ) }
       </nav>

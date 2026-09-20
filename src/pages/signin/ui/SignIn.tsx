@@ -1,17 +1,25 @@
-import { type ChangeEvent, type SubmitEvent, useState } from 'react';
+import { type ChangeEvent, type SubmitEvent, useContext, useState } from 'react';
 import { Input } from "@/shared/ui/Input";
 import { Button } from "@/shared/ui/Button";
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
 import EyeIcon from '@/shared/assets/icons/eye.svg?react';
 import './SignIn.css';
+import { Link } from "react-router-dom";
+import { ROUTES } from "@/shared/config/routes.ts";
+import { UserContext } from "@/entities/user";
 
 export const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const context = useContext(UserContext);
+
   const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ email, password });
+    localStorage.setItem("token", "token");
+    if (context?.setIsAuth) {
+      context.setIsAuth(true);
+    }
   };
 
   const changeEmail = (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +55,7 @@ export const SignIn = () => {
             label="Password"
             type="password"
             placeholder="Enter password"
-            minLength={6}
+            minLength={ 6 }
             icon={ <EyeIcon/> }
             value={ password }
             onChange={ changePassword }
@@ -60,7 +68,7 @@ export const SignIn = () => {
 
         <p className="auth-form-footer">
           Forgot to create an account?{ ' ' }
-          <a href="/sign-up">Sign up</a>
+          <Link to={ ROUTES.SIGNUP }>Sign up</Link>
         </p>
       </section>
     </div>

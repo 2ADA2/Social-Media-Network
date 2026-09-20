@@ -1,17 +1,26 @@
 import { Input } from "@/shared/ui/Input";
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
 import EyeIcon from '@/shared/assets/icons/eye.svg?react';
-import { type ChangeEvent, type SubmitEvent, useState } from "react";
+import { type ChangeEvent, type SubmitEvent, useContext, useState } from "react";
 import './SignUp.css';
 import { Button } from "@/shared/ui/Button";
+import { Link } from "react-router-dom";
+import { ROUTES } from "@/shared/config/routes.ts";
+import { UserContext } from "@/entities/user";
 
 export const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const context = useContext(UserContext);
+
   const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ email, password });
+
+    localStorage.setItem("token", "token");
+    if (context?.setIsAuth) {
+      context.setIsAuth(true);
+    }
   };
 
   const changeEmail = (e: ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +59,7 @@ export const SignUp = () => {
               placeholder="Enter password"
               icon={ <EyeIcon/> }
               value={ password }
-              minLength={6}
+              minLength={ 6 }
               onChange={ changePassword }
               required
             />
@@ -64,9 +73,9 @@ export const SignUp = () => {
 
         <p className='auth-form-footer'>
           Already have an account?{ ' ' }
-          <a href='/sign-in'>
+          <Link to={ ROUTES.SIGNIN }>
             Sign in
-          </a>
+          </Link>
         </p>
       </section>
     </div>
