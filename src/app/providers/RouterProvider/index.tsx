@@ -14,7 +14,7 @@ export const RouterProvider = () => {
   const isAuth = useAuth();
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={ "Social-Media-Network" }>
       <Routes>
         <Route element={ <MainLayout/> }>
 
