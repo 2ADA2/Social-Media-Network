@@ -1,7 +1,8 @@
 import "./main.css";
 import { Post } from "@/entities/post";
+import { CreatePost } from "@/features/create-post/ui/create-post.tsx";
 
-const POST_DATA = {
+const POST_DATA1 = {
   title: "post title",
   author: "Rami Malek",
   avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdmhXSLQ8UtzfFDL9cV9JOE1bZaYOMWf0f_CYjm_XXJw&s=10",
@@ -32,13 +33,15 @@ const POST_DATA3 = {
   comments: ["WOW that's great", "Not bat", "THIS GUY IS A GOAT!!!"],
 };
 
+const POSTS = [POST_DATA1, POST_DATA2, POST_DATA3];
+
 export const MainPage = () => {
   return (
     <div className='main-page'>
+      <CreatePost/>
+
       <div className='posts-container'>
-        <Post { ...POST_DATA }/>
-        <Post { ...POST_DATA2 }/>
-        <Post { ...POST_DATA3 }/>
+        { POSTS.map(post => <Post { ...post }/>) }
       </div>
     </div>
   );
