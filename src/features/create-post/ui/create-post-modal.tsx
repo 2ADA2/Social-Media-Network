@@ -63,7 +63,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
   return (
     <Modal isOpen={ isOpen } onClose={ onClose } className = "create-post-modal">
       <form onSubmit={ submitForm }>
-        <div>Create a new post</div>
+        <div className='form-title'>Create a new post</div>
         <Input
           icon={ <MailIcon/> }
           label='Post Title'
