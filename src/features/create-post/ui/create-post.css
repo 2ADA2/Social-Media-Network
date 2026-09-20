@@ -4,7 +4,7 @@
   align-items: center;
   gap: 12px;
   background: var(--bg-primary);
-  border: 2px solid var(--input-border);
+  border: 2px solid var(--border-primary);
   border-width: 2px 0;
   font-family: var(--font-family-secondary);
   padding: 12px;

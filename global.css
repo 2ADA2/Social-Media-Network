@@ -36,8 +36,8 @@ body {
 
   --transition-primary: 200ms;
 
-  --input-border: #c9c9c9;
-  --input-border-active: #7c7c7c;
+  --border-primary: #c9c9c9;
+  --border-primary-active: #7c7c7c;
 }
 
 [data-theme="dark"] {
@@ -56,6 +56,6 @@ body {
 
   --toggle-bg: #151A2D;
 
-  --input-border: #384162;
+  --border-primary: #384162;
   --input-border-active: #7A44FF;
 }

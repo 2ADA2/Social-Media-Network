@@ -5,7 +5,7 @@
   gap: 16px;
   width: 100%;
   padding: 12px;
-  border-bottom: 2px solid var(--input-border);
+  border-bottom: 2px solid var(--border-primary);
 
   .post-header {
     display: flex;

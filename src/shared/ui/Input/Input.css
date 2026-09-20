@@ -23,7 +23,7 @@
     width: 320px;
     max-width: calc(100vw - 8px);
     background: var(--input-bg);
-    border: 1px solid var(--input-border);
+    border: 1px solid var(--border-primary);
     padding: 4px 10px;
     color: var(--color-primary);
   }

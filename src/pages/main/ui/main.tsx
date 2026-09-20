@@ -41,7 +41,7 @@ export const MainPage = () => {
       <CreatePost/>
 
       <div className='posts-container'>
-        { POSTS.map(post => <Post { ...post }/>) }
+        { POSTS.map((post, i) => <Post key={ i } { ...post }/>) }
       </div>
     </div>
   );
