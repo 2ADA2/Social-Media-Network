@@ -5,6 +5,7 @@ import { type ChangeEvent, useState } from "react";
 import MailIcon from "@/shared/assets/icons/mail.svg?react";
 import PenIcon from "@/shared/assets/icons/pen.svg?react";
 import "./create-post-modal.css";
+import { TextArea } from "@/shared/ui/TextArea";
 
 
 const MAX_SIZE = 10 * 1024 * 1024;
@@ -23,7 +24,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
     setTitle(e.target.value);
   };
 
-  const changeDescription = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
   };
 
@@ -72,7 +73,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
           onChange={ changeTitle }
           minLength={ 3 }
         />
-        <Input
+        <TextArea
           icon={ <PenIcon/> }
           label='Description'
           placeholder='Write description here...'

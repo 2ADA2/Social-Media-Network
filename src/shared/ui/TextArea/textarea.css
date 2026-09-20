@@ -1,0 +1,40 @@
+.textarea-label {
+  display: flex;
+  flex-direction: column;
+  gap:12px;
+  width:100%;
+  max-width: calc(100% - 8px);
+  font-family: var(--font-family-secondary);
+  font-size: 14px;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    svg path {
+      fill: var(--color-primary);
+    }
+  }
+
+  textarea {
+    box-sizing: border-box;
+    min-height: 58px;
+    resize: none;
+    width: 100%;
+    max-width: calc(100vw - 8px);
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    padding: 10px 10px;
+    color: var(--color-primary);
+  }
+
+  textarea::placeholder {
+    color: var(--placehloder-color);
+  }
+
+  textarea:focus{
+    outline: none;
+    border-color: var(--input-border-active);
+  }
+}

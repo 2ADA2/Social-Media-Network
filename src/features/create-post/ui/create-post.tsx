@@ -3,7 +3,7 @@ import { useAuth, useUser } from "@/features/auth";
 import { Button } from "@/shared/ui/Button";
 import "./create-post.css";
 import { useCreatePost } from "@/features/create-post/ui/useCreatePost.ts";
-import { CreatePostModal } from "@/features/create-post/ui/create-post-modal.tsx";
+import { CreatePostModal } from "@/features/create-post/ui/create-post-modal/create-post-modal.tsx";
 
 export const CreatePost = () => {
   const isAuth = useAuth();
