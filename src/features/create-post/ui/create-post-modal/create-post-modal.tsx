@@ -6,9 +6,11 @@ import MailIcon from "@/shared/assets/icons/mail.svg?react";
 import PenIcon from "@/shared/assets/icons/pen.svg?react";
 import "./create-post-modal.css";
 import { TextArea } from "@/shared/ui/TextArea";
+import { FileInput } from "@/shared/ui/FileInput";
 
 
 const MAX_SIZE = 10 * 1024 * 1024;
+const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf'];
 
 export interface CreateModalProps {
   isOpen: boolean;
@@ -19,6 +21,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [file, setFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState('');
 
   const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -36,9 +39,9 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
       return;
     }
 
-    const allowedTypes = ['image/png', 'image/jpeg'];
-    if (!allowedTypes.includes(selectedFile.type)) {
-      alert('File must be .PNG or .JPG');
+
+    if (!ALLOWED_TYPES.includes(selectedFile.type)) {
+      alert('File must be .PNG, .JPG or .pdf');
       e.target.value = '';
       setFile(null);
       return;
@@ -52,6 +55,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
     }
 
     setFile(selectedFile);
+    setFileName(selectedFile.name);
   };
 
   const submitForm = () => {
@@ -62,7 +66,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
   };
 
   return (
-    <Modal isOpen={ isOpen } onClose={ onClose } className = "create-post-modal">
+    <Modal isOpen={ isOpen } onClose={ onClose } className="create-post-modal">
       <form onSubmit={ submitForm }>
         <div className='form-title'>Create a new post</div>
         <Input
@@ -81,7 +85,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
           onChange={ changeDescription }
           minLength={ 3 }
         />
-        <input type='file' onChange={ changeFile }/>
+        <FileInput fileName={fileName} onChange={ changeFile }/>
         <Button type='submit'>Create</Button>
       </form>
     </Modal>

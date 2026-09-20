@@ -8,6 +8,7 @@
 }
 
 .modal-window {
+  box-sizing: border-box;
   position: fixed;
   background: var(--bg-primary);
   top: 50%;
@@ -18,9 +19,9 @@
   gap: 12px;
   padding: 12px;
   font-family: var(--font-family-secondary);
-  border: 2px solid var(--input-border);
+  border: 1px solid var(--input-border);
   width: 90%;
-  max-width: 600px;
+  max-width: 800px;
 
   .modal-close {
     background: none;
@@ -29,8 +30,9 @@
     position: absolute;
     width: 16px;
     height: 16px;
-    right: 12px;
+    right: 24px;
     top: 12px;
+    margin: 0;
 
     svg {
       width: 16px;
@@ -40,5 +42,26 @@
         fill: var(--color-primary);
       }
     }
+  }
+}
+
+@media (min-width: 768px) {
+  .modal-window {
+    padding: 24px;
+    gap: 16px;
+
+    .modal-close {
+      width: 24px;
+      height: 24px;
+      top: 24px;
+      right: 24px;
+      margin: 0;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
   }
 }
