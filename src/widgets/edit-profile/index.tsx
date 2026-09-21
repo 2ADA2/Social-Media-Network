@@ -4,7 +4,7 @@ import { useUser } from "@/features/auth";
 import MailIcon from "@/shared/assets/icons/mail.svg?react";
 import UserIcon from "@/shared/assets/icons/user.svg?react";
 import Pen from "@/shared/assets/icons/pen.svg?react";
-import { type ChangeEvent, useState } from "react";
+import React, { type ChangeEvent, useState } from "react";
 import { TextArea } from "@/shared/ui/TextArea";
 import { Button } from "@/shared/ui/Button";
 import "./edit-profile.css";
@@ -27,8 +27,8 @@ export const EditProfile = () => {
     setDescription(e.target.value);
   };
 
-  const saveChanges = () => {
-    // saved
+  const saveChanges = (e:React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
   };
 
   return (
@@ -43,34 +43,42 @@ export const EditProfile = () => {
           </CoverButton>
         </div>
       </div>
-      <Input
-        value={ username }
-        onChange={ changeName }
-        label='Username'
-        name='username'
-        placeholder='@username'
-        icon={ <UserIcon/> }
-        minLength={ 3 }
-      />
-      <Input
-        value={ email }
-        onChange={ changeEmail }
-        label='Email'
-        name='email'
-        placeholder='example@mail.com'
-        icon={ <MailIcon/> }
-        minLength={ 3 }
-      />
-      <div>
-        <TextArea
-          value={ description }
-          onChange={ changeDescription }
-          label='Description'
-          icon={ <Pen/> }
-          placeholder='Write your description here...'
-          maxLength={ 200 }/>
-      </div>
-      <Button className='save-profile-button' onClick={ saveChanges }>Save profile changes</Button>
+      <form onSubmit={saveChanges}>
+        <Input
+          value={ username }
+          onChange={ changeName }
+          label='Username'
+          name='username'
+          type='text'
+          placeholder='@username'
+          info='from 3 to 20 chars'
+          icon={ <UserIcon/> }
+          minLength={ 3 }
+          maxLength={ 20 }
+        />
+        <Input
+          value={ email }
+          onChange={ changeEmail }
+          label='Email'
+          name='email'
+          type='email'
+          info='enter your email'
+          placeholder='example@mail.com'
+          icon={ <MailIcon/> }
+          minLength={ 3 }
+        />
+        <div>
+          <TextArea
+            value={ description }
+            onChange={ changeDescription }
+            label='Description'
+            icon={ <Pen/> }
+            info='Max 200 chars'
+            placeholder='Write your description here...'
+            maxLength={ 200 }/>
+        </div>
+        <Button type="submit" className='save-profile-button'>Save profile changes</Button>
+      </form>
     </section>
   );
 };
