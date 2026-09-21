@@ -38,7 +38,9 @@ export const Post = ({
   const [showComments, setShowComments] = useState(false);
 
   const toggleLike = () => {
-    setLiked((prev) => !prev);
+    if (isAuth) {
+      setLiked((prev) => !prev);
+    }
   };
 
   const toggleComments = () => {
