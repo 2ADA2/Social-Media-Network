@@ -49,6 +49,7 @@ export const EditProfile = () => {
         onChange={ changeName }
         label='Username'
         name='username'
+        placeholder='@username'
         icon={ <UserIcon/> }
         defaultValue={ user.username }
         minLength={ 3 }
@@ -58,6 +59,7 @@ export const EditProfile = () => {
         onChange={ changeEmail }
         label='Email'
         name='email'
+        placeholder='example@mail.com'
         icon={ <MailIcon/> }
         defaultValue={ user.email }
         minLength={ 3 }
@@ -68,6 +70,7 @@ export const EditProfile = () => {
           onChange={ changeDescription }
           label='Description'
           icon={ <Pen/> }
+          placeholder='Write your description here...'
           maxLength={ 200 }/>
         <div className='ta-info'>
           <InfoIcon className='ignore'/>
