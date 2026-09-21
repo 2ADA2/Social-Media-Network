@@ -1,7 +1,8 @@
-import React, { type InputHTMLAttributes, type ReactNode, useState } from "react";
+import { type InputHTMLAttributes, type ReactNode, useState } from "react";
 import InfoIcon from "@/shared/assets/icons/info-filled.svg?react";
 import EyeIcon from "@/shared/assets/icons/eye.svg?react";
 import EyeCrossedIcon from "@/shared/assets/icons/eye-crossed.svg?react";
+import "./password-input.css";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -11,24 +12,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const PasswordInput = ({ icon, label, info, ...props }: InputProps) => {
   const [isShow, setIsShow] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
 
-  const changeShow = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsShow(!isShow);
-  };
-
-  const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-  };
-
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
+  const changeShow = () => setIsShow(!isShow);
 
   return (
     <label className="input-label">
@@ -41,15 +26,12 @@ export const PasswordInput = ({ icon, label, info, ...props }: InputProps) => {
         <input
           { ...props }
           type={ isShow ? "text" : "password" }
-          onFocus={ handleFocus }
-          onBlur={ handleBlur }
         />
 
         <div className="password-eye">
-          { isFocused && <button onClick={ changeShow } onMouseDown={ handleMouseDown }>
+          <button type='button' onClick={ changeShow }>
             { isShow ? <EyeIcon/> : <EyeCrossedIcon/> }
           </button>
-          }
         </div>
       </div>
 
