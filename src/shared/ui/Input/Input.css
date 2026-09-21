@@ -37,10 +37,6 @@
     border-color: var(--input-border-active);
   }
 
-  input:focus ~ .info {
-    display: flex;
-  }
-
   .info {
     position: absolute;
     bottom: -22px ;
@@ -58,5 +54,11 @@
         fill: var(--color-muted);
       }
     }
+  }
+}
+
+@media (min-width: 768px) {
+  .input-label input:focus ~ .info {
+    display: flex;
   }
 }
