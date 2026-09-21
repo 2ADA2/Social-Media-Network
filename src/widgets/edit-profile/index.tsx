@@ -3,7 +3,6 @@ import { Input } from "@/shared/ui/Input";
 import { useUser } from "@/features/auth";
 import MailIcon from "@/shared/assets/icons/mail.svg?react";
 import UserIcon from "@/shared/assets/icons/user.svg?react";
-import InfoIcon from "@/shared/assets/icons/info-filled.svg?react";
 import Pen from "@/shared/assets/icons/pen.svg?react";
 import { type ChangeEvent, useState } from "react";
 import { TextArea } from "@/shared/ui/TextArea";
@@ -70,10 +69,6 @@ export const EditProfile = () => {
           icon={ <Pen/> }
           placeholder='Write your description here...'
           maxLength={ 200 }/>
-        <div className='ta-info'>
-          <InfoIcon className='ignore'/>
-          <small>Max 200 chars</small>
-        </div>
       </div>
       <Button className='save-profile-button' onClick={ saveChanges }>Save profile changes</Button>
     </section>

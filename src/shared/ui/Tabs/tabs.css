@@ -9,7 +9,7 @@
 
 .tab {
   box-sizing: border-box;
-  padding: 12px;
+  padding: 0 12px;
   font-size: 16px;
   font-weight: 500;
   background: transparent;

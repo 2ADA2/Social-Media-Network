@@ -50,13 +50,6 @@
   }
 }
 
-.ta-info {
-  margin-top: 8px;
-  display: flex;
-  gap: 8px;
-  color: var(--color-muted);
-}
-
 @media (min-width: 700px) {
   .profile-page .edit-profile {
     gap: 32px;
