@@ -5,5 +5,7 @@
 }
 
 @media(min-width: 768px) {
-  min-height: calc(100dvh - 68px - 68px);
+  .main {
+    min-height: calc(100dvh - 68px - 68px);
+  }
 }
