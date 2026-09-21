@@ -20,32 +20,32 @@ export const MainSidebar = ({ title, users }: MainSidebarProps) => {
   if (isUserArray(users)) {
     return (
       <aside className="main-sidebar">
-        <h2>{title}</h2>
-        {users.map((user) => (
+        <h2>{ title }</h2>
+        { users.map((user) => (
           <UserCard
-            key={user.id}
-            {...user}
-            title={user.name}
-            subtitle={user.username}
-            avatarUrl={user.avatar}
+            key={ user.id }
+            { ...user }
+            title={ user.name }
+            subtitle={ user.username }
+            avatarUrl={ user.avatar }
           />
-        ))}
+        )) }
       </aside>
     );
   }
 
   return (
     <aside className="main-sidebar">
-      <h2>{title}</h2>
-      {users.map((user) => (
+      <h2>{ title }</h2>
+      { users.map((user) => (
         <UserCard
-          key={user.id}
-          {...user}
-          title={user.name}
-          subtitle={user.members}
-          avatarUrl={user.avatar}
+          key={ user.id }
+          { ...user }
+          title={ user.name }
+          subtitle={ user.members }
+          avatarUrl={ user.avatar }
         />
-      ))}
+      )) }
     </aside>
   );
 };

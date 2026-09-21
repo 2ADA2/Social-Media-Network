@@ -16,10 +16,28 @@
   }
 }
 
+.recommend-sidebars{
+  display: none;
+}
+
 @media (min-width: 768px) {
   .posts-container {
     width: auto;
     border: 2px solid var(--border-primary);
+  }
+}
+
+@media (min-width: 1320px) {
+  .recommend-sidebars{
+    width: calc(50vw - 390px);
+    max-width: 340px;
+    position: absolute;
+    right: 16px;
+    top: 64px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 }
 
