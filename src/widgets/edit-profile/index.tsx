@@ -51,7 +51,6 @@ export const EditProfile = () => {
         name='username'
         placeholder='@username'
         icon={ <UserIcon/> }
-        defaultValue={ user.username }
         minLength={ 3 }
       />
       <Input
@@ -61,7 +60,6 @@ export const EditProfile = () => {
         name='email'
         placeholder='example@mail.com'
         icon={ <MailIcon/> }
-        defaultValue={ user.email }
         minLength={ 3 }
       />
       <div>
