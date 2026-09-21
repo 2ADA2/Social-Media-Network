@@ -4,7 +4,7 @@
   justify-content: space-between;
   font-family: var(--font-family-secondary), serif;
   background-color: var(--bg-primary);
-  height: 48px;
+  height: 68px;
   padding: 12px 24px;
 }
 
@@ -14,6 +14,8 @@
   align-items: center;
   justify-content: center;
   gap:6px;
+  color: var(--color-primary);
+  text-decoration: none;
 
   svg {
     width: 24px;
@@ -23,6 +25,18 @@
 
 .desktop-nav{
   display: none;
+  align-items: center;
+
+  nav{
+    margin: 0;
+  }
+
+  a {
+    font-family: var(--font-family-secondary);
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 400;
+  }
 }
 
 @media(min-width: 768px) {
