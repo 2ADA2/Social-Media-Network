@@ -20,6 +20,9 @@ body {
   --bg-primary: #eeeeee;
   --bg-secondary: #FAFAFA;
 
+  --placehloder-color: #8791B7;
+  --bg-border: #E0E2E7;
+
   --hover-primary: #dcdcdc;
 
   --button-hover: #08B94E;
@@ -50,10 +53,10 @@ body {
   --bg-secondary: #1B2037;
   --bg-border: #384162;
 
-  --placehloder-color: #8791B7;
   --input-bg: #151A2D;
 
   --hover-primary: #151a2c;
+
 
   --toggle-bg: #151A2D;
 
