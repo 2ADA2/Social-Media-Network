@@ -15,5 +15,9 @@
     .user-card-about {
       color: var(--color-muted);
     }
+
+    .user-card-title{
+      color: var(--color-primary);
+    }
   }
 }
