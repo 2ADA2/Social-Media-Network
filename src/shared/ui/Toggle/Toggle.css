@@ -1,13 +1,13 @@
 .toggle {
   position: relative;
   width: 48px;
-  height: 24px;
-  background: var(--toggle-bg);
+  height: 28px;
+  background: var(--bg-primary);
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
   transition: background var(--transition-primary);
-  padding: 2px;
+  padding: 4px;
 }
 
 .thumb {
@@ -20,5 +20,5 @@
 }
 
 .toggle.active .thumb {
-  transform: translateX(24px);
+  transform: translateX(20px);
 }

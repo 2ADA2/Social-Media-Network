@@ -47,6 +47,7 @@ export const SignUp = () => {
             <Input
               label="Email"
               type="email"
+              name="email"
               placeholder="Enter email"
               icon={ <MailIcon/> }
               value={ email }
@@ -56,6 +57,7 @@ export const SignUp = () => {
             <Input
               label="Password"
               type="password"
+              name="password"
               placeholder="Enter password"
               icon={ <EyeIcon/> }
               value={ password }

@@ -3,6 +3,7 @@ import { Input } from "@/shared/ui/Input";
 import { useUser } from "@/features/auth";
 import MailIcon from "@/shared/assets/icons/mail.svg?react";
 import UserIcon from "@/shared/assets/icons/user.svg?react";
+import InfoIcon from "@/shared/assets/icons/info-filled.svg?react";
 import Pen from "@/shared/assets/icons/pen.svg?react";
 import { type ChangeEvent, useState } from "react";
 import { TextArea } from "@/shared/ui/TextArea";
@@ -39,7 +40,7 @@ export const EditProfile = () => {
         <div className='user-info'>
           <div>{ user.name } { user.surname }</div>
           <CoverButton>
-            <small>Change profile photo</small>
+            <span>Change profile photo</span>
           </CoverButton>
         </div>
       </div>
@@ -47,6 +48,7 @@ export const EditProfile = () => {
         value={ username }
         onChange={ changeName }
         label='Username'
+        name='username'
         icon={ <UserIcon/> }
         defaultValue={ user.username }
         minLength={ 3 }
@@ -55,19 +57,24 @@ export const EditProfile = () => {
         value={ email }
         onChange={ changeEmail }
         label='Email'
+        name='email'
         icon={ <MailIcon/> }
         defaultValue={ user.email }
         minLength={ 3 }
       />
-      <TextArea
-        value={ description }
-        onChange={ changeDescription }
-        label='Description'
-        icon={ <Pen/> }
-        maxLength={ 200 }
-      >
-      </TextArea>
-      <Button onClick={ saveChanges }>Save profile changes</Button>
+      <div>
+        <TextArea
+          value={ description }
+          onChange={ changeDescription }
+          label='Description'
+          icon={ <Pen/> }
+          maxLength={ 200 }/>
+        <div className='ta-info'>
+          <InfoIcon className='ignore'/>
+          <small>Max 200 chars</small>
+        </div>
+      </div>
+      <Button className='save-profile-button' onClick={ saveChanges }>Save profile changes</Button>
     </section>
   );
 };
