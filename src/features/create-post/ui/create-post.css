@@ -29,6 +29,7 @@
     width: 700px;
     margin: 16px auto 0 auto;
     border-width: 2px;
+    height: 88px;
 
     .avatar {
       width: 64px;
@@ -37,6 +38,7 @@
 
     button {
       height: 44px;
+      width: 188px;
     }
   }
 }
