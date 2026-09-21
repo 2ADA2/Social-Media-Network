@@ -23,8 +23,7 @@ export const RouterProvider = () => {
             <Route path={ ROUTES.PROFILE } element={ <ProfilePage/> }/>
           </Route>
 
-          <Route path={ ROUTES.HOME } element={ <MainPage/> }/>
-
+          <Route path={ ROUTES.HOME } element={ <MainPage/> }/>s
         </Route>
 
         <Route element={ <MainLayout hiddenNav={ true }/> }>
