@@ -5,7 +5,14 @@
   justify-content: center;
   color: var(--color-accent);
   background-color: var(--bg-primary);
-  height: 68px;
-  font-size: 18px;
+  height: 56px;
+  font-size: 14px;
   font-family: var(--font-family-secondary), serif;
+}
+
+@media (min-width: 768px) {
+  .footer{
+    height: 68px;
+    font-size: 18px;
+  }
 }
