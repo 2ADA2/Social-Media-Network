@@ -3,11 +3,11 @@ import { ROUTES } from "@/shared/config/routes.ts";
 import { MainPage } from "@/pages/main";
 import { MainLayout } from "@/app/layouts/MainLayout";
 import { ProfilePage } from "@/pages/profile";
-import { NotFoundPage } from "@/pages/not-found";
 import { useAuth } from "@/features/auth";
 import { ProtectedRoute } from "./ProtectedRoute.tsx";
 import { SignIn } from "@/pages/signin";
 import { SignUp } from "@/pages/signup";
+import { NotFound } from "@/pages/not-found";
 
 
 export const RouterProvider = () => {
@@ -34,7 +34,9 @@ export const RouterProvider = () => {
           </Route>
         </Route>
 
-        <Route path={ ROUTES.NOT_FOUND } element={ <NotFoundPage/> }/>
+        <Route element={ <MainLayout hiddenNav={ true }/> }>
+          <Route path={ ROUTES.NOT_FOUND } element={ <NotFound/> }/>
+        </Route>
       </Routes>
     </BrowserRouter>
   );
