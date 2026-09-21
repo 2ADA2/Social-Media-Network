@@ -7,6 +7,7 @@ import ArrowUp from "@/shared/assets/icons/arrow-up.svg?react";
 import "./post.css";
 import { useAuth } from "@/features/auth";
 import { Avatar } from "@/shared/ui/Avatar/Avatar.tsx";
+import { CreateComment } from "@/features/create-comment";
 
 interface PostProps {
   title: string;
@@ -84,11 +85,14 @@ export const Post = ({
           </div>
         </CoverButton>
       </footer>
-      { isAuth && showComments && <ol className='post-comments'>
-        { comments.map(
-          (comment, i) => <li key={ i }>{ comment }</li>,
-        ) }
-      </ol> }
+      { isAuth && showComments && <>
+          <ol className='post-comments'>
+            { comments.map(
+              (comment, i) => <li key={ i }>{ comment }</li>,
+            ) }
+          </ol>
+          <CreateComment/>
+      </> }
     </article>
   );
 };
