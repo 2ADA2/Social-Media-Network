@@ -33,6 +33,7 @@ export const Statistics = () => {
       </div>
 
       <div className="stats-toggle">
+        <span>Table view</span>
         <Toggle checked={ enableChartView } onChange={ switchChartView }/>
         <span>Enable Chart view</span>
       </div>

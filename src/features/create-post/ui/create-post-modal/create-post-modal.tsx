@@ -72,6 +72,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
         <Input
           icon={ <MailIcon/> }
           label='Post Title'
+          name='titile'
           placeholder='Enter post title'
           value={ title }
           onChange={ changeTitle }
@@ -80,12 +81,13 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
         <TextArea
           icon={ <PenIcon/> }
           label='Description'
+          name='description'
           placeholder='Write description here...'
           value={ description }
           onChange={ changeDescription }
           minLength={ 3 }
         />
-        <FileInput fileName={fileName} onChange={ changeFile }/>
+        <FileInput name='image' fileName={fileName} onChange={ changeFile }/>
         <Button type='submit'>Create</Button>
       </form>
     </Modal>

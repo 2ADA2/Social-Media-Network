@@ -22,23 +22,29 @@ const COMMENTS = [
 
 export const TableView = () => {
   return (
-    <>
+    <div className='stats-container'>
       <div className="stats-block">
         <h2 className="stats-heading">Likes</h2>
         <div className="stats-table">
           <div className="stats-table-title">Title</div>
-          <div className="stats-table-head">
-            <span>Col 1</span>
-            <span>Col 2</span>
-            <span>Col 3</span>
-          </div>
-          { LIKES.map((row, i) => (
-            <div key={ i } className="stats-table-row">
-              <span>Row { i + 1 }</span>
-              <span>{ row.col1 }</span>
-              <span>{ row.col2 }</span>
-            </div>
-          )) }
+          <table className="stats-table-content">
+            <thead>
+            <tr className="stats-table-head">
+              <th className="text-left">Col 1</th>
+              <th className="text-right">Col 2</th>
+              <th className="text-right">Col 3</th>
+            </tr>
+            </thead>
+            <tbody>
+            { LIKES.map((row, i) => (
+              <tr key={ i } className="stats-table-row">
+                <td className="text-left">Row { i + 1 }</td>
+                <td className="text-right">{ row.col1 }</td>
+                <td className="text-right">{ row.col2 }</td>
+              </tr>
+            )) }
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -46,20 +52,26 @@ export const TableView = () => {
         <h2 className="stats-heading">Comments</h2>
         <div className="stats-table">
           <div className="stats-table-title">Title</div>
-          <div className="stats-table-head">
-            <span>Col 1</span>
-            <span>Col 2</span>
-            <span>Col 3</span>
-          </div>
-          { COMMENTS.map((row, i) => (
-            <div key={ i } className="stats-table-row">
-              <span>Row { i + 1 }</span>
-              <span>{ row.col1 }</span>
-              <span>{ row.col2 }</span>
-            </div>
-          )) }
+          <table className="stats-table-content">
+            <thead>
+            <tr className="stats-table-head">
+              <th className="text-left">Col 1</th>
+              <th className="text-right">Col 2</th>
+              <th className="text-right">Col 3</th>
+            </tr>
+            </thead>
+            <tbody>
+            { COMMENTS.map((row, i) => (
+              <tr key={ i } className="stats-table-row">
+                <td className="text-left">Row { i + 1 }</td>
+                <td className="text-right">{ row.col1 }</td>
+                <td className="text-right">{ row.col2 }</td>
+              </tr>
+            )) }
+            </tbody>
+          </table>
         </div>
       </div>
-    </>
+    </div>
   );
 };

@@ -8,13 +8,13 @@ import { UserContext } from "@/entities/user";
 export const ProfileInfo = () => {
   const context = useContext(UserContext);
   const logout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     context?.setIsAuth(false);
   };
 
   return (
     <div className='profile-grid'>
-      <div className='profile-column'>
+      <div className='profile-column profile-info'>
         <section>
           <h2>Preferences</h2>
           <div className='switcher-container'>

@@ -43,18 +43,20 @@ export const SignIn = () => {
 
         <form className="auth-form" onSubmit={ handleSubmit }>
           <Input
-            label="Email"
-            type="email"
-            placeholder="Enter email"
+            label='Email'
+            type='email'
+            name='email'
+            placeholder='Enter email'
             icon={ <MailIcon/> }
             value={ email }
             onChange={ changeEmail }
             required
           />
           <Input
-            label="Password"
-            type="password"
-            placeholder="Enter password"
+            label='Password'
+            type='password'
+            name='password'
+            placeholder='Enter password'
             minLength={ 6 }
             icon={ <EyeIcon/> }
             value={ password }
