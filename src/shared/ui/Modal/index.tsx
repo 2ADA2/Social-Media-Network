@@ -11,7 +11,7 @@ export interface ModalProps {
 
 export const Modal = ({ children, isOpen, onClose, className = '' }: ModalProps) => {
   if (!isOpen) {
-    return <></>;
+    return null;
   }
 
   return (
