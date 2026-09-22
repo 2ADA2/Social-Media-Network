@@ -2,8 +2,8 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap:12px;
-  width:100%;
+  gap: 12px;
+  width: 100%;
   max-width: calc(100vw - 8px);
   font-family: var(--font-family-secondary);
   font-size: 14px;
@@ -46,7 +46,7 @@
 
   .info {
     position: absolute;
-    bottom: -24px ;
+    bottom: -24px;
     display: none;
     margin-top: 8px;
     gap: 8px;
@@ -59,6 +59,23 @@
       path {
         fill: var(--color-muted);
       }
+    }
+  }
+}
+.textarea-label.filled textarea{
+  height: 200px;
+}
+.textarea-label.error {
+  textarea {
+    border-color: var(--color-danger);
+  }
+
+  .info.error-info {
+    display: flex;
+    color: var(--color-danger);
+
+    svg path {
+      fill: var(--color-danger);
     }
   }
 }

@@ -9,11 +9,14 @@ import { TextArea } from "@/shared/ui/TextArea";
 import { Button } from "@/shared/ui/Button";
 import "./edit-profile.css";
 
+const MAX_DESCRIPTION_LENGTH = 200;
+
 export const EditProfile = () => {
   const user = useUser();
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [description, setDescription] = useState(user.description);
+  const [descriptionError, setDescriptionError] = useState("");
 
   const changeName = (e: ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -24,10 +27,18 @@ export const EditProfile = () => {
   };
 
   const changeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(e.target.value);
+    const value = e.target.value;
+
+    if (value.length > MAX_DESCRIPTION_LENGTH) {
+      setDescriptionError("Reached the 200 text limit");
+    } else {
+      setDescriptionError("");
+    }
+
+    setDescription(value);
   };
 
-  const saveChanges = (e:React.SubmitEvent<HTMLFormElement>) => {
+  const saveChanges = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 
@@ -43,7 +54,7 @@ export const EditProfile = () => {
           </CoverButton>
         </div>
       </div>
-      <form onSubmit={saveChanges}>
+      <form onSubmit={ saveChanges }>
         <Input
           value={ username }
           onChange={ changeName }
@@ -72,10 +83,13 @@ export const EditProfile = () => {
             value={ description }
             onChange={ changeDescription }
             label='Description'
+            name='description'
             icon={ <Pen/> }
             info='Max 200 chars'
             placeholder='Write your description here...'
-            maxLength={ 200 }/>
+            hasError={ !!descriptionError }
+            errorMessage={ descriptionError }
+          />
         </div>
         <Button type="submit" className='save-profile-button'>Save profile changes</Button>
       </form>
