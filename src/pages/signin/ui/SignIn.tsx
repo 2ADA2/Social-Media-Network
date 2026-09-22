@@ -1,17 +1,25 @@
-import { type ChangeEvent, type SubmitEvent, useState } from 'react';
+import { type ChangeEvent, type SubmitEvent, useContext, useState } from 'react';
 import { Input } from "@/shared/ui/Input";
 import { Button } from "@/shared/ui/Button";
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
 import EyeIcon from '@/shared/assets/icons/eye.svg?react';
 import './SignIn.css';
+import { Link } from "react-router-dom";
+import { ROUTES } from "@/shared/config/routes.ts";
+import { UserContext } from "@/entities/user";
 
 export const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const context = useContext(UserContext);
+
   const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ email, password });
+    localStorage.setItem("token", "token");
+    if (context?.setIsAuth) {
+      context.setIsAuth(true);
+    }
   };
 
   const changeEmail = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,41 +31,46 @@ export const SignIn = () => {
   };
 
   return (
-    <section className="auth">
-      <h1>Sign in into an account</h1>
-      <p>
-        Enter your email and password <br/>
-        to sign in into this app
-      </p>
+    <div className='auth-container'>
+      <section className="sign-in">
+        <div className='sign-up-header'>
+          <h1>Sign in into an account</h1>
+          <p>
+            Enter your email and password <br/>
+            to sign in into this app
+          </p>
+        </div>
 
-      <form className="auth-form" onSubmit={ handleSubmit }>
-        <Input
-          label="Email"
-          type="email"
-          placeholder="Enter email"
-          icon={ <MailIcon/> }
-          value={ email }
-          onChange={ changeEmail }
-          required
-        />
-        <Input
-          label="Password"
-          type="password"
-          placeholder="Enter password"
-          icon={ <EyeIcon/> }
-          value={ password }
-          onChange={ changePassword }
-          required
-        />
-        <Button type="submit">
-          Sign in
-        </Button>
-      </form>
+        <form className="auth-form" onSubmit={ handleSubmit }>
+          <Input
+            label="Email"
+            type="email"
+            placeholder="Enter email"
+            icon={ <MailIcon/> }
+            value={ email }
+            onChange={ changeEmail }
+            required
+          />
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Enter password"
+            minLength={ 6 }
+            icon={ <EyeIcon/> }
+            value={ password }
+            onChange={ changePassword }
+            required
+          />
+          <Button type="submit">
+            Sign in
+          </Button>
+        </form>
 
-      <p className="auth-form-footer">
-        Forgot to create an account?{ ' ' }
-        <a href="/sign-up">Sign up</a>
-      </p>
-    </section>
+        <p className="auth-form-footer">
+          Forgot to create an account?{ ' ' }
+          <Link to={ ROUTES.SIGNUP }>Sign up</Link>
+        </p>
+      </section>
+    </div>
   );
 };

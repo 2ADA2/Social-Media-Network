@@ -1,11 +1,12 @@
 import { useState } from "react";
 import HeartIcon from "@/shared/assets/icons/heart.svg?react";
 import CommentIcon from "@/shared/assets/icons/comment.svg?react";
-import { CoverButton } from "@/shared/ui/CoverButton/CoverButton.tsx";
+import { CoverButton } from "@/shared/ui/CoverButton";
 import ArrowDown from "@/shared/assets/icons/arrow-down.svg?react";
 import ArrowUp from "@/shared/assets/icons/arrow-up.svg?react";
 import "./post.css";
 import { useAuth } from "@/features/auth";
+import { Avatar } from "@/shared/ui/Avatar/Avatar.tsx";
 
 interface PostProps {
   title: string;
@@ -13,7 +14,7 @@ interface PostProps {
   avatarUrl: string;
   date: string;
   description: string;
-  imgUrl: string;
+  imgUrl?: string;
   alt?: string;
   likes: number;
   comments: string[];
@@ -46,23 +47,19 @@ export const Post = ({
   return (
     <article className="post">
       <header className="post-header">
-        <img
-          className="author-avatar"
-          src={ avatarUrl }
-          alt={ `${ author } avatar` }
-        />
+        <Avatar src={ avatarUrl } alt={ alt } size={ 48 }/>
         <div className="header-data">
           <div>{ author }</div>
-          <small>{ date }</small>
+          <div className='post-date'>{ date }</div>
         </div>
       </header>
 
-      <img
-        className="post-image"
-        loading="lazy"
-        src={ imgUrl }
-        alt={ alt }
-      />
+      { imgUrl && <img
+          className="post-image"
+          loading="lazy"
+          src={ imgUrl }
+          alt={ alt }
+      /> }
 
       <p>{ description }</p>
 
@@ -70,16 +67,16 @@ export const Post = ({
         <CoverButton onClick={ toggleLike }>
           <div>
             <HeartIcon className={ liked ? "active" : "" }/>
-            <small>{ liked ? likes + 1 : likes } likes</small>
+            <span className='control-text'>{ liked ? likes + 1 : likes } likes</span>
           </div>
         </CoverButton>
 
         <CoverButton onClick={ toggleComments }>
           <div>
             <CommentIcon/>
-            <small>{
+            <span className='control-text'>{
               isAuth ? ` ${ comments.length } Comments` : "You have to login to see the comments"
-            } </small>
+            } </span>
             {
               isAuth &&
               (showComments ? <ArrowDown className='arrow-icon'/> : <ArrowUp className={ 'arrow-icon' }/>)

@@ -1,11 +1,25 @@
-.main {
-  min-height: calc(100dvh - 7rem);
+.main-page {
   display: flex;
   flex-direction: column;
   gap:2px;
-  padding: 16px 0;
   align-items: center;
   justify-content: center;
-  font-size: 5rem;
   color: var(--color-muted);
 }
+
+.posts-container{
+  width: 100%;
+  margin: 16px 0;
+
+  .post:last-child{
+    border: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .posts-container {
+    width: auto;
+    border: 2px solid var(--border-primary);
+  }
+}
+

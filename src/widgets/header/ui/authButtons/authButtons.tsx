@@ -1,10 +1,12 @@
 import "./authButtons.css";
+import { Link } from "react-router-dom";
+import { ROUTES } from "@/shared/config/routes.ts";
 
 export const AuthButtons = () => {
   return (
     <nav className="header-auth-nav">
-      <a href="/sign-in">Sign in</a>
-      <a href="/sign-up">Sign up</a>
+      <Link to={ ROUTES.SIGNIN }>Sign in</Link>
+      <Link to={ ROUTES.SIGNUP }>Sign up</Link>
     </nav>
   );
 };

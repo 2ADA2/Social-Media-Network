@@ -1,7 +1,8 @@
+// const TABS = [
+//   { id: 'info', label: 'Profile Info' },
+//   { id: 'stats', label: 'Statistics' },
+// ];
+
 export const ProfilePage = () => {
-  return (
-    <main>
-      profile page
-    </main>
-  );
+  return <div>Profile Page</div>;
 };

@@ -1,9 +1,10 @@
-.input-label {
+.textarea-label {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap:12px;
-  width: 320px;
-  max-width: calc(100% - 8px);
+  width:100%;
+  max-width: calc(100vw - 8px);
   font-family: var(--font-family-secondary);
   font-size: 14px;
 
@@ -17,22 +18,23 @@
     }
   }
 
-  input {
+  textarea {
     box-sizing: border-box;
-    height: 48px;
-    width: 320px;
+    min-height: 58px;
+    resize: none;
+    width: 100%;
     max-width: calc(100vw - 8px);
     background: var(--input-bg);
     border: 1px solid var(--border-primary);
-    padding: 4px 10px;
+    padding: 10px 10px;
     color: var(--color-primary);
   }
 
-  input::placeholder {
+  textarea::placeholder {
     color: var(--placehloder-color);
   }
 
-  input:focus{
+  textarea:focus{
     outline: none;
     border-color: var(--input-border-active);
   }

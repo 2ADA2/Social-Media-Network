@@ -11,10 +11,10 @@ const USER_DATA: User = {
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user] = useState<User | null>(USER_DATA);
-  const [isAuth] = useState<boolean>(false);
+  const [isAuth, setIsAuth] = useState<boolean>(!!localStorage.getItem("token"));
 
   return (
-    <UserContext.Provider value={ { isAuth, user } }>
+    <UserContext.Provider value={ { isAuth, setIsAuth, user } }>
       { children }
     </UserContext.Provider>
   );

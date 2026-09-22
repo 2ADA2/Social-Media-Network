@@ -6,6 +6,6 @@
 
 .burgerMenuIcon {
   fill: var(--color-primary);
-  width: 2rem;
-  height: 2rem;
+  width: 24px;
+  height: 24px;
 }
