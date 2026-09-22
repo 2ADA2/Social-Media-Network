@@ -1,0 +1,12 @@
+.stats-chart {
+  flex-grow: 1;
+
+  .chart {
+    height: 400px;
+    background: var(--bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+  }
+}

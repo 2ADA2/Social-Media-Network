@@ -14,15 +14,14 @@ interface TabsProps {
 export const Tabs = ({ tabs, activeTab, onChange }: TabsProps) => {
   return (
     <div className='tabs'>
-      {tabs.map((tab) => (
+      { tabs.map((tab) => (
         <button
-          key={tab.id}
-          className={`tab ${activeTab === tab.id ? 'active-tab' : ''}`}
-          onClick={() => onChange(tab.id)}
-        >
-          {tab.label}
+          key={ tab.id }
+          className={ `tab ${ activeTab === tab.id ? 'tab-active' : '' }` }
+          onClick={ () => onChange(tab.id) }>
+          { tab.label }
         </button>
-      ))}
+      )) }
     </div>
   );
 };
