@@ -3,7 +3,7 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 36px 0;
 
   section {
     display: flex;
@@ -40,11 +40,10 @@ h2 {
   }
 
   .profile-grid {
-    gap: 32px;
+    gap: 0 50px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    margin-bottom: 128px;
   }
 
   .profile-edit-section {

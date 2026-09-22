@@ -5,6 +5,7 @@
   max-width: calc(100vw - 8px);
   font-family: var(--font-family-secondary);
   font-size: 14px;
+  position: relative;
 
   div {
     display: flex;
@@ -31,8 +32,33 @@
     color: var(--placehloder-color);
   }
 
-  input:focus{
+  input:focus {
     outline: none;
     border-color: var(--input-border-active);
+  }
+
+  .info {
+    position: absolute;
+    bottom: -22px ;
+    display: none;
+    margin-top: 8px;
+    gap: 8px;
+    color: var(--color-muted);
+
+    svg {
+      width: 14px;
+      height: 14px;
+
+      path {
+
+        fill: var(--color-muted);
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .input-label input:focus ~ .info {
+    display: flex;
   }
 }

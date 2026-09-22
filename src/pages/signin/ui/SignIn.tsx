@@ -7,6 +7,7 @@ import './SignIn.css';
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { UserContext } from "@/entities/user";
+import { PasswordInput } from "@/shared/ui/password-input";
 
 export const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -52,9 +53,8 @@ export const SignIn = () => {
             onChange={ changeEmail }
             required
           />
-          <Input
+          <PasswordInput
             label='Password'
-            type='password'
             name='password'
             placeholder='Enter password'
             minLength={ 6 }

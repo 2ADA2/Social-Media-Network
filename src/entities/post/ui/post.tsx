@@ -48,7 +48,7 @@ export const Post = ({
   };
 
   return (
-    <article className="post">
+    <article className={ `post ${isAuth ? "" : "blocked"}`}>
       <header className="post-header">
         <Avatar src={ avatarUrl } alt={ alt } size={ 48 }/>
         <div className="header-data">

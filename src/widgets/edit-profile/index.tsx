@@ -3,18 +3,20 @@ import { Input } from "@/shared/ui/Input";
 import { useUser } from "@/features/auth";
 import MailIcon from "@/shared/assets/icons/mail.svg?react";
 import UserIcon from "@/shared/assets/icons/user.svg?react";
-import InfoIcon from "@/shared/assets/icons/info-filled.svg?react";
 import Pen from "@/shared/assets/icons/pen.svg?react";
-import { type ChangeEvent, useState } from "react";
+import React, { type ChangeEvent, useState } from "react";
 import { TextArea } from "@/shared/ui/TextArea";
 import { Button } from "@/shared/ui/Button";
 import "./edit-profile.css";
+
+const MAX_DESCRIPTION_LENGTH = 200;
 
 export const EditProfile = () => {
   const user = useUser();
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [description, setDescription] = useState(user.description);
+  const [descriptionError, setDescriptionError] = useState("");
 
   const changeName = (e: ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -25,11 +27,19 @@ export const EditProfile = () => {
   };
 
   const changeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(e.target.value);
+    const value = e.target.value;
+
+    if (value.length > MAX_DESCRIPTION_LENGTH) {
+      setDescriptionError("Reached the 200 text limit");
+    } else {
+      setDescriptionError("");
+    }
+
+    setDescription(value);
   };
 
-  const saveChanges = () => {
-    // saved
+  const saveChanges = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
   };
 
   return (
@@ -44,38 +54,45 @@ export const EditProfile = () => {
           </CoverButton>
         </div>
       </div>
-      <Input
-        value={ username }
-        onChange={ changeName }
-        label='Username'
-        name='username'
-        placeholder='@username'
-        icon={ <UserIcon/> }
-        minLength={ 3 }
-      />
-      <Input
-        value={ email }
-        onChange={ changeEmail }
-        label='Email'
-        name='email'
-        placeholder='example@mail.com'
-        icon={ <MailIcon/> }
-        minLength={ 3 }
-      />
-      <div>
-        <TextArea
-          value={ description }
-          onChange={ changeDescription }
-          label='Description'
-          icon={ <Pen/> }
-          placeholder='Write your description here...'
-          maxLength={ 200 }/>
-        <div className='ta-info'>
-          <InfoIcon className='ignore'/>
-          <small>Max 200 chars</small>
+      <form onSubmit={ saveChanges }>
+        <Input
+          value={ username }
+          onChange={ changeName }
+          label='Username'
+          name='username'
+          type='text'
+          placeholder='@username'
+          info='from 3 to 20 chars'
+          icon={ <UserIcon/> }
+          minLength={ 3 }
+          maxLength={ 20 }
+        />
+        <Input
+          value={ email }
+          onChange={ changeEmail }
+          label='Email'
+          name='email'
+          type='email'
+          info='enter your email'
+          placeholder='example@mail.com'
+          icon={ <MailIcon/> }
+          minLength={ 3 }
+        />
+        <div>
+          <TextArea
+            value={ description }
+            onChange={ changeDescription }
+            label='Description'
+            name='description'
+            icon={ <Pen/> }
+            info='Max 200 chars'
+            placeholder='Write your description here...'
+            hasError={ !!descriptionError }
+            errorMessage={ descriptionError }
+          />
         </div>
-      </div>
-      <Button className='save-profile-button' onClick={ saveChanges }>Save profile changes</Button>
+        <Button type="submit" className='save-profile-button'>Save profile changes</Button>
+      </form>
     </section>
   );
 };

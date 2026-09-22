@@ -4,6 +4,31 @@
   gap: 16px;
   color: var(--color-primary);
 
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    label {
+      width: 100%;
+
+      input {
+        max-width: 100%;
+      }
+
+      textarea {
+        width: 320px;
+        max-width: 100%;
+        height: 110px;
+      }
+    }
+
+    button {
+      margin-top: 12px;
+      max-width: 100%;
+    }
+  }
+
   .profile-avatar {
     display: flex;
     gap: 16px;
@@ -30,35 +55,10 @@
       }
     }
   }
-
-  label {
-    width: 100%;
-
-    input {
-      max-width: 100%;
-    }
-
-    textarea {
-      width: 320px;
-      max-width: 100%;
-      height: 110px;
-    }
-  }
-
-  button {
-    max-width: 100%;
-  }
-}
-
-.ta-info {
-  margin-top: 8px;
-  display: flex;
-  gap: 8px;
-  color: var(--color-muted);
 }
 
 @media (min-width: 700px) {
-  .profile-page .edit-profile {
+  .profile-page .edit-profile , .edit-profile form{
     gap: 32px;
 
     label textarea {

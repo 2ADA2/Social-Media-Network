@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/Button";
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { UserContext } from "@/entities/user";
+import { PasswordInput } from "@/shared/ui/password-input";
 
 export const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -54,9 +55,8 @@ export const SignUp = () => {
               onChange={ changeEmail }
               required
             />
-            <Input
+            <PasswordInput
               label="Password"
-              type="password"
               name="password"
               placeholder="Enter password"
               icon={ <EyeIcon/> }

@@ -2,11 +2,12 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap:12px;
-  width:100%;
+  gap: 12px;
+  width: 100%;
   max-width: calc(100vw - 8px);
   font-family: var(--font-family-secondary);
   font-size: 14px;
+  position: relative;
 
   div {
     display: flex;
@@ -26,7 +27,7 @@
     max-width: calc(100vw - 8px);
     background: var(--input-bg);
     border: 1px solid var(--border-primary);
-    padding: 10px 10px;
+    padding: 14px 14px 24px 14px;
     color: var(--color-primary);
   }
 
@@ -34,8 +35,47 @@
     color: var(--placehloder-color);
   }
 
-  textarea:focus{
+  textarea:focus {
     outline: none;
     border-color: var(--input-border-active);
+  }
+
+  textarea:focus ~ .info {
+    display: flex;
+  }
+
+  .info {
+    position: absolute;
+    bottom: -24px;
+    display: none;
+    margin-top: 8px;
+    gap: 8px;
+    color: var(--color-muted);
+
+    svg {
+      width: 14px;
+      height: 14px;
+
+      path {
+        fill: var(--color-muted);
+      }
+    }
+  }
+}
+.textarea-label.filled textarea{
+  height: 200px;
+}
+.textarea-label.error {
+  textarea {
+    border-color: var(--color-danger);
+  }
+
+  .info.error-info {
+    display: flex;
+    color: var(--color-danger);
+
+    svg path {
+      fill: var(--color-danger);
+    }
   }
 }

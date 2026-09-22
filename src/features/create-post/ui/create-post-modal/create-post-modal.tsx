@@ -1,12 +1,13 @@
 import { Modal } from "@/shared/ui/Modal";
 import { Input } from "@/shared/ui/Input";
 import { Button } from "@/shared/ui/Button";
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 import MailIcon from "@/shared/assets/icons/mail.svg?react";
 import PenIcon from "@/shared/assets/icons/pen.svg?react";
 import "./create-post-modal.css";
 import { TextArea } from "@/shared/ui/TextArea";
 import { FileInput } from "@/shared/ui/FileInput";
+import { useBlockScroll } from "@/features/block-scroll/useBlockScroll.tsx";
 
 
 const MAX_SIZE = 10 * 1024 * 1024;
@@ -22,6 +23,15 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
   const [description, setDescription] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState('');
+  const { blockScroll, unblockScroll } = useBlockScroll();
+
+  useEffect(() => {
+    if (isOpen) {
+      blockScroll();
+    }
+
+    return unblockScroll;
+  }, [isOpen]);
 
   const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -87,7 +97,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
           onChange={ changeDescription }
           minLength={ 3 }
         />
-        <FileInput name='image' fileName={fileName} onChange={ changeFile }/>
+        <FileInput name='image' fileName={ fileName } onChange={ changeFile }/>
         <Button type='submit'>Create</Button>
       </form>
     </Modal>
