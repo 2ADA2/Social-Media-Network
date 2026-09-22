@@ -44,6 +44,12 @@
   }
 }
 
+.post.blocked {
+  button {
+    cursor: default;
+  }
+}
+
 .post-control {
   display: flex;
   gap: 16px;
