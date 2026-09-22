@@ -17,13 +17,11 @@ export const RouterProvider = () => {
     <BrowserRouter basename={ "Social-Media-Network" }>
       <Routes>
         <Route element={ <MainLayout/> }>
-
-          // auth-protected
           <Route element={ <ProtectedRoute condition={ isAuth } route={ ROUTES.SIGNIN }/> }>
             <Route path={ ROUTES.PROFILE } element={ <ProfilePage/> }/>
           </Route>
 
-          <Route path={ ROUTES.HOME } element={ <MainPage/> }/>s
+          <Route path={ ROUTES.HOME } element={ <MainPage/> }/>
         </Route>
 
         <Route element={ <MainLayout hiddenNav={ true }/> }>

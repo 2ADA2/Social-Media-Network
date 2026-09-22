@@ -71,8 +71,6 @@
 
 @media (min-width: 768px) {
   .stats {
-    margin-bottom: 128px;
-
     .stats-container {
       flex-direction: row;
       gap: 36px;
