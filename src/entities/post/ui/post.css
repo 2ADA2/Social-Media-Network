@@ -121,6 +121,7 @@
 
 @media (min-width: 768px) {
   .post {
+    padding: 24px;
     width: 700px;
     background: var(--bg-primary);
   }
