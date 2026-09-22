@@ -6,6 +6,8 @@ import { AuthButtons } from "@/widgets/header/ui/authButtons/authButtons.tsx";
 import { NavBar } from "@/widgets/navbar";
 import { UserNav } from "@/entities/UserNav";
 import { useAuth } from "@/features/auth";
+import { ROUTES } from "@/shared/config/routes.ts";
+import { Link } from "react-router-dom";
 
 export interface HeaderProps {
   hiddenNav?: boolean;
@@ -41,10 +43,10 @@ export const Header = ({ hiddenNav = false }: HeaderProps) => {
 
     return (
       <header className="header">
-        <div className="headerLogo">
+        <Link to={ROUTES.HOME} className="headerLogo">
           <SidekickLogo/>
           <span>sidekick</span>
-        </div>
+        </Link>
 
         { hideNav() }
       </header>

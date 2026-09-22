@@ -27,17 +27,22 @@
   }
 }
 
-@media (min-width: 1320px) {
+@media (min-width: 1330px) {
   .recommend-sidebars{
-    width: calc(50vw - 390px);
-    max-width: 340px;
+    width: 260px;
     position: absolute;
-    right: 16px;
-    top: 64px;
+    left: calc(50vw + 390px);
+    top: 84px;
 
     display: flex;
     flex-direction: column;
     gap: 16px;
+  }
+}
+
+@media (min-width: 1330px) {
+  .recommend-sidebars{
+    width: 320px;
   }
 }
 

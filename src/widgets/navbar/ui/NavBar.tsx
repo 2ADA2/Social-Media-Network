@@ -4,6 +4,8 @@ import { useAuth, useUser } from "@/features/auth";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { Link } from "react-router-dom";
 import { Avatar } from "@/shared/ui/Avatar/Avatar.tsx";
+import { useEffect } from "react";
+import { useBlockScroll } from "@/features/block-scroll/useBlockScroll.tsx";
 
 interface NavBarProps {
   setNavBar: () => void;
@@ -12,6 +14,14 @@ interface NavBarProps {
 export const NavBar = ({ setNavBar }: NavBarProps) => {
   const auth = useAuth();
   const user = useUser();
+  const { blockScroll, unblockScroll } = useBlockScroll();
+
+  useEffect(() => {
+    blockScroll();
+
+    return unblockScroll;
+  }, []);
+
 
   return (
     <>
