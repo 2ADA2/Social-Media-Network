@@ -29,6 +29,7 @@
     border: 1px solid var(--border-primary);
     padding: 14px 14px 24px 14px;
     color: var(--color-primary);
+    line-height: 18px;
   }
 
   textarea::placeholder {

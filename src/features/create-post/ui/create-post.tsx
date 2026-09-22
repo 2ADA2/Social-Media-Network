@@ -12,7 +12,7 @@ export const CreatePost = () => {
   const { isOpen, open, close } = useCreatePost();
 
   if (!isAuth) {
-    return <></>;
+    return null;
   }
 
   return (

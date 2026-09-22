@@ -35,7 +35,7 @@ export const TextArea = ({ icon, label, info, hasError, value, errorMessage, ...
       );
     }
 
-    return <></>;
+    return null;
   };
 
   return (

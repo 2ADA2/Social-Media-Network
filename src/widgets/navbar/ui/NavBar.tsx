@@ -12,7 +12,7 @@ interface NavBarProps {
 }
 
 export const NavBar = ({ setNavBar }: NavBarProps) => {
-  const auth = useAuth();
+  const isAuth = useAuth();
   const user = useUser();
   const { blockScroll, unblockScroll } = useBlockScroll();
 
@@ -32,11 +32,11 @@ export const NavBar = ({ setNavBar }: NavBarProps) => {
             <SidekickLogo/>
             <span>sidekick</span>
           </div>
-          <Avatar src={ user.avatar } size={ 24 }/>
+          { isAuth && <Avatar src={ user.avatar } size={ 24 }/> }
         </div>
 
         <div className='nav-container'>
-          { !auth ? (
+          { !isAuth ? (
             <>
               <Link to={ ROUTES.SIGNIN }>Sign in</Link>
               <Link to={ ROUTES.SIGNUP }>Sign up</Link>
