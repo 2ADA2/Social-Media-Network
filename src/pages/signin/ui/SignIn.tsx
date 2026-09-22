@@ -34,7 +34,7 @@ export const SignIn = () => {
   return (
     <div className='auth-container'>
       <section className="sign-in">
-        <div className='sign-up-header'>
+        <div className='auth-header'>
           <h1>Sign in into an account</h1>
           <p>
             Enter your email and password <br/>
