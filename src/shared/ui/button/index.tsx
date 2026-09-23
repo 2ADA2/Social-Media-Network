@@ -1,5 +1,5 @@
 import React, { type ButtonHTMLAttributes } from "react";
-import "./Button.css";
+import "./button.css";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode,
@@ -9,5 +9,5 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button = ({ children, className = "", ...props }: ButtonProps) => {
   return (
     <button type = "button" className={ `btn ${ className }` }{ ...props }>{ children }</button>
-  );
+);
 };

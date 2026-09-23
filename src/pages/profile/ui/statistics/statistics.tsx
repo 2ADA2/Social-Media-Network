@@ -1,4 +1,4 @@
-import { Toggle } from '@/shared/ui/Toggle';
+import { Toggle } from '../../../../shared/ui/toggle';
 import './statistics.css';
 import { useState } from "react";
 import { TableView } from "@/pages/profile/ui/statistics/table-view/table-view.tsx";

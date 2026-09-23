@@ -1,6 +1,6 @@
 import { type ChangeEvent, type SubmitEvent, useContext, useState } from 'react';
-import { Input } from "@/shared/ui/Input";
-import { Button } from "@/shared/ui/Button";
+import { Input } from "../../../shared/ui/input";
+import { Button } from "../../../shared/ui/button";
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
 import EyeIcon from '@/shared/assets/icons/eye.svg?react';
 import './SignIn.css';
