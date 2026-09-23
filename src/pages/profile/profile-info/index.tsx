@@ -1,6 +1,6 @@
 import { ThemeSwitcher } from "@/features/theme-switcher";
 import { Button } from "@/shared/ui/button";
-import { EditProfile } from "@/widgets/edit-profile";
+import { EditProfile } from "./edit-profile";
 import "./profile-info.css";
 import { useContext } from "react";
 import { UserContext } from "@/entities/user";

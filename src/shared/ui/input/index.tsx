@@ -5,12 +5,10 @@ import "./input.css";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   icon?: ReactNode;
-  isError?: boolean;
-  error?: boolean;
   info?: string;
 }
 
-export const Input = ({ icon, label, info, isError, error, ...props }: InputProps) => {
+export const Input = ({ icon, label, info, ...props }: InputProps) => {
   return (
     <label className="input-label">
       <div>
