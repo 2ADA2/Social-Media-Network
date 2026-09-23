@@ -12,7 +12,7 @@
     "copy404": "cpy dist/index.html dist --rename=404.html --flat",
     "predeploy": "run-s build copy404",
     "deploy": "gh-pages -d dist",
-    "server" : "npx internship-backend serve social --port 4000",
+    "server" : "npx internship-backend serve social --port 4000"
   },
   "dependencies": {
     "@sidekick-software/internship-backend": "file:packages/sidekick-software-internship-backend-0.1.0.tgz",

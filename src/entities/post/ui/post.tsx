@@ -78,7 +78,7 @@ export const Post = ({
           <div>
             <CommentIcon/>
             <span className='control-text'>{
-              isAuth ? ` ${ comments.length } Comments` : "You have to login to see the comments"
+              isAuth ? ` ${ comments.length } Comments` : "You have to login.ts to see the comments"
             } </span>
             {
               isAuth &&

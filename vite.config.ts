@@ -16,4 +16,6 @@ export default defineConfig({
       '/api': 'http://localhost:4000',
     },
   },
+  optimizeDeps: { exclude: ['@electric-sql/pglite'] },
+  worker: { format: 'es' },
 });
