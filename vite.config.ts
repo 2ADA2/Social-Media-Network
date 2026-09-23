@@ -5,7 +5,7 @@ import { resolve } from "path";
 
 export default defineConfig({
   plugins: [react(), svgr()],
-  base: '/Social-Media-Network',
+  base: '/',
   resolve: {
     alias: {
       "@": resolve(import.meta.dirname, 'src'),
