@@ -1,4 +1,4 @@
-import "./UserNav.css";
+import "./user-nav.css";
 import { useUser } from "@/features/auth";
 import { Avatar } from "@/shared/ui/avatar";
 import { ROUTES } from "@/shared/config/routes.ts";

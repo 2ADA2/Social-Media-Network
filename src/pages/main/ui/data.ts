@@ -1,4 +1,4 @@
-import type { Community } from "@/entities/community/model/types.ts";
+import type { Community } from "@/entities/community";
 import type { User } from "@/entities/user";
 
 export const POST_DATA1 = {
