@@ -1,9 +1,9 @@
-import "./NavBar.css";
+import "./navbar.css";
 import SidekickLogo from "@/shared/assets/icons/sidekick-logo.svg?react";
 import { useAuth, useUser } from "@/features/auth";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { Link } from "react-router-dom";
-import { Index } from "@/shared/ui/avatar";
+import { Avatar } from "@/shared/ui/avatar";
 import { useEffect } from "react";
 import { useBlockScroll } from "@/features/block-scroll/useBlockScroll.tsx";
 
@@ -32,7 +32,7 @@ export const NavBar = ({ setNavBar }: NavBarProps) => {
             <SidekickLogo/>
             <span>sidekick</span>
           </div>
-          { isAuth && <Index src={ user.avatar } size={ 24 }/> }
+          { isAuth && <Avatar src={ user.avatar } size={ 24 }/> }
         </div>
 
         <div className='nav-container'>

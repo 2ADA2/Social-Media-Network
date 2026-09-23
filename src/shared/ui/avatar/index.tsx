@@ -1,4 +1,5 @@
 import "./avatar.css";
+import React from "react";
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLImageElement> {
   src: string;
@@ -7,7 +8,7 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLImageElement> {
   className?: string;
 }
 
-export const Index = ({ src, size, alt, className, ...props }: AvatarProps) => {
+export const Avatar = ({ src, size, alt, className, ...props }: AvatarProps) => {
   return (
     <img src={ src }
          className={ "avatar " + className }

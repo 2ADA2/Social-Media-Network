@@ -1,19 +1,20 @@
-import "./header.css";
+import "./main-header.css";
 import SidekickLogo from "@/shared/assets/icons/sidekick-logo.svg?react";
 import { useState } from "react";
-import { BurgerMenu } from "@/widgets/header/ui/burgerMenu/burgerMenu.tsx";
-import { AuthButtons } from "@/widgets/header/ui/authButtons/authButtons.tsx";
-import { NavBar } from "@/widgets/navbar";
+import { BurgerMenu } from "@/app/layouts/main-layout/main-header/burger-menu";
+import { AuthButtons } from "@/app/layouts/main-layout/main-header/auth-buttons";
 import { UserNav } from "@/entities/UserNav";
 import { useAuth } from "@/features/auth";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { Link } from "react-router-dom";
+import { NavBar } from "@/app/layouts/main-layout/main-header/navbar";
+
 
 export interface HeaderProps {
   hiddenNav?: boolean;
 }
 
-export const Header = ({ hiddenNav = false }: HeaderProps) => {
+export const MainHeader = ({ hiddenNav = false }: HeaderProps) => {
     const auth = useAuth();
     const [isNavBar, setIsNavBar] = useState(false);
 
