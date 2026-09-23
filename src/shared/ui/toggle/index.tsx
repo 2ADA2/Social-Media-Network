@@ -1,4 +1,4 @@
-import './Toggle.css';
+import './toggle.css';
 
 interface ToggleProps {
   checked: boolean;

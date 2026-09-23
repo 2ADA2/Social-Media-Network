@@ -1,6 +1,6 @@
 import "./UserNav.css";
 import { useUser } from "@/features/auth";
-import { Avatar } from "@/shared/ui/Avatar/Avatar.tsx";
+import { Index } from "@/shared/ui/avatar";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { Link } from "react-router-dom";
 
@@ -9,7 +9,7 @@ export const UserNav = () => {
 
   return (
     <Link to={ROUTES.PROFILE} className="user-nav">
-      <Avatar src={ user.avatar } alt={ `${ user.name } avatar` } size={ 24 }/>
+      <Index src={ user.avatar } alt={ `${ user.name } avatar` } size={ 24 }/>
       <span>{ user.name } { user.surname }</span>
     </Link>
   );

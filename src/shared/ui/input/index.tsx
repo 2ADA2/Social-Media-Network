@@ -1,6 +1,6 @@
 import { type InputHTMLAttributes, type ReactNode } from "react";
 import InfoIcon from "@/shared/assets/icons/info-filled.svg?react";
-import "./Input.css";
+import "./input.css";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -10,7 +10,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   info?: string;
 }
 
-export const Input = ({ icon, label, info, isError, error, ...props }: InputProps) => {
+export const Index = ({ icon, label, info, isError, error, ...props }: InputProps) => {
   return (
     <label className="input-label">
       <div>
