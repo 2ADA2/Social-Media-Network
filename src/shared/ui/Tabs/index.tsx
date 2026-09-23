@@ -1,4 +1,4 @@
-import './Tabs.css';
+import './tabs.css';
 
 interface Tab {
   id: string;
