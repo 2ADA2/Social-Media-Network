@@ -1,12 +1,12 @@
-import { CoverButton } from "../../shared/ui/cover-button";
-import { Input } from "../../shared/ui/input";
+import { CoverButton } from "../../../../shared/ui/cover-button";
+import { Input } from "../../../../shared/ui/input";
 import { useUser } from "@/entities/user/model/use-user.tsx";
 import MailIcon from "@/shared/assets/icons/mail.svg?react";
 import UserIcon from "@/shared/assets/icons/user.svg?react";
 import Pen from "@/shared/assets/icons/pen.svg?react";
 import React, { type ChangeEvent, useState } from "react";
-import { TextArea } from "../../shared/ui/text-area";
-import { Button } from "../../shared/ui/button";
+import { TextArea } from "../../../../shared/ui/text-area";
+import { Button } from "../../../../shared/ui/button";
 import "./edit-profile.css";
 
 const MAX_DESCRIPTION_LENGTH = 200;
