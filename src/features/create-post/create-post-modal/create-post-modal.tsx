@@ -7,7 +7,7 @@ import PenIcon from "@/shared/assets/icons/pen.svg?react";
 import "./create-post-modal.css";
 import { TextArea } from "@/shared/ui/text-area";
 import { FileInput } from "@/shared/ui/file-input";
-import { useBlockScroll } from "@/features/block-scroll/useBlockScroll.tsx";
+import { useBlockScroll } from "@/shared/lib/hooks/block-scroll/useBlockScroll.tsx";
 
 const MAX_SIZE = 10 * 1024 * 1024;
 const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf'];

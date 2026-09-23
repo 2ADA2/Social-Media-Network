@@ -1,9 +1,9 @@
 import "./main.css";
 import { Post } from "@/entities/post";
-import { CreatePost } from "@/features/create-post/ui/create-post.tsx";
 import { MainSidebar } from "@/widgets/main-sidebar";
 import { POSTS, SUGGESTED_COMMUNITIES, SUGGESTED_PEOPLE } from "@/pages/main/ui/data.ts";
-import { useAuth } from "@/features/auth";
+import { CreatePost } from "@/features/create-post";
+import { useAuth } from "@/entities/user/model/use-auth.tsx";
 
 
 

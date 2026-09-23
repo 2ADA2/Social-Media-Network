@@ -1,11 +1,12 @@
 import "./navbar.css";
 import SidekickLogo from "@/shared/assets/icons/sidekick-logo.svg?react";
-import { useAuth, useUser } from "@/features/auth";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { Link } from "react-router-dom";
 import { Avatar } from "@/shared/ui/avatar";
 import { useEffect } from "react";
-import { useBlockScroll } from "@/features/block-scroll/useBlockScroll.tsx";
+import { useBlockScroll } from "@/shared/lib/hooks/block-scroll/useBlockScroll.tsx";
+import { useAuth } from "@/entities/user/model/use-auth.tsx";
+import { useUser } from "@/entities/user/model/use-user.tsx";
 
 interface NavBarProps {
   setNavBar: () => void;
