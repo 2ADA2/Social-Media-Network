@@ -1,9 +1,9 @@
 import { type ChangeEvent, type SubmitEvent, useContext, useState } from 'react';
-import { Input } from "../../../shared/ui/input";
-import { Button } from "../../../shared/ui/button";
+import { Input } from "@/shared/ui/input";
+import { Button } from "@/shared/ui/button";
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
 import EyeIcon from '@/shared/assets/icons/eye.svg?react';
-import './SignIn.css';
+import './sign-in.css';
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { UserContext } from "@/entities/user";

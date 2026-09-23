@@ -1,8 +1,8 @@
-import { Toggle } from '../../../../shared/ui/toggle';
+import { Toggle } from '@/shared/ui/toggle';
 import './statistics.css';
 import { useState } from "react";
-import { TableView } from "@/pages/profile/ui/statistics/table-view/table-view.tsx";
-import { ChartView } from "@/pages/profile/ui/statistics/chart-view/chart-view.tsx";
+import { TableView } from "@/pages/profile/statistics/table-view";
+import { ChartView } from "./chart-view";
 
 const STATS = [
   { title: 'Title', value: '45,678.90', delta: '+20%', positive: true },
