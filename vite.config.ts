@@ -11,4 +11,11 @@ export default defineConfig({
       "@": resolve(import.meta.dirname, 'src'),
     },
   },
+  server: {
+    proxy: {
+      '/api': 'http://localhost:4000',
+    },
+  },
+  optimizeDeps: { exclude: ['@electric-sql/pglite'] },
+  worker: { format: 'es' },
 });
