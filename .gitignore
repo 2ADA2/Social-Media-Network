@@ -13,6 +13,7 @@ dist-ssr
 *.local
 
 .pglite-data/
+
 .env
 .env.local
 
