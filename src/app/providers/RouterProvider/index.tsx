@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { MainPage } from "@/pages/main";
-import { MainLayout } from "@/app/layouts/MainLayout";
+import { MainLayout } from "../../layouts/main-layout";
 import { ProfilePage } from "@/pages/profile";
 import { useAuth } from "@/features/auth";
 import { ProtectedRoute } from "./ProtectedRoute.tsx";

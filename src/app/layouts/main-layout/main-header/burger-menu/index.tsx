@@ -1,5 +1,5 @@
 import BurgerMenuIcon from "@/shared/assets/icons/menu-burger.svg?react";
-import "./burgerMenu.css";
+import "./burger-menu.css";
 
 interface BurgerMenuProps {
   onClick?: () => void;

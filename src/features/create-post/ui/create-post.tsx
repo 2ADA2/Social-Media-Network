@@ -1,4 +1,4 @@
-import { Index } from "@/shared/ui/avatar";
+import { Avatar } from "@/shared/ui/avatar";
 import { useAuth, useUser } from "@/features/auth";
 import { Button } from "../../../shared/ui/button";
 import "./create-post.css";
@@ -17,7 +17,7 @@ export const CreatePost = () => {
 
   return (
     <div className='create-post-card'>
-      <Index src={ user.avatar } size={ 32 }/>
+      <Avatar src={ user.avatar } size={ 32 }/>
       <span>What's happening?</span>
       <Button onClick={ open }> Tell everyone </Button>
 

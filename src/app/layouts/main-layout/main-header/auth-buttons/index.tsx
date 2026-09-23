@@ -1,4 +1,4 @@
-import "./authButtons.css";
+import "./auth-buttons.css";
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/shared/config/routes.ts";
 

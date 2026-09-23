@@ -1,12 +1,12 @@
 import { useState } from "react";
 import HeartIcon from "@/shared/assets/icons/heart.svg?react";
 import CommentIcon from "@/shared/assets/icons/comment.svg?react";
-import { CoverButton } from "../../../shared/ui/cover-button";
+import { CoverButton } from "@/shared/ui/cover-button";
 import ArrowDown from "@/shared/assets/icons/arrow-down.svg?react";
 import ArrowUp from "@/shared/assets/icons/arrow-up.svg?react";
 import "./post.css";
 import { useAuth } from "@/features/auth";
-import { Index } from "@/shared/ui/avatar";
+import { Avatar } from "@/shared/ui/avatar";
 import { CreateComment } from "@/features/create-comment";
 
 interface PostProps {
@@ -50,7 +50,7 @@ export const Post = ({
   return (
     <article className={ `post ${isAuth ? "" : "blocked"}`}>
       <header className="post-header">
-        <Index src={ avatarUrl } alt={ alt } size={ 48 }/>
+        <Avatar src={ avatarUrl } alt={ alt } size={ 48 }/>
         <div className="header-data">
           <div>{ author }</div>
           <div className='post-date'>{ date }</div>
