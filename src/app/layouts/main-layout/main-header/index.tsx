@@ -3,11 +3,11 @@ import SidekickLogo from "@/shared/assets/icons/sidekick-logo.svg?react";
 import { useState } from "react";
 import { BurgerMenu } from "@/app/layouts/main-layout/main-header/burger-menu";
 import { AuthButtons } from "@/app/layouts/main-layout/main-header/auth-buttons";
-import { UserNav } from "@/entities/UserNav";
 import { useAuth } from "@/features/auth";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { Link } from "react-router-dom";
 import { NavBar } from "@/app/layouts/main-layout/main-header/navbar";
+import { UserNav } from "@/app/layouts/main-layout/main-header/user-nav";
 
 
 export interface HeaderProps {
