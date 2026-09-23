@@ -1,6 +1,6 @@
 import { CoverButton } from "../../shared/ui/cover-button";
 import { Input } from "../../shared/ui/input";
-import { useUser } from "@/features/auth";
+import { useUser } from "@/entities/user/model/use-user.tsx";
 import MailIcon from "@/shared/assets/icons/mail.svg?react";
 import UserIcon from "@/shared/assets/icons/user.svg?react";
 import Pen from "@/shared/assets/icons/pen.svg?react";

@@ -3,7 +3,7 @@ import { ROUTES } from "@/shared/config/routes.ts";
 import { MainPage } from "@/pages/main";
 import { MainLayout } from "../../layouts/main-layout";
 import { ProfilePage } from "@/pages/profile";
-import { useAuth } from "@/features/auth";
+import { useAuth } from "@/entities/user/model/use-auth.tsx";
 import { ProtectedRoute } from "./ProtectedRoute.tsx";
 import { SignIn } from "@/pages/signin";
 import { SignUp } from "@/pages/signup";

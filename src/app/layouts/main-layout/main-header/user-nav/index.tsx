@@ -1,5 +1,5 @@
 import "./user-nav.css";
-import { useUser } from "@/features/auth";
+import { useUser } from "@/entities/user/model/use-user.tsx";
 import { Avatar } from "@/shared/ui/avatar";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { Link } from "react-router-dom";

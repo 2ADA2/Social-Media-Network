@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Toggle } from "../../../shared/ui/toggle";
+import { Toggle } from "@/shared/ui/toggle";
 
 export const ThemeSwitcher = () => {
   const [checked, setChecked] = useState(localStorage.getItem("theme") === "dark");
