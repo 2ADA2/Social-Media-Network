@@ -20,8 +20,8 @@ export const NavBar = ({ setNavBar }: NavBarProps) => {
   useEffect(() => {
     blockScroll();
 
-    return unblockScroll;
-  }, []);
+    return () => unblockScroll();
+  }, [blockScroll, unblockScroll]);
 
 
   return (
