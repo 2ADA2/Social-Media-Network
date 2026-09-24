@@ -12,9 +12,14 @@ export const useAuth = () => {
     dispatch(setCredentials({ user, token }));
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    dispatch(logoutAction());
+  };
+
   return {
     isAuth,
     auth,
-    logout: () => dispatch(logoutAction()),
+    logout,
   };
 };
