@@ -30,7 +30,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
     }
 
     return unblockScroll;
-  }, [isOpen]);
+  }, [blockScroll, isOpen, unblockScroll]);
 
   const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);

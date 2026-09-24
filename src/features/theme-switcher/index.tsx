@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
 import { Toggle } from "@/shared/ui/toggle";
+import { useThemeStore } from "@/app/store/theme-store.ts";
 
 export const ThemeSwitcher = () => {
-  const [checked, setChecked] = useState(localStorage.getItem("theme") === "dark");
+  const { theme, toggleTheme } = useThemeStore(state => state);
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", checked ? "dark" : "light");
-    localStorage.setItem("theme", checked ? "dark" : "light");
-  }, [checked]);
+  const checked = theme === "dark";
 
   return (
-    <Toggle checked={ checked } onChange={ () => setChecked(!checked) }/>
+    <Toggle checked={ checked } onChange={ toggleTheme }/>
   );
 };

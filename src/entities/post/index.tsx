@@ -32,7 +32,7 @@ export const Post = ({
                        likes = 0,
                        comments = [],
                      }: PostProps) => {
-  const isAuth = useAuth();
+  const { isAuth } = useAuth();
 
   const [liked, setLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -48,53 +48,53 @@ export const Post = ({
   };
 
   return (
-    <article className={ `post ${isAuth ? "" : "blocked"}`}>
-  <header className="post-header">
-  <Avatar src={ avatarUrl } alt={ alt } size={ 48 }/>
-  <div className="header-data">
-    <div>{ author }</div>
-    <div className='post-date'>{ date }</div>
-    </div>
-    </header>
+    <article className={ `post ${ isAuth ? "" : "blocked" }` }>
+      <header className="post-header">
+        <Avatar src={ avatarUrl } alt={ alt } size={ 48 }/>
+        <div className="header-data">
+          <div>{ author }</div>
+          <div className='post-date'>{ date }</div>
+        </div>
+      </header>
 
-  { imgUrl && <img
-    className="post-image"
-    loading="lazy"
-    src={ imgUrl }
-    alt={ alt }
-    /> }
+      { imgUrl && <img
+          className="post-image"
+          loading="lazy"
+          src={ imgUrl }
+          alt={ alt }
+      /> }
 
-    <p>{ description }</p>
+      <p>{ description }</p>
 
-    <footer className="post-control">
-  <CoverButton onClick={ toggleLike }>
-  <div>
-    <HeartIcon className={ liked ? "active" : "" }/>
-  <span className='control-text'>{ liked ? likes + 1 : likes } likes</span>
-  </div>
-  </CoverButton>
+      <footer className="post-control">
+        <CoverButton onClick={ toggleLike }>
+          <div>
+            <HeartIcon className={ liked ? "active" : "" }/>
+            <span className='control-text'>{ liked ? likes + 1 : likes } likes</span>
+          </div>
+        </CoverButton>
 
-  <CoverButton onClick={ toggleComments }>
-  <div>
-    <CommentIcon/>
-  <span className='control-text'>{
-    isAuth ? ` ${ comments.length } Comments` : "You have to login to see the comments"
-  } </span>
-    {
-      isAuth &&
-      (showComments ? <ArrowDown className='arrow-icon'/> : <ArrowUp className={ 'arrow-icon' }/>)
-    }
-    </div>
-    </CoverButton>
-    </footer>
-    { isAuth && showComments && <>
-      <ol className='post-comments'>
-      { comments.map(
-          (comment, i) => <li key={ i }>{ comment }</li>,
-        ) }
-      </ol>
-      <CreateComment/>
+        <CoverButton onClick={ toggleComments }>
+          <div>
+            <CommentIcon/>
+            <span className='control-text'>{
+              isAuth ? ` ${ comments.length } Comments` : "You have to login to see the comments"
+            } </span>
+            {
+              isAuth &&
+              (showComments ? <ArrowDown className='arrow-icon'/> : <ArrowUp className={ 'arrow-icon' }/>)
+            }
+          </div>
+        </CoverButton>
+      </footer>
+      { isAuth && showComments && <>
+          <ol className='post-comments'>
+            { comments.map(
+              (comment, i) => <li key={ i }>{ comment }</li>,
+            ) }
+          </ol>
+          <CreateComment/>
       </> }
-      </article>
-    );
-    };
+    </article>
+  );
+};
