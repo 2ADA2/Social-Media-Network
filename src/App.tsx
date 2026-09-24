@@ -1,15 +1,16 @@
 import "../global.css";
 import { RouterProvider } from "@/app/providers/RouterProvider";
-import { UserProvider } from "@/app/providers/UserProvider";
 import { ThemeProvider } from "@/app/providers/ThemeProvider";
+import { store } from "@/app/store/user-store.ts";
+import { Provider } from "react-redux";
 
 function App() {
   return (
-    <UserProvider>
+    <Provider store={ store }>
       <ThemeProvider>
         <RouterProvider/>
       </ThemeProvider>
-    </UserProvider>
+    </Provider>
   );
 }
 

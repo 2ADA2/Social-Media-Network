@@ -15,7 +15,7 @@ export interface HeaderProps {
 }
 
 export const MainHeader = ({ hiddenNav = false }: HeaderProps) => {
-    const auth = useAuth();
+    const { isAuth } = useAuth();
     const [isNavBar, setIsNavBar] = useState(false);
 
     const setNavBar = () => {
@@ -34,7 +34,7 @@ export const MainHeader = ({ hiddenNav = false }: HeaderProps) => {
           </div>
 
           <div className='desktop-nav'>
-            { auth ? <UserNav/> : <AuthButtons/> }
+            { isAuth ? <UserNav/> : <AuthButtons/> }
           </div>
 
           { isNavBar && <NavBar setNavBar={ () => setNavBar() }/> }

@@ -1,27 +1,24 @@
 import { Input } from "@/shared/ui/input";
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
 import EyeIcon from '@/shared/assets/icons/eye.svg?react';
-import { type ChangeEvent, type SubmitEvent, useContext, useState } from "react";
+import { type ChangeEvent, type SubmitEvent, useState } from "react";
 import './sign-up.css';
 import { Button } from "@/shared/ui/button";
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/shared/config/routes.ts";
-import { UserContext } from "@/entities/user";
 import { PasswordInput } from "@/shared/ui/password-input";
+import { useAuth } from "@/entities/user/model/use-auth.tsx";
+import { USER_DATA } from "@/app/store/user-data.ts";
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const context = useContext(UserContext);
+  const { auth } = useAuth();
 
   const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    localStorage.setItem("token", "token");
-    if (context?.setIsAuth) {
-      context.setIsAuth(true);
-    }
+    auth(USER_DATA, "token");
   };
 
   const changeEmail = (e: ChangeEvent<HTMLInputElement>) => {
