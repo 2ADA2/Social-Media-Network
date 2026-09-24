@@ -14,7 +14,7 @@ export const RouterProvider = () => {
   const isAuth = useAuth();
 
   return (
-    <BrowserRouter basename={ "Social-Media-Network" }>
+    <BrowserRouter>
       <Routes>
         <Route element={ <MainLayout/> }>
           <Route element={ <ProtectedRoute condition={ isAuth } route={ ROUTES.SIGNIN }/> }>
