@@ -35,7 +35,6 @@ export default defineConfig([
             eqeqeq: ['error', 'always'],
             'no-var': 'error',
             'prefer-const': 'error',
-            'no-unused-vars': 'warn',
             'no-duplicate-imports': 'error',
             'spaced-comment': ['error', 'always', { markers: ['/'] }],
         },
