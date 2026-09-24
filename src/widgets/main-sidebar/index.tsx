@@ -1,7 +1,7 @@
 import './main-sidebar.css';
 import { UserCard } from "@/entities/user/ui/user-card.tsx";
 import type { User } from "@/entities/user";
-import type { Community } from "@/entities/community/model/types.ts";
+import type { Community } from "@/entities/community";
 
 export interface MainSidebarProps {
   title: string;
