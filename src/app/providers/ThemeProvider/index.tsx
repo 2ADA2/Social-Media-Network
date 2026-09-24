@@ -5,7 +5,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const theme = useThemeStore((state) => state.theme);
 
   useLayoutEffect(() => {
-    const isDark = localStorage.getItem("theme") === "dark";
+    const isDark = theme === "dark";
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
   }, [theme]);
 
