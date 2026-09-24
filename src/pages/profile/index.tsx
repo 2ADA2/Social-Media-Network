@@ -9,7 +9,7 @@ const TABS = [
   { id: 'stats', label: 'Statistics' },
 ];
 
-export const ProfilePage = () => {
+const ProfilePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = searchParams.get('tab') === 'stats' ? 'stats' : 'info';
 
@@ -31,3 +31,5 @@ export const ProfilePage = () => {
     </div>
   );
 };
+
+export default ProfilePage;

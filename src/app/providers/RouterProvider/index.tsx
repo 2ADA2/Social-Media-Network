@@ -1,13 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { MainPage } from "@/pages/main";
-import { ProfilePage } from "@/pages/profile";
 import { useAuth } from "@/entities/user/model/use-auth.tsx";
 import { ProtectedRoute } from "./ProtectedRoute.tsx";
-import { SignIn } from "@/pages/signin";
-import { SignUp } from "@/pages/signup";
 import { NotFound } from "@/pages/not-found";
 import { MainLayout } from "@/app/layouts/main-layout";
+import { lazy } from "react";
+
+const SignIn = lazy(() => import('@/pages/signin'));
+const SignUp = lazy(() => import('@/pages/signup'));
+const ProfilePage = lazy(() => import('@/pages/profile'));
 
 
 export const RouterProvider = () => {

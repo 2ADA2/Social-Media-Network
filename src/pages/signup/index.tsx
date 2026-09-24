@@ -9,7 +9,7 @@ import { ROUTES } from "@/shared/config/routes.ts";
 import { UserContext } from "@/entities/user";
 import { PasswordInput } from "@/shared/ui/password-input";
 
-export const SignUp = () => {
+const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -83,3 +83,5 @@ export const SignUp = () => {
     </div>
   );
 };
+
+export default SignUp;
