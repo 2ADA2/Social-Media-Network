@@ -2,15 +2,10 @@ import { ThemeSwitcher } from "@/features/theme-switcher";
 import { Button } from "@/shared/ui/button";
 import { EditProfile } from "./edit-profile";
 import "./profile-info.css";
-import { useContext } from "react";
-import { UserContext } from "@/entities/user";
+import { useAuth } from "@/entities/user/model/use-auth.tsx";
 
 export const ProfileInfo = () => {
-  const context = useContext(UserContext);
-  const logout = () => {
-    localStorage.removeItem("token");
-    context?.setIsAuth(false);
-  };
+  const { logout } = useAuth();
 
   return (
     <div className='profile-grid'>

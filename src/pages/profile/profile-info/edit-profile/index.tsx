@@ -12,10 +12,11 @@ import "./edit-profile.css";
 const MAX_DESCRIPTION_LENGTH = 200;
 
 export const EditProfile = () => {
-  const user = useUser();
-  const [username, setUsername] = useState(user.username);
-  const [email, setEmail] = useState(user.email);
-  const [description, setDescription] = useState(user.description);
+  const { user } = useUser();
+
+  const [username, setUsername] = useState(user!.username);
+  const [email, setEmail] = useState(user!.email);
+  const [description, setDescription] = useState(user!.description);
   const [descriptionError, setDescriptionError] = useState("");
 
   const changeName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,9 +47,9 @@ export const EditProfile = () => {
     <section className='edit-profile'>
       <h2>Edit profile</h2>
       <div className='profile-row profile-avatar'>
-        <img src={ user.avatar } alt='your avatar'/>
+        <img src={ user!.avatar } alt='your avatar'/>
         <div className='user-info'>
-          <div>{ user.name } { user.surname }</div>
+          <div>{ user!.name } { user!.surname }</div>
           <CoverButton>
             <span>Change profile photo</span>
           </CoverButton>

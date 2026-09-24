@@ -1,12 +1,20 @@
-import { useContext } from 'react';
-import { UserContext } from '@/entities/user';
+import { useAppSelector, useAppDispatch } from '@/app/store/hooks';
+import { selectIsAuthenticated } from './selectors';
+import { logout as logoutAction, setCredentials } from './user-slice';
+import type { User } from './types';
 
 export const useAuth = () => {
-  const context = useContext(UserContext);
+  const isAuth = useAppSelector(selectIsAuthenticated);
+  const dispatch = useAppDispatch();
 
-  if (!context) {
-    throw new Error('Cannot get userContext');
-  }
+  const auth = (user: User, token: string) => {
+    localStorage.setItem("token", token);
+    dispatch(setCredentials({ user, token }));
+  };
 
-  return context.isAuth;
+  return {
+    isAuth,
+    auth,
+    logout: () => dispatch(logoutAction()),
+  };
 };

@@ -6,7 +6,7 @@ import { CreatePost } from "@/features/create-post";
 import { useAuth } from "@/entities/user/model/use-auth.tsx";
 
 export const MainPage = () => {
-  const isAuth = useAuth();
+  const { isAuth } = useAuth();
 
   return (
     <div className='main-page'>

@@ -5,12 +5,12 @@ import { ROUTES } from "@/shared/config/routes.ts";
 import { Link } from "react-router-dom";
 
 export const UserNav = () => {
-  const user = useUser();
+  const { user } = useUser();
 
   return (
     <Link to={ROUTES.PROFILE} className="user-nav">
-      <Avatar src={ user.avatar } alt={ `${ user.name } avatar` } size={ 24 }/>
-      <span>{ user.name } { user.surname }</span>
+      <Avatar src={ user!.avatar } alt={ `${ user!.name } avatar` } size={ 24 }/>
+      <span>{ user!.name } { user!.surname }</span>
     </Link>
   );
 };

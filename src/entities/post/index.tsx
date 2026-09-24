@@ -32,7 +32,7 @@ export const Post = ({
                        likes = 0,
                        comments = [],
                      }: PostProps) => {
-  const isAuth = useAuth();
+  const { isAuth } = useAuth();
 
   const [liked, setLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);

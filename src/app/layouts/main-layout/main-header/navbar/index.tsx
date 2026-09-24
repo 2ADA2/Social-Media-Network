@@ -13,8 +13,8 @@ interface NavBarProps {
 }
 
 export const NavBar = ({ setNavBar }: NavBarProps) => {
-  const isAuth = useAuth();
-  const user = useUser();
+  const { isAuth } = useAuth();
+  const { user } = useUser();
   const { blockScroll, unblockScroll } = useBlockScroll();
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export const NavBar = ({ setNavBar }: NavBarProps) => {
             <SidekickLogo/>
             <span>sidekick</span>
           </div>
-          { isAuth && <Avatar src={ user.avatar } size={ 24 }/> }
+          { isAuth && <Avatar src={ user!.avatar } size={ 24 }/> }
         </div>
 
         <div className='nav-container'>
