@@ -1,9 +1,8 @@
 {
   "name": "social",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
-  "homepage": "https://2ADA2.github.io/Social-Media-Network/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
