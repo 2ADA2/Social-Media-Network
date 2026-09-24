@@ -1,5 +1,5 @@
 import "./profile-page.css";
-import { Tabs } from "../../shared/ui/tabs";
+import { Tabs } from "@/shared/ui/tabs";
 import { ProfileInfo } from "@/pages/profile/profile-info";
 import { Statistics } from "./statistics";
 import { useSearchParams } from "react-router-dom";
@@ -9,7 +9,7 @@ const TABS = [
   { id: 'stats', label: 'Statistics' },
 ];
 
-export const ProfilePage = () => {
+const ProfilePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = searchParams.get('tab') === 'stats' ? 'stats' : 'info';
 
@@ -31,3 +31,5 @@ export const ProfilePage = () => {
     </div>
   );
 };
+
+export default ProfilePage;
