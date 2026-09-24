@@ -1,15 +1,14 @@
 import "../global.css";
-import { useLayoutEffect } from "react";
 import { RouterProvider } from "@/app/providers/RouterProvider";
 import { UserProvider } from "@/app/providers/UserProvider";
+import { ThemeProvider } from "@/app/providers/ThemeProvider";
+
 function App() {
-  useLayoutEffect(() => {
-    const isDark = localStorage.getItem("theme") === "dark";
-    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-  }, []);
   return (
     <UserProvider>
-      <RouterProvider/>
+      <ThemeProvider>
+        <RouterProvider/>
+      </ThemeProvider>
     </UserProvider>
   );
 }
