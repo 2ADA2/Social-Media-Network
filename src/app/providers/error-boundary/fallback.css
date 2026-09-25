@@ -3,6 +3,7 @@
   height: 100dvh;
   width: 100vw;
   padding: 12px;
+  overflow-x: hidden;
 
   display: flex;
 
@@ -43,16 +44,19 @@
     margin-top: 8px;
     font-weight: 500;
     line-height: 100%;
+    font-size: 14px;
   }
 
   .details-container {
     position: relative;
     width: 100%;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 12px;
+    line-height: 100%;
 
-    details, summary{
-      height: 20px;
+    div {
+      text-align: left;
+      line-height: 130%;
     }
 
     summary{
@@ -70,6 +74,29 @@
 }
 
 @media (min-width: 768px) {
+  .error-page {
+    font-size: 40px;
+
+    svg {
+      width: 120px;
+      height: 120px;
+    }
+
+    details, summary, pre {
+      height: 36px;
+    }
+
+    small {
+      font-size: 16px;
+    }
+
+    details {
+      font-size: 16px;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
   .error-page {
     font-size: 60px;
 
