@@ -7,6 +7,7 @@ import { ProtectedRoute } from "./ProtectedRoute.tsx";
 import { NotFound } from "@/pages/not-found";
 import { lazy, Suspense } from "react";
 import { Loader } from "@/shared/ui/loader";
+import { ErrorBoundary } from "@/app/providers/error-boundary";
 
 const SignIn = lazy(() => import('@/pages/signin'));
 const SignUp = lazy(() => import('@/pages/signup'));
@@ -17,39 +18,42 @@ export const RouterProvider = () => {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route element={ <MainLayout/> }>
-          <Route element={ <ProtectedRoute condition={ isAuth } route={ ROUTES.SIGNIN }/> }>
-            <Route path={ROUTES.PROFILE} element={
-              <Suspense fallback={ <Loader/> }>
-                <ProfilePage/>
-              </Suspense>
-            }/>
+      <ErrorBoundary>
+        <Routes>
+          <Route element={ <MainLayout/> }>
+            <Route element={ <ProtectedRoute condition={ isAuth } route={ ROUTES.SIGNIN }/> }>
+              <Route path={ ROUTES.PROFILE } element={
+                <Suspense fallback={ <Loader/> }>
+                  <ProfilePage/>
+                </Suspense>
+              }/>
+            </Route>
+
+            <Route path={ ROUTES.HOME } element={ <MainPage/> }/>
           </Route>
 
-          <Route path={ ROUTES.HOME } element={ <MainPage/> }/>
-        </Route>
-
-        // auth
-        <Route element={ <MainLayout hiddenNav={ true }/> }>
-          <Route element={ <ProtectedRoute condition={ !isAuth } route={ ROUTES.HOME }/> }>
-            <Route path={ ROUTES.SIGNUP } element={
-              <Suspense fallback={ <Loader/> }>
-                <SignUp/>
-              </Suspense>
-            }/>
-            <Route path={ ROUTES.SIGNIN } element={
-              <Suspense fallback={ <Loader/> }>
-                <SignIn/>
-              </Suspense>
-            }/>
+          // auth
+          <Route element={ <MainLayout hiddenNav={ true }/> }>
+            <Route element={ <ProtectedRoute condition={ !isAuth } route={ ROUTES.HOME }/> }>
+              <Route path={ ROUTES.SIGNUP } element={
+                <Suspense fallback={ <Loader/> }>
+                  <SignUp/>
+                </Suspense>
+              }/>
+              <Route path={ ROUTES.SIGNIN } element={
+                <Suspense fallback={ <Loader/> }>
+                  <SignIn/>
+                </Suspense>
+              }/>
+            </Route>
           </Route>
-        </Route>
 
-        <Route element={ <MainLayout hiddenNav={ true }/> }>
-          <Route path={ ROUTES.NOT_FOUND } element={ <NotFound/> }/>
-        </Route>
-      </Routes>
+          <Route element={ <MainLayout hiddenNav={ true }/> }>
+            <Route path={ ROUTES.NOT_FOUND } element={ <NotFound/> }/>
+          </Route>
+        </Routes>
+      </ErrorBoundary>
+
     </BrowserRouter>
   );
 };

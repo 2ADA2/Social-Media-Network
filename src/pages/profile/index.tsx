@@ -17,6 +17,10 @@ const ProfilePage = () => {
     setSearchParams({ tab });
   };
 
+  if (searchParams) {
+    throw new Error("params error");
+  }
+
   return (
     <div className='profile-page'>
       <h1 hidden>Edit profile</h1>
