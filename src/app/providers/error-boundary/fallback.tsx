@@ -30,7 +30,8 @@ export const Fallback = ({ error, onReset }: FallbackProps) => {
         <div className='details-container'>
           <details className="error-fallback-details">
             <summary>Details</summary>
-            <pre>{ error?.message || "unknown error" }</pre>
+            <div>{ error?.name || "unknown error name" }</div>
+            <div>{ error?.message || "" }</div>
           </details>
         </div>
 
