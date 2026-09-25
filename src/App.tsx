@@ -6,11 +6,11 @@ import { Provider } from "react-redux";
 
 function App() {
   return (
-    <Provider store={ store }>
-      <ThemeProvider>
-        <RouterProvider/>
-      </ThemeProvider>
-    </Provider>
+      <Provider store={ store }>
+        <ThemeProvider>
+          <RouterProvider/>
+        </ThemeProvider>
+      </Provider>
   );
 }
 
