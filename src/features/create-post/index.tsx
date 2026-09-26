@@ -1,6 +1,4 @@
-import { Avatar } from "@/shared/ui/avatar";
-import { Button } from "@/shared/ui/button";
-import "./create-post.css";
+import { Card, Text, StyledButton, StyledAvatar } from './create-post.styles';
 import { useCreatePost } from "@/features/create-post/use-create-post.ts";
 import { CreatePostModal } from "@/features/create-post/create-post-modal/create-post-modal.tsx";
 import { useAuth } from "@/entities/user/model/use-auth.tsx";
@@ -17,12 +15,12 @@ export const CreatePost = () => {
   }
 
   return (
-    <div className='create-post-card'>
-      <Avatar src={ user!.avatar } size={ 32 }/>
-      <span>What's happening?</span>
-      <Button onClick={ open }> Tell everyone </Button>
+    <Card>
+      <StyledAvatar src={user!.avatar} size={32} />
+      <Text>What's happening?</Text>
+      <StyledButton onClick={open}>Tell everyone</StyledButton>
 
-      <CreatePostModal isOpen={ isOpen } onClose={ close }/>
-    </div>
+      <CreatePostModal isOpen={isOpen} onClose={close} />
+    </Card>
   );
 };
