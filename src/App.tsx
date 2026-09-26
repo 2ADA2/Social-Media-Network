@@ -1,6 +1,6 @@
 import "../global.css";
-import { RouterProvider } from "@/app/providers/RouterProvider";
-import { ThemeProvider } from "@/app/providers/ThemeProvider";
+import { RouterProvider } from "app/providers/router-provider";
+import { ThemeProvider } from "app/providers/theme-provider";
 import { store } from "@/app/store/user-store.ts";
 import { Provider } from "react-redux";
 
