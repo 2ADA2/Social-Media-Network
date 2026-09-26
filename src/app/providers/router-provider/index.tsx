@@ -3,7 +3,7 @@ import { ROUTES } from "@/shared/config/routes.ts";
 import { MainPage } from "@/pages/main";
 import { MainLayout } from "../../layouts/main-layout";
 import { useAuth } from "@/entities/user/model/use-auth.tsx";
-import { ProtectedRoute } from "./ProtectedRoute.tsx";
+import { ProtectedRoute } from "./protected-route.tsx";
 import { NotFound } from "@/pages/not-found";
 import { lazy, Suspense } from "react";
 import { Loader } from "@/shared/ui/loader";
