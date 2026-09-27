@@ -25,12 +25,10 @@ const SignIn = () => {
 
   const changeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-    setEmailError('Email is not valid');
   };
 
   const changePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-    setPasswordError('Password is not valid');
   };
 
   return (
@@ -53,6 +51,7 @@ const SignIn = () => {
             error={emailError}
             icon={ <MailIcon/> }
             value={ email }
+            custom={true}
             onChange={ changeEmail }
             required
           />
@@ -64,6 +63,7 @@ const SignIn = () => {
             minLength={ 6 }
             icon={ <EyeIcon/> }
             value={ password }
+            custom={true}
             onChange={ changePassword }
             required
           />

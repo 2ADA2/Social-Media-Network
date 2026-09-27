@@ -2,6 +2,7 @@ import { type InputHTMLAttributes, type ReactNode, useState } from "react";
 import CheckIcon from "@/shared/assets/icons/check.svg?react";
 import CrossIcon from "@/shared/assets/icons/cross.svg?react";
 import EyeIcon from "@/shared/assets/icons/eye.svg?react";
+import LikeIcon from "@/shared/assets/icons/thumbs-up.svg?react";
 import EyeCrossedIcon from "@/shared/assets/icons/eye-crossed.svg?react";
 import "./password-input.css";
 import { ShowInputInfo } from "@/shared/ui/show-input-info/show-input-info.tsx";
@@ -14,6 +15,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   custom?: boolean;
   error?: string;
 }
+
+const DEFAULT_INFO = "Your password is strong";
 
 export const PasswordInput = ({ icon, label, info, custom, error, ...props }: InputProps) => {
   const isOk = custom && !error && props.value;
@@ -45,8 +48,8 @@ export const PasswordInput = ({ icon, label, info, custom, error, ...props }: In
         </div>
       </div>
 
-      { error || isOk &&
-        (<ShowInputInfo error={ error } info={ info || "" }/>)
+      { (error || isOk) &&
+        (<ShowInputInfo error={ error } info={ info || DEFAULT_INFO } icon={ <LikeIcon/> }/>)
       }
     </label>
   );

@@ -3,9 +3,10 @@ import InfoIcon from "@/shared/assets/icons/info-filled.svg?react";
 interface ShowInputInfoProps {
   error?: string;
   info?: string;
+  icon?: React.ReactNode;
 }
 
-export const ShowInputInfo = ({ error, info }: ShowInputInfoProps) => {
+export const ShowInputInfo = ({ error, info, icon }: ShowInputInfoProps) => {
   if (error) {
     return (
       <div className='info error-info'>
@@ -18,7 +19,7 @@ export const ShowInputInfo = ({ error, info }: ShowInputInfoProps) => {
   if (info) {
     return (
       <div className='info'>
-        <InfoIcon className='ignore'/>
+        {icon || <InfoIcon className='ignore'/>}
         <small>{ info }</small>
       </div>
     );

@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .sign-in {
   box-sizing: border-box;
   display: flex;
@@ -41,7 +42,7 @@
   .auth-form {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 18px;
 
     .input-container {
       display: flex;
