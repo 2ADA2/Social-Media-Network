@@ -31,7 +31,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
   const {
     control,
     handleSubmit,
-    setValue,
+    reset,
   } = useForm<CreatePostSchema>({
     resolver: zodResolver(createPostSchema),
     defaultValues: { title: '', description: '' },
@@ -75,8 +75,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
 
   const submitForm = () => {
     console.log(file);
-    setValue('title', '');
-    setValue('description', '');
+    reset();
     setFile(null);
   };
 

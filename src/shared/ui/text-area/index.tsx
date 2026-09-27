@@ -22,7 +22,7 @@ export const TextArea = ({ icon, label, info, value, errorMessage, ...props }: I
         <span>{ label }</span>
       </div>
 
-      <textarea { ...props } />
+      <textarea { ...props } value={ value } />
 
       <ShowInputInfo error={ errorMessage } info={ info }/>
     </label>
