@@ -35,7 +35,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
   } = useForm<CreatePostSchema>({
     resolver: zodResolver(createPostSchema),
     defaultValues: { title: '', description: '' },
-    mode: 'onChange',
+    mode: 'onTouched',
   });
 
 
