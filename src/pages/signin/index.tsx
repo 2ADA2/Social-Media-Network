@@ -12,7 +12,9 @@ import { USER_DATA } from "@/app/store/user-data.ts";
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const { auth } = useAuth();
 
@@ -23,10 +25,12 @@ const SignIn = () => {
 
   const changeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    setEmailError('Email is not valid');
   };
 
   const changePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+    setPasswordError('Password is not valid');
   };
 
   return (
@@ -46,6 +50,7 @@ const SignIn = () => {
             type='email'
             name='email'
             placeholder='Enter email'
+            error={emailError}
             icon={ <MailIcon/> }
             value={ email }
             onChange={ changeEmail }
@@ -55,6 +60,7 @@ const SignIn = () => {
             label='Password'
             name='password'
             placeholder='Enter password'
+            error={passwordError}
             minLength={ 6 }
             icon={ <EyeIcon/> }
             value={ password }

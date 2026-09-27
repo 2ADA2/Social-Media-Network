@@ -57,6 +57,19 @@
   }
 }
 
+.input-label.error {
+  input {
+    color: var(--color-danger);
+    border-color: var(--color-danger);
+  }
+
+  .input-status {
+    svg path {
+      fill: var(--color-danger);
+    }
+  }
+}
+
 @media (min-width: 768px) {
   .input-label input:focus ~ .info {
     display: flex;
