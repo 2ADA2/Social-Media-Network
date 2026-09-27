@@ -29,7 +29,7 @@ export const Input = ({ icon, label, info, custom, error, ...props }: InputProps
 
       <input { ...props } />
 
-      { error || isOk &&
+      { (error || isOk) &&
         (<ShowInputInfo error={ error } info={ info || "" }/>)
       }
     </label>
