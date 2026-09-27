@@ -5,6 +5,8 @@
   max-width: calc(100vw - 8px);
   font-family: var(--font-family-secondary);
   font-size: 14px;
+  width: 320px;
+  max-width: 100%;
   position: relative;
 
   div {
@@ -52,7 +54,6 @@
 
   .info {
     bottom: -16px;
-    display: none;
     gap: 8px;
     color: var(--color-muted);
     font-weight: 400;

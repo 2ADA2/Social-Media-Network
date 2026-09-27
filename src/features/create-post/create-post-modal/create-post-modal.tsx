@@ -8,6 +8,12 @@ import {
   StyledForm, StyledInput, StyledTextArea, StyledTitle,
 } from "@/features/create-post/create-post-modal/create-post-modal.styles.ts";
 import { StyledButton } from "@/features/create-post/create-post.styles.ts";
+import { Controller, useForm } from "react-hook-form";
+import {
+  createPostSchema,
+  type CreatePostSchema,
+} from "@/features/create-post/create-post-modal/create-post-schema.ts";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const MAX_SIZE = 10 * 1024 * 1024;
 const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf'];
@@ -18,11 +24,20 @@ export interface CreateModalProps {
 }
 
 export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const { blockScroll, unblockScroll } = useBlockScroll();
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState('');
-  const { blockScroll, unblockScroll } = useBlockScroll();
+
+  const {
+    control,
+    handleSubmit,
+    setValue,
+  } = useForm<CreatePostSchema>({
+    resolver: zodResolver(createPostSchema),
+    defaultValues: { title: '', description: '' },
+    mode: 'onChange',
+  });
+
 
   useEffect(() => {
     if (isOpen) {
@@ -32,14 +47,6 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
     return unblockScroll;
   }, [isOpen]);
 
-  const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
-
-  const changeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(e.target.value);
-  };
-
   const changeFile = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] ?? null;
 
@@ -47,7 +54,6 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
       setFile(null);
       return;
     }
-
 
     if (!ALLOWED_TYPES.includes(selectedFile.type)) {
       alert('File must be .PNG, .JPG or .pdf');
@@ -69,32 +75,42 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
 
   const submitForm = () => {
     console.log(file);
-    setTitle("");
-    setDescription("");
+    setValue('title', '');
+    setValue('description', '');
     setFile(null);
   };
 
   return (
     <StyledCreatePostModal isOpen={ isOpen } onClose={ onClose }>
-      <StyledForm onSubmit={ submitForm }>
+      <StyledForm onSubmit={ handleSubmit(submitForm) } noValidate>
         <StyledTitle>Create a new post</StyledTitle>
-        <StyledInput
-          icon={ <MailIcon/> }
-          label='Post Title'
-          name='titile'
-          placeholder='Enter post title'
-          value={ title }
-          onChange={ changeTitle }
-          minLength={ 3 }
+        <Controller
+          name="title"
+          control={ control }
+          render={ ({ field, fieldState: { error } }) => (
+            <StyledInput
+              { ...field }
+              icon={ <MailIcon/> }
+              label='Post Title'
+              name='titile'
+              error={ error?.message }
+              placeholder='Enter post title'
+            />
+          ) }
         />
-        <StyledTextArea
-          icon={ <PenIcon/> }
-          label='Description'
-          name='description'
-          placeholder='Write description here...'
-          value={ description }
-          onChange={ changeDescription }
-          minLength={ 3 }
+        <Controller
+          name="description"
+          control={ control }
+          render={ ({ field, fieldState: { error } }) => (
+            <StyledTextArea $filled={ !!error?.message }
+                            { ...field }
+                            icon={ <PenIcon/> }
+                            label='Description'
+                            name='description'
+                            placeholder='Write description here...'
+                            errorMessage={ error?.message }
+            />
+          ) }
         />
         <FileInput name='image' fileName={ fileName } onChange={ changeFile }/>
         <StyledButton type='submit'>Create</StyledButton>
