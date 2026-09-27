@@ -8,9 +8,9 @@ import { ROUTES } from "@/shared/config/routes.ts";
 import { PasswordInput } from "@/shared/ui/password-input";
 import { useAuth } from "@/entities/user/model/use-auth.tsx";
 import { USER_DATA } from "@/app/store/user-data.ts";
+import { type SignInFormData, signInSchema } from "@/pages/signin/signin-schema.ts";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type SignInFormData, signInSchema } from "@/pages/signin/signin-schema.ts";
 
 const SignIn = () => {
   const { auth } = useAuth();
@@ -21,12 +21,12 @@ const SignIn = () => {
   } = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
     defaultValues: { email: '', password: '' },
-    mode: 'onTouched',
+    mode: 'onChange',
   });
 
   const onSubmit = async (data: SignInFormData) => {
-    console.log(data);
     auth(USER_DATA, "token");
+    console.log(data);
   };
 
   return (
@@ -40,7 +40,7 @@ const SignIn = () => {
           </p>
         </div>
 
-        <form className="auth-form" onSubmit={ handleSubmit(onSubmit) }>
+        <form className="auth-form" onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
             name="email"
             control={control}
@@ -56,6 +56,7 @@ const SignIn = () => {
               />
             )}
           />
+
           <Controller
             name="password"
             control={control}
