@@ -58,6 +58,8 @@ export const MainHeader = ({ hiddenNav = false }: HeaderProps) => {
         >
           <Box sx={{
             height: 24,
+            display: 'flex',
+            alignItems: 'center',
             '& svg': {
                 width: { xs: 12, md: 24 },
                 height: { xs: 12, md: 24 },
@@ -65,7 +67,7 @@ export const MainHeader = ({ hiddenNav = false }: HeaderProps) => {
           }}>
             <SidekickLogo/>
           </Box>
-          <Typography component={'span'} sx={{letterSpacing:0, fontSize: { xs: 10, md: 16 }, fontFamily: 'inherit' }}>
+          <Typography component={'span'} sx={{ lineHeight:1, letterSpacing:0, fontSize: { xs: 10, md: 16 }, fontFamily: 'inherit' }}>
             sidekick
           </Typography>
         </Box>
