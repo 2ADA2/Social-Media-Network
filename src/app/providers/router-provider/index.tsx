@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { MainPage } from "@/pages/main";
 import { useAuth } from "@/entities/user/model/use-auth.tsx";
-import { ProtectedRoute } from "./ProtectedRoute.tsx";
+import { ProtectedRoute } from "./protected-route.tsx";
 import { NotFound } from "@/pages/not-found";
 import { lazy, Suspense } from "react";
 import { Loader } from "@/shared/ui/loader";
