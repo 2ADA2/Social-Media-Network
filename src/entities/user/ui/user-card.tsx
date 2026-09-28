@@ -1,4 +1,4 @@
-import { Avatar } from "@/shared/ui/Avatar/Avatar.tsx";
+import { Avatar } from "@/shared/ui/avatar";
 import "./user-card.css";
 
 export interface UserCardProps {
