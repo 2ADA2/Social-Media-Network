@@ -25,7 +25,7 @@ export const MainHeader = ({ hiddenNav = false }: HeaderProps) => {
   const [isNavBar, setIsNavBar] = useState(false);
 
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));   // ≥ 768px (если breakpoint переопределён)
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   const toggleNavBar = () => setIsNavBar((prev) => !prev);
 
@@ -35,7 +35,7 @@ export const MainHeader = ({ hiddenNav = false }: HeaderProps) => {
         sx={{
           justifyContent: 'space-between',
           height: { xs: 30, md: 68 },
-          minHeight: { xs: '30px !important', md: '68px !important' },   // ⚠️ важно
+          minHeight: { xs: '30px', md: '68px' },
           px: { xs: 1.5, md: 3 },
           fontFamily: 'var(--font-family-secondary), serif',
           bgcolor: 'var(--bg-primary)',
