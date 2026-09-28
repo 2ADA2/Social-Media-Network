@@ -7,8 +7,8 @@ import { useAuth } from "@/entities/user/model/use-auth.tsx";
 import { useUser } from "@/entities/user/model/use-user.tsx";
 
 export const CreatePost = () => {
-  const isAuth = useAuth();
-  const user = useUser();
+  const { isAuth } = useAuth();
+  const { user } = useUser();
 
   const { isOpen, open, close } = useCreatePost();
 
@@ -18,7 +18,7 @@ export const CreatePost = () => {
 
   return (
     <div className='create-post-card'>
-      <Avatar src={ user.avatar } size={ 32 }/>
+      <Avatar src={ user!.avatar } size={ 32 }/>
       <span>What's happening?</span>
       <Button onClick={ open }> Tell everyone </Button>
 

@@ -14,7 +14,7 @@ const ProfilePage = lazy(() => import('@/pages/profile'));
 
 
 export const RouterProvider = () => {
-  const isAuth = useAuth();
+  const { isAuth } = useAuth();
 
   return (
     <BrowserRouter>
