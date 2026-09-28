@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { setCredentials, userReducer } from '@/entities/user/model/user-slice';
-import { USER_DATA } from "@/app/store/user-data.ts";
+import { logout, setCredentials, userReducer } from '@/entities/user/model/user-slice';
+import { getMe } from "@/features/auth/me.ts";
 
 export const store = configureStore({
   reducer: {
@@ -11,9 +11,14 @@ export const store = configureStore({
 const token = localStorage.getItem('token');
 
 if (token) {
-  // check token
-
-  store.dispatch(setCredentials({ user: USER_DATA, token }));
+  (async () => {
+    try {
+      const user = await getMe(token);
+      store.dispatch(setCredentials({ user, token }));
+    } catch {
+      store.dispatch(logout());
+    }
+  })();
 }
 
 export type RootState = ReturnType<typeof store.getState>;

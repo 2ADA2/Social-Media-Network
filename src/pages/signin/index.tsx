@@ -6,14 +6,13 @@ import './sign-in.css';
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { PasswordInput } from "@/shared/ui/password-input";
-import { useAuth } from "@/entities/user/model/use-auth.tsx";
-import { USER_DATA } from "@/app/store/user-data.ts";
+import { useAuth } from "@/features/auth/use-auth.tsx";
 import { type SignInFormData, signInSchema } from "@/pages/signin/signin-schema.ts";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const SignIn = () => {
-  const { auth } = useAuth();
+  const { signin } = useAuth();
 
   const {
     control,
@@ -25,8 +24,11 @@ const SignIn = () => {
   });
 
   const onSubmit = async (data: SignInFormData) => {
-    auth(USER_DATA, "token");
-    console.log(data);
+    try {
+      await signin(data.email, data.password);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (

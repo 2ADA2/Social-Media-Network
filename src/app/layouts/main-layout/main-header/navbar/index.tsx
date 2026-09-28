@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Avatar } from "@/shared/ui/avatar";
 import { useEffect } from "react";
 import { useBlockScroll } from "@/shared/lib/hooks/block-scroll/use-block-scroll.tsx";
-import { useAuth } from "@/entities/user/model/use-auth.tsx";
+import { useAuth } from "@/features/auth/use-auth.tsx";
 import { useUser } from "@/entities/user/model/use-user.tsx";
 
 interface NavBarProps {
