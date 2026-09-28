@@ -1,4 +1,4 @@
-import React, { type ChangeEvent, type InputHTMLAttributes } from "react";
+import React, { type ChangeEvent, type InputHTMLAttributes, useRef } from "react";
 import "./file-input.css";
 import DownloadIcon from "@/shared/assets/icons/download-file.svg?react";
 
@@ -7,6 +7,8 @@ export interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const FileInput = ({ onChange, fileName = '', ...props }: FileInputProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
 
@@ -22,13 +24,22 @@ export const FileInput = ({ onChange, fileName = '', ...props }: FileInputProps)
     onChange?.(fakeEvent);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLLabelElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      inputRef?.current?.click();
+    }
+  };
+
   return (
     <label
       className='file-input-label'
       onDragOver={ (e) => e.preventDefault() }
       onDrop={ handleDrop }
+      tabIndex={ 0 }
+      onKeyDown={ handleKeyDown }
     >
-      <input type={ "file" } { ...props } onChange={ onChange }/>
+      <input type={ "file" } { ...props } onChange={ onChange } ref={ inputRef }/>
       <div className='file-input-container'>
         <div>
           <DownloadIcon/>

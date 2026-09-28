@@ -20,8 +20,9 @@ export const StyledTitle = styled.span`
   }
 `;
 
-export const StyledTextArea = styled(TextArea)`
+export const StyledTextArea = styled(TextArea)<{ $filled: boolean }>`
   width: 100%;
+  margin-bottom: ${({ $filled }) => $filled ? '16px' : 0};
 `;
 
 export const StyledInput = styled(Input)`

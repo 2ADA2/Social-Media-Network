@@ -1,53 +1,30 @@
 import { type InputHTMLAttributes, type ReactNode } from "react";
-import InfoIcon from "@/shared/assets/icons/info-filled.svg?react";
 import "./textarea.css";
+import { ShowInputInfo } from "@/shared/ui/show-input-info/show-input-info.tsx";
 
 interface InputProps extends InputHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
   icon?: ReactNode;
   value: string;
   info?: string;
-  hasError?: boolean;
   errorMessage?: string;
 }
 
 const FILLED_LIMIT = 50;
 
-export const TextArea = ({ icon, label, info, hasError, value, errorMessage, ...props }: InputProps) => {
+export const TextArea = ({ icon, label, info, value, errorMessage, ...props }: InputProps) => {
   const isFilled = value.length > FILLED_LIMIT;
 
-  const showInfo = () => {
-    if (hasError) {
-      return (
-        <div className='info error-info'>
-          <InfoIcon className='ignore'/>
-          <small>{ errorMessage }</small>
-        </div>
-      );
-    }
-
-    if (info) {
-      return (
-        <div className='info'>
-          <InfoIcon className='ignore'/>
-          <small>{ info }</small>
-        </div>
-      );
-    }
-
-    return null;
-  };
-
   return (
-    <label className={ `textarea-label ${ hasError ? 'error' : '' } ${ isFilled ? 'filled' : '' }` }>
+    <label className={ `textarea-label ${ errorMessage ? 'error' : '' } ${ isFilled ? 'filled' : '' }` }>
       <div>
         { icon && <div className="textarea-icon">{ icon }</div> }
         <span>{ label }</span>
       </div>
 
-      <textarea { ...props } />
+      <textarea { ...props } value={ value } />
 
-      { showInfo() }
+      <ShowInputInfo error={ errorMessage } info={ info }/>
     </label>
   );
 };

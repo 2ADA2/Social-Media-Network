@@ -6,9 +6,27 @@ import "./create-comment.css";
 
 export const CreateComment = () => {
   const [comment, setComment] = useState('');
+  const [error, setError] = useState('');
+
+  const check = (length: number) => {
+    if (1 > length || length > 200) {
+      setError("Comment length at least 1, at most 200");
+      return false;
+    }
+
+    setError('');
+    return true;
+  };
 
   const changeComment = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
+    check(e.target.value.length);
+  };
+
+  const createComment = () => {
+    if (check(comment.length)) {
+      setComment("");
+    }
   };
 
   return (
@@ -19,9 +37,9 @@ export const CreateComment = () => {
         placeholder='Write a comment...'
         onChange={ changeComment }
         value={ comment }
+        errorMessage={ error }
       />
-      <Button>Add a comment</Button>
+      <Button type="button" onClick={ createComment }>Add a comment</Button>
     </div>
-
   );
 };

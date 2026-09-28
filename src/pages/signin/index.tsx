@@ -1,4 +1,3 @@
-import { type ChangeEvent, type SubmitEvent, useState } from 'react';
 import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
@@ -9,24 +8,25 @@ import { ROUTES } from "@/shared/config/routes.ts";
 import { PasswordInput } from "@/shared/ui/password-input";
 import { useAuth } from "@/entities/user/model/use-auth.tsx";
 import { USER_DATA } from "@/app/store/user-data.ts";
+import { type SignInFormData, signInSchema } from "@/pages/signin/signin-schema.ts";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
   const { auth } = useAuth();
 
-  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    control,
+    handleSubmit,
+  } = useForm<SignInFormData>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: { email: '', password: '' },
+    mode: 'onChange',
+  });
+
+  const onSubmit = async (data: SignInFormData) => {
     auth(USER_DATA, "token");
-  };
-
-  const changeEmail = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const changePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
+    console.log(data);
   };
 
   return (
@@ -40,26 +40,36 @@ const SignIn = () => {
           </p>
         </div>
 
-        <form className="auth-form" onSubmit={ handleSubmit }>
-          <Input
-            label='Email'
-            type='email'
-            name='email'
-            placeholder='Enter email'
-            icon={ <MailIcon/> }
-            value={ email }
-            onChange={ changeEmail }
-            required
+        <form className="auth-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field, fieldState: { error } }) => (
+              <Input
+                {...field}
+                label="Email"
+                type="email"
+                placeholder="Enter email"
+                icon={<MailIcon />}
+                error={error?.message}
+                custom
+              />
+            )}
           />
-          <PasswordInput
-            label='Password'
-            name='password'
-            placeholder='Enter password'
-            minLength={ 6 }
-            icon={ <EyeIcon/> }
-            value={ password }
-            onChange={ changePassword }
-            required
+
+          <Controller
+            name="password"
+            control={control}
+            render={({ field, fieldState: { error } }) => (
+              <PasswordInput
+                {...field}
+                label="Password"
+                placeholder="Enter password"
+                icon={<EyeIcon />}
+                error={error?.message}
+                custom
+              />
+            )}
           />
           <Button type="submit">
             Sign in

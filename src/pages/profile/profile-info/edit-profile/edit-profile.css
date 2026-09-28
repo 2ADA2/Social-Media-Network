@@ -9,9 +9,11 @@
     flex-direction: column;
     gap: 24px;
 
-    label {
-      width: 100%;
+    label.error {
+      margin-bottom: 12px;
+    }
 
+    label {
       input {
         max-width: 100%;
       }
@@ -20,6 +22,11 @@
         width: 320px;
         max-width: 100%;
         height: 110px;
+      }
+
+      .info {
+        position: absolute;
+        bottom: -22px;
       }
     }
 
@@ -60,6 +67,10 @@
 @media (min-width: 700px) {
   .profile-page .edit-profile , .edit-profile form{
     gap: 32px;
+
+    label.error {
+      margin-bottom: 4px;
+    }
 
     label textarea {
       width: 100%;
