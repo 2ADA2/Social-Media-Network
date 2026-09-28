@@ -1,5 +1,5 @@
-import { TextArea } from "../../shared/ui/text-area";
-import { Button } from "../../shared/ui/button";
+import { TextArea } from "@/shared/ui/text-area";
+import { Button } from "@/shared/ui/button";
 import PenIcon from "@/shared/assets/icons/pen.svg?react";
 import { type ChangeEvent, useState } from "react";
 import "./create-comment.css";

@@ -1,5 +1,5 @@
 import "./profile-page.css";
-import { Tabs } from "../../shared/ui/tabs";
+import { Tabs } from "@/shared/ui/tabs";
 import { ProfileInfo } from "@/pages/profile/profile-info";
 import { Statistics } from "./statistics";
 import { useSearchParams } from "react-router-dom";
