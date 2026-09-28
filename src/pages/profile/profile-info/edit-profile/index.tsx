@@ -43,7 +43,7 @@ export const EditProfile = () => {
           </CoverButton>
         </div>
       </div>
-      <form onSubmit={ handleSubmit(saveChanges) }>
+      <form onSubmit={ handleSubmit(saveChanges) } noValidate>
         <Controller
           name="username"
           control={ control }
@@ -67,7 +67,6 @@ export const EditProfile = () => {
             <Input
               { ...field }
               label="Email"
-              type="email"
               placeholder="Enter email"
               icon={ <MailIcon/> }
               error={ error?.message }

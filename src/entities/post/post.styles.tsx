@@ -49,12 +49,18 @@ export const Description = styled.p`
   color: var(--color-primary);
 `;
 
-export const PostControl = styled.footer`
+export const PostControl = styled.footer<{ $auth: boolean }>`
   display: flex;
   gap: 16px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  ${({ $auth }) => !$auth && css`
+    .cover-button {
+      cursor: default;
+    }
+  `}
 `;
 
 export const ControlContainer = styled.div`
@@ -76,7 +82,7 @@ export const ControlText = styled.span`
 export const StyledSVG = styled.div<{ $active: boolean }>`
   display: flex;
   align-items: center;
-  
+
   svg {
     width: 18px;
 

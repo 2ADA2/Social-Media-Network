@@ -4,7 +4,6 @@ import CommentIcon from "@/shared/assets/icons/comment.svg?react";
 import { CoverButton } from "@/shared/ui/cover-button";
 import ArrowDown from "@/shared/assets/icons/arrow-down.svg?react";
 import ArrowUp from "@/shared/assets/icons/arrow-up.svg?react";
-import "./post.css";
 import { useAuth } from "@/entities/user/model/use-auth.tsx";
 import { Avatar } from "@/shared/ui/avatar";
 import { CreateComment } from "@/features/create-comment";
@@ -75,7 +74,7 @@ export const Post = ({
 
       <Description>{ description }</Description>
 
-      <PostControl>
+      <PostControl $auth={isAuth}>
         <CoverButton onClick={ toggleLike }>
           <ControlContainer>
             <StyledSVG $active={ liked }>

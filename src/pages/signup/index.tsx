@@ -10,8 +10,7 @@ import { useAuth } from "@/entities/user/model/use-auth.tsx";
 import { USER_DATA } from "@/app/store/user-data.ts";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signupSchema } from "@/pages/signup/signup-schema.ts";
-import type { SignInFormData } from "@/pages/signin/signin-schema.ts";
+import { type SignUpFormData, signupSchema } from "@/pages/signup/signup-schema.ts";
 
 const SignUp = () => {
   const { auth } = useAuth();
@@ -19,13 +18,13 @@ const SignUp = () => {
   const {
     control,
     handleSubmit,
-  } = useForm<SignInFormData>({
+  } = useForm<SignUpFormData>({
     resolver: zodResolver(signupSchema),
     defaultValues: { email: '', password: '' },
     mode: 'onChange',
   });
 
-  const onSubmit = async (data: SignInFormData) => {
+  const onSubmit = async (data: SignUpFormData) => {
     auth(USER_DATA, "token");
     console.log(data);
   };
