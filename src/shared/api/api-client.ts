@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { store } from "@/app/store/user-store.ts";
 import { logout } from "@/entities/user/model/user-slice.ts";
+import { refreshRequest } from "@/features/auth/refresh.ts";
 
 export const apiClient = axios.create({
   baseURL: '/',
@@ -24,16 +25,11 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const original = error.config;
-    const code = error.response?.data?.code;
-
-
-    if (error.response?.status === 401 && code === 'TOKEN_EXPIRED' && !original._retry) {
+    if (error.response?.status === 401 && !original._retry) {
       original._retry = true;
 
       try {
-        const { data } = await axios.post('/api/refresh', null, {
-          withCredentials: true,
-        });
+        const data = await refreshRequest();
 
         localStorage.setItem('token', data.token);
 

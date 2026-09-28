@@ -5,12 +5,14 @@ interface UserState {
   userData: User | null;
   token: string | null;
   isAuth: boolean;
+  isInit: boolean
 }
 
 const initialState: UserState = {
   userData: null,
   token: null,
   isAuth: false,
+  isInit: false,
 };
 
 const userSlice = createSlice({
@@ -33,8 +35,11 @@ const userSlice = createSlice({
       state.token = null;
       state.isAuth = false;
     },
+    initUserStore: (state) => {
+      state.isInit = true;
+    },
   },
 });
 
-export const { setCredentials, setUser, logout } = userSlice.actions;
+export const { setCredentials, setUser, logout, initUserStore } = userSlice.actions;
 export const userReducer = userSlice.reducer;

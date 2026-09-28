@@ -10,12 +10,9 @@ export const useAuth = () => {
   const dispatch = useAppDispatch();
 
   const auth = async (token: string) => {
-    const user = await getMe(token);
-    console.log(user);
+    const user = await getMe();
     dispatch(setCredentials({ user, token }));
   };
-
-  console.log(isAuth);
 
   const signin = async (email: string, password: string) => {
     const { user, token } = await signinRequest({ email, password });

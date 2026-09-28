@@ -16,7 +16,7 @@ export const signinRequest = async (params: SigninParams): Promise<SigninRespons
   const res = await fetch('/api/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',   // ← для refresh-cookie
+    credentials: 'include',
     body: JSON.stringify(params),
   });
 
