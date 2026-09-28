@@ -1,13 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { MainPage } from "@/pages/main";
-import { ProfilePage } from "@/pages/profile";
 import { useAuth } from "@/entities/user/model/use-auth.tsx";
 import { ProtectedRoute } from "./ProtectedRoute.tsx";
-import { SignIn } from "@/pages/signin";
-import { SignUp } from "@/pages/signup";
 import { NotFound } from "@/pages/not-found";
+import { lazy, Suspense } from "react";
+import { Loader } from "@/shared/ui/loader";
 import { MainLayout } from "@/app/layouts/main-layout";
+
+const SignIn = lazy(() => import('@/pages/signin'));
+const SignUp = lazy(() => import('@/pages/signup'));
+const ProfilePage = lazy(() => import('@/pages/profile'));
 
 
 export const RouterProvider = () => {
@@ -18,7 +21,11 @@ export const RouterProvider = () => {
       <Routes>
         <Route element={ <MainLayout/> }>
           <Route element={ <ProtectedRoute condition={ isAuth } route={ ROUTES.SIGNIN }/> }>
-            <Route path={ ROUTES.PROFILE } element={ <ProfilePage/> }/>
+            <Route path={ROUTES.PROFILE} element={
+              <Suspense fallback={ <Loader/> }>
+                <ProfilePage/>
+              </Suspense>
+            }/>
           </Route>
 
           <Route path={ ROUTES.HOME } element={ <MainPage/> }/>
@@ -26,8 +33,16 @@ export const RouterProvider = () => {
 
         <Route element={ <MainLayout hiddenNav={ true }/> }>
           <Route element={ <ProtectedRoute condition={ !isAuth } route={ ROUTES.HOME }/> }>
-            <Route path={ ROUTES.SIGNUP } element={ <SignUp/> }/>
-            <Route path={ ROUTES.SIGNIN } element={ <SignIn/> }/>
+            <Route path={ ROUTES.SIGNUP } element={
+              <Suspense fallback={ <Loader/> }>
+                <SignUp/>
+              </Suspense>
+            }/>
+            <Route path={ ROUTES.SIGNIN } element={
+              <Suspense fallback={ <Loader/> }>
+                <SignIn/>
+              </Suspense>
+            }/>
           </Route>
         </Route>
 
