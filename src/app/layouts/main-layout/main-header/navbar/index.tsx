@@ -21,7 +21,7 @@ export const NavBar = ({ setNavBar }: NavBarProps) => {
     blockScroll();
 
     return () => unblockScroll();
-  }, [blockScroll, unblockScroll]);
+  }, []);
 
 
   return (
