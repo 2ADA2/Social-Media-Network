@@ -8,6 +8,16 @@ import "./post.css";
 import { useAuth } from "@/entities/user/model/use-auth.tsx";
 import { Avatar } from "@/shared/ui/avatar";
 import { CreateComment } from "@/features/create-comment";
+import {
+  ControlContainer, ControlText,
+  Description,
+  HeaderData,
+  PostComments, PostControl,
+  PostDate,
+  PostHeader,
+  PostImage, StyledArrowIcon,
+  StyledPost, StyledSVG,
+} from "@/entities/post/post.styles.tsx";
 
 interface PostProps {
   title: string;
@@ -48,53 +58,59 @@ export const Post = ({
   };
 
   return (
-    <article className={ `post ${ isAuth ? "" : "blocked" }` }>
-      <header className="post-header">
+    <StyledPost>
+      <PostHeader>
         <Avatar src={ avatarUrl } alt={ alt } size={ 48 }/>
-        <div className="header-data">
+        <HeaderData>
           <div>{ author }</div>
-          <div className='post-date'>{ date }</div>
-        </div>
-      </header>
+          <PostDate>{ date }</PostDate>
+        </HeaderData>
+      </PostHeader>
 
-      { imgUrl && <img
-          className="post-image"
+      { imgUrl && <PostImage
           loading="lazy"
           src={ imgUrl }
           alt={ alt }
       /> }
 
-      <p>{ description }</p>
+      <Description>{ description }</Description>
 
-      <footer className="post-control">
+      <PostControl>
         <CoverButton onClick={ toggleLike }>
-          <div>
-            <HeartIcon className={ liked ? "active" : "" }/>
-            <span className='control-text'>{ liked ? likes + 1 : likes } likes</span>
-          </div>
+          <ControlContainer>
+            <StyledSVG $active={ liked }>
+              <HeartIcon/>
+            </StyledSVG>
+            <ControlText className='control-text'>{ liked ? likes + 1 : likes } likes</ControlText>
+          </ControlContainer>
         </CoverButton>
 
         <CoverButton onClick={ toggleComments }>
-          <div>
-            <CommentIcon/>
-            <span className='control-text'>{
+          <ControlContainer>
+            <StyledSVG $active={ false }>
+              <CommentIcon/>
+            </StyledSVG>
+            <ControlText className='control-text'>{
               isAuth ? ` ${ comments.length } Comments` : "You have to login to see the comments"
-            } </span>
-            {
-              isAuth &&
-              (showComments ? <ArrowDown className='arrow-icon'/> : <ArrowUp className={ 'arrow-icon' }/>)
-            }
-          </div>
+            } </ControlText>
+
+            <StyledArrowIcon>
+              {
+                isAuth &&
+                (showComments ? <ArrowDown className='arrow-icon'/> : <ArrowUp className={ 'arrow-icon' }/>)
+              }
+            </StyledArrowIcon>
+          </ControlContainer>
         </CoverButton>
-      </footer>
+      </PostControl>
       { isAuth && showComments && <>
-          <ol className='post-comments'>
+          <PostComments>
             { comments.map(
               (comment, i) => <li key={ i }>{ comment }</li>,
             ) }
-          </ol>
+          </PostComments>
           <CreateComment/>
       </> }
-    </article>
+    </StyledPost>
   );
 };
