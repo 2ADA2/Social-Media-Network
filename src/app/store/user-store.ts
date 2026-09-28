@@ -18,8 +18,11 @@ if (token) {
       store.dispatch(initUserStore());
     } catch {
       store.dispatch(logout());
+      store.dispatch(initUserStore());
     }
   })();
+} else {
+  store.dispatch(initUserStore());
 }
 
 export type RootState = ReturnType<typeof store.getState>;

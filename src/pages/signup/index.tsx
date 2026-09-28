@@ -1,6 +1,6 @@
 import { Input } from "@/shared/ui/input";
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
-import EyeIcon from '@/shared/assets/icons/eye.svg?react';
+import KeyboardIcon from '@/shared/assets/icons/keyboard.svg?react';
 import './sign-up.css';
 import { Button } from "@/shared/ui/button";
 import { Link } from "react-router-dom";
@@ -65,7 +65,7 @@ const SignUp = () => {
                   { ...field }
                   label="Password"
                   placeholder="Enter password"
-                  icon={ <EyeIcon/> }
+                  icon={ <KeyboardIcon/> }
                   error={ error?.message }
                   custom
                 />
