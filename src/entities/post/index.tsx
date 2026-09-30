@@ -49,9 +49,9 @@ export const Post = ({ post }: PostProps) => {
   return (
     <StyledPost>
       <PostHeader>
-        <Avatar src={ post.authorPhoto } alt={ `Post ${ post.id }` } size={ 48 }/>
+        <Avatar src={ post.author.profileImage || "" } alt={ `Post ${ post.id }` } size={ 48 }/>
         <HeaderData>
-          <div>Author #{ post.authorId }</div>
+          <div>{ post.author.firstName } { post.author.secondName }</div>
           <PostDate>{ new Date(post.creationDate).toLocaleDateString() }</PostDate>
         </HeaderData>
       </PostHeader>
