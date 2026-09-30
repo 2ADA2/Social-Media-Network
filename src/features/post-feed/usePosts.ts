@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { type PostsParams, postsQueries } from "@/features/post-feed/posts-query.ts";
+import { postsQueries } from '@/features/post-feed/posts-query';
 
-export const usePosts = (params?: PostsParams) => {
-  return useQuery(postsQueries.posts(params ?? {}));
+export const usePosts = (limit = 20, offset = 0) => {
+  return useQuery(postsQueries.list(limit, offset));
 };
