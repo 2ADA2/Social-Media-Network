@@ -14,6 +14,7 @@ export const signupRequest = async (params: SignupParams): Promise<SignupRespons
   const res = await fetch('/api/signup', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify(params),
   });
 
