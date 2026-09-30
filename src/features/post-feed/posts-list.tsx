@@ -3,13 +3,14 @@ import { Loader } from "@/shared/ui/loader";
 import { usePosts } from "@/features/post-feed/usePosts.ts";
 
 export const PostsList = () => {
-  const { data, isPending, isError } = usePosts({ limit: 20 });
+  const { data, isPending, isError, error } = usePosts(20);
 
   if (isPending) {
     return <Loader/>;
   }
+
   if (isError) {
-    throw new Error("Cannot get posts");
+    throw new Error(error.message);
   }
 
   return (
