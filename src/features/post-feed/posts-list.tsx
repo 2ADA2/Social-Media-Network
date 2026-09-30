@@ -4,6 +4,7 @@ import { usePosts } from "@/features/post-feed/usePosts.ts";
 import { useIntersectionObserver } from "@/shared/lib/hooks/useIntersecionObserver";
 import { useEffect, useState } from "react";
 import type { Post as PostType } from "@/entities/post/types.ts";
+import "./posts-list.css";
 
 const LIMIT = 20;
 
@@ -36,7 +37,11 @@ export const PostsList = () => {
   const ref = useIntersectionObserver({ onIntersect: loadPosts });
 
   if (isPending && !posts.length) {
-    return <Loader/>;
+    return (
+      <div className='posts-list-loader-container'>
+        <Loader/>
+      </div>
+    );
   }
 
   if (isError) {
@@ -44,11 +49,11 @@ export const PostsList = () => {
   }
 
   return (
-    <>
+    <div className='posts-container'>
       { posts.map((post, i) => <Post key={ i } post={ post }/>) }
       { hasMore && <Loader isBlock={ false }/> }
 
       <div ref={ ref }></div>
-    </>
+    </div>
   );
 };

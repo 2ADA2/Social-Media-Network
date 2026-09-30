@@ -12,9 +12,7 @@ export const MainPage = () => {
     <div className='main-page'>
       <CreatePost/>
 
-      <div className='posts-container'>
-        <PostsList/>
-      </div>
+      <PostsList/>
 
       <div className={ 'recommend-sidebars' }>
         { isAuth && (

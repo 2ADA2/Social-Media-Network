@@ -7,24 +7,8 @@
   color: var(--color-muted);
 }
 
-.posts-container{
-  width: 100%;
-  margin: 16px 0;
-
-  .post:last-child{
-    border: none;
-  }
-}
-
 .recommend-sidebars{
   display: none;
-}
-
-@media (min-width: 768px) {
-  .posts-container {
-    width: auto;
-    border: 2px solid var(--border-primary);
-  }
 }
 
 @media (min-width: 1330px) {
