@@ -3,14 +3,16 @@ import { selectIsAuthenticated } from '@/entities/user/model/selectors.ts';
 import { logout as logoutAction, setCredentials } from "@/entities/user/model/user-slice.ts";
 import { signinRequest } from "@/features/auth/signin.ts";
 import { signupRequest } from "@/features/auth/signup.ts";
-import { getMe } from "@/features/auth/me.ts";
+import { userQueries } from "@/features/auth/me.ts";
+import { queryClient } from "@/shared/api/queryClient.ts";
+import { fetchLogout } from "@/features/auth/logout.ts";
 
 export const useAuth = () => {
   const isAuth = useAppSelector(selectIsAuthenticated);
   const dispatch = useAppDispatch();
 
   const auth = async (token: string) => {
-    const user = await getMe();
+    const user = await queryClient.fetchQuery(userQueries.me());
     dispatch(setCredentials({ user, token }));
   };
 
@@ -33,6 +35,8 @@ export const useAuth = () => {
   const logout = () => {
     localStorage.removeItem("token");
     dispatch(logoutAction());
+    queryClient.clear();
+    fetchLogout();
   };
 
   return {

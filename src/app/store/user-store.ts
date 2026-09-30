@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { initUserStore, logout, setCredentials, userReducer } from '@/entities/user/model/user-slice';
-import { getMe } from "@/features/auth/me.ts";
+import { userQueries } from "@/features/auth/me.ts";
+import { queryClient } from "@/shared/api/queryClient.ts";
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,7 @@ const token = localStorage.getItem('token');
 if (token) {
   (async () => {
     try {
-      const user = await getMe();
+      const user = await queryClient.fetchQuery(userQueries.me());
       store.dispatch(setCredentials({ user, token }));
       store.dispatch(initUserStore());
     } catch {
