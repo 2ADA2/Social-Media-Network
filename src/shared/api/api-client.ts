@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { store } from "@/app/store/user-store.ts";
-import { logout } from "@/entities/user/model/user-slice.ts";
-import { refreshRequest } from "@/features/auth/refresh.ts";
+import { store } from '@/app/store/user-store';
+import { logout } from '@/entities/user/model/user-slice';
+import { refreshRequest } from '@/features/auth/refresh';
+import { fetchLogout } from "@/features/auth/logout.ts";
 
 export const apiClient = axios.create({
   baseURL: '/',
@@ -11,38 +12,56 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
-    config.headers.Authorization = `Bearer ${ token }`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
 
+let refreshPromise: Promise<string> | null = null;
+
+const getNewToken = (): Promise<string> => {
+  refreshPromise ??= refreshRequest()
+    .then((data) => {
+      localStorage.setItem('token', data.token);
+      return data.token;
+    })
+    .finally(() => {
+      refreshPromise = null;
+    });
+
+  return refreshPromise;
+};
+
 const forceLogout = () => {
   localStorage.removeItem('token');
   store.dispatch(logout());
+  fetchLogout();
 };
 
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const original = error.config;
-    if (error.response?.status === 401 && !original._retry) {
-      original._retry = true;
+    const status = error.response?.status;
 
-      try {
-        const data = await refreshRequest();
-
-        localStorage.setItem('token', data.token);
-
-        original.headers.Authorization = `Bearer ${ data.token }`;
-        return apiClient(original);
-      } catch {
-        forceLogout();
-        return Promise.reject(error);
-      }
+    if (status !== 401) {
+      return Promise.reject(error);
     }
 
-    forceLogout();
+    if (original._retry) {
+      forceLogout();
+      return Promise.reject(error);
+    }
 
-    return Promise.reject(error);
+    original._retry = true;
+
+    try {
+      const newToken = await getNewToken();
+      original.headers.Authorization = `Bearer ${newToken}`;
+      return apiClient(original);
+    } catch {
+      forceLogout();
+      return Promise.reject(error);
+    }
   },
 );

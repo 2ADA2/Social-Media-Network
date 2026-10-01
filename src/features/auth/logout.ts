@@ -1,7 +1,11 @@
 export const fetchLogout = async () => {
-  fetch('/api/logout', {
+  const res = await fetch('/api/logout', {
     method: 'POST',
     credentials: 'include',
   });
+
+  if (!res.ok) {
+    throw new Error('logout failed:' + res.status);
+  }
 };
 

@@ -17,9 +17,8 @@ export const useAuth = () => {
   };
 
   const signin = async (email: string, password: string) => {
-    const { user, token } = await signinRequest({ email, password });
+    const { token } = await signinRequest({ email, password });
     localStorage.setItem('token', token);
-    dispatch(setCredentials({ user, token }));
     auth(token);
   };
 
@@ -32,11 +31,16 @@ export const useAuth = () => {
     await signin(data.email, data.password);
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    dispatch(logoutAction());
-    queryClient.clear();
-    fetchLogout();
+  const logout = async () => {
+    try {
+      await fetchLogout();
+    } catch (err) {
+      console.error('Logout request failed:', err);
+    } finally {
+      localStorage.removeItem('token');
+      dispatch(logoutAction());
+      queryClient.clear();
+    }
   };
 
   return {
