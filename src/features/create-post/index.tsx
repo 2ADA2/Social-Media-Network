@@ -1,7 +1,7 @@
 import { Card, Text, StyledButton, StyledAvatar } from './create-post.styles';
 import { useCreatePost } from "@/features/create-post/use-create-post.ts";
 import { CreatePostModal } from "@/features/create-post/create-post-modal/create-post-modal.tsx";
-import { useAuth } from "@/entities/user/model/use-auth.tsx";
+import { useAuth } from "@/features/auth/use-auth.tsx";
 import { useUser } from "@/entities/user/model/use-user.tsx";
 
 export const CreatePost = () => {

@@ -1,19 +1,18 @@
 import { Input } from "@/shared/ui/input";
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
-import EyeIcon from '@/shared/assets/icons/eye.svg?react';
+import KeyboardIcon from '@/shared/assets/icons/keyboard.svg?react';
 import './sign-up.css';
 import { Button } from "@/shared/ui/button";
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { PasswordInput } from "@/shared/ui/password-input";
-import { useAuth } from "@/entities/user/model/use-auth.tsx";
-import { USER_DATA } from "@/app/store/user-data.ts";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type SignUpFormData, signupSchema } from "@/pages/signup/signup-schema.ts";
+import { useAuth } from "@/features/auth/use-auth.tsx";
 
 const SignUp = () => {
-  const { auth } = useAuth();
+  const { signup } = useAuth();
 
   const {
     control,
@@ -25,8 +24,12 @@ const SignUp = () => {
   });
 
   const onSubmit = async (data: SignUpFormData) => {
-    auth(USER_DATA, "token");
-    console.log(data);
+    try {
+      await signup(data);
+    } catch (e) {
+      alert("Cannot signup: " + e);
+      console.error(e);
+    }
   };
 
   return (
@@ -66,7 +69,7 @@ const SignUp = () => {
                   { ...field }
                   label="Password"
                   placeholder="Enter password"
-                  icon={ <EyeIcon/> }
+                  icon={ <KeyboardIcon/> }
                   error={ error?.message }
                   custom
                 />

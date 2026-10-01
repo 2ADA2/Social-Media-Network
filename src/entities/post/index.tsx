@@ -4,7 +4,7 @@ import CommentIcon from "@/shared/assets/icons/comment.svg?react";
 import { CoverButton } from "@/shared/ui/cover-button";
 import ArrowDown from "@/shared/assets/icons/arrow-down.svg?react";
 import ArrowUp from "@/shared/assets/icons/arrow-up.svg?react";
-import { useAuth } from "@/entities/user/model/use-auth.tsx";
+import { useAuth } from "@/features/auth/use-auth.tsx";
 import { Avatar } from "@/shared/ui/avatar";
 import { CreateComment } from "@/features/create-comment";
 import {
