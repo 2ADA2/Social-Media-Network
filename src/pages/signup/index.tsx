@@ -27,6 +27,7 @@ const SignUp = () => {
     try {
       await signup(data);
     } catch (e) {
+      alert("Cannot signup: " + e);
       console.error(e);
     }
   };

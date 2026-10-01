@@ -27,6 +27,7 @@ const SignIn = () => {
     try {
       await signin(data.email, data.password);
     } catch (e) {
+      alert("Cannot signup: " + e);
       console.error(e);
     }
   };
