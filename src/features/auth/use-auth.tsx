@@ -17,9 +17,14 @@ export const useAuth = () => {
   };
 
   const signin = async (email: string, password: string) => {
-    const { token } = await signinRequest({ email, password });
-    localStorage.setItem('token', token);
-    auth(token);
+    try {
+      const { token } = await signinRequest({ email, password });
+      await auth(token);
+      localStorage.setItem('token', token);
+    } catch (e) {
+      localStorage.removeItem('token');
+      throw e;
+    }
   };
 
   const signup = async (data: {
