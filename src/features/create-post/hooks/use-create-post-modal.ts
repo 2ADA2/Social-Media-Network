@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useCreatePost = () => {
+export const useCreatePostModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const open = () => setIsOpen(true);
