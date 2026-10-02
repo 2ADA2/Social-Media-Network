@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/app/providers/theme-provider";
 import { RouterProvider } from "@/app/providers/router-provider";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/shared/api/queryClient.ts";
+import { NotificationsProvider } from "@/app/providers/notifications-context";
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
       <Provider store={ store }>
         <MuiThemeProvider>
           <ThemeProvider>
-            <RouterProvider/>
+            <NotificationsProvider>
+              <RouterProvider/>
+            </NotificationsProvider>
           </ThemeProvider>
         </MuiThemeProvider>
       </Provider>
