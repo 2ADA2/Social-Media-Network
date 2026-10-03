@@ -41,6 +41,10 @@
     border-color: var(--input-border-active);
   }
 
+  textarea:disabled {
+    color: var(--color-muted);
+  }
+
   textarea:focus ~ .info {
     display: flex;
   }
