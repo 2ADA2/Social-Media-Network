@@ -3,6 +3,9 @@ import { graphqlClient } from '@/shared/api/graphql-client';
 import type { Post, PostsPage } from '@/entities/post/types';
 import { gql } from 'graphql-request';
 
+const STALE_TIME = 5 * 60 * 1000;
+const POSTS_LIMIT = 20;
+
 const ALL_POSTS_QUERY = gql`
   query AllPosts($limit: Int, $offset: Int) {
     allPosts(limit: $limit, offset: $offset) {
@@ -21,6 +24,10 @@ const ALL_POSTS_QUERY = gql`
         firstName
         secondName
         profileImage
+      }
+      likedByUsers {
+        id
+        username
       }
     }
   }
@@ -59,13 +66,13 @@ export const postsQueries = {
     queryOptions({
       queryKey: ['posts'],
       queryFn: () => fetchPosts(),
-      staleTime: 5 * 60 * 1000,
+      staleTime: STALE_TIME,
     }),
 
-  list: (limit = 20, offset = 0) =>
+  list: (limit = POSTS_LIMIT, offset = 0) =>
     queryOptions({
       queryKey: ['posts', { limit, offset }],
       queryFn: () => fetchPosts(limit, offset),
-      staleTime: 5 * 60 * 1000,
+      staleTime: STALE_TIME,
     }),
 };
