@@ -6,13 +6,11 @@ import ArrowDown from '@/shared/assets/icons/arrow-down.svg?react';
 import ArrowUp from '@/shared/assets/icons/arrow-up.svg?react';
 import { useAuth } from '@/features/auth/use-auth';
 import { Avatar } from '@/shared/ui/avatar';
-import { CreateComment } from '@/features/create-comment';
 import {
   ControlContainer,
   ControlText,
   Description,
   HeaderData,
-  PostComments,
   PostControl,
   PostDate,
   PostHeader,
@@ -25,6 +23,7 @@ import type { Post as PostType } from '@/entities/post/types';
 import { useLikePost } from "@/features/like-post/use-like-post.ts";
 import { useAppSelector } from "@/app/store/hooks.ts";
 import { selectUserId } from "@/entities/user/model/selectors.ts";
+import { PostComments } from "@/entities/post/post-comments.tsx";
 
 interface PostProps {
   post: PostType;
@@ -107,10 +106,7 @@ export const Post = ({ post }: PostProps) => {
       </PostControl>
 
       { isAuth && showComments && (
-        <>
-          <PostComments/>
-          <CreateComment/>
-        </>
+        <PostComments postId={post.id} />
       ) }
     </StyledPost>
   );
