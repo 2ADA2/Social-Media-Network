@@ -17,6 +17,7 @@ export interface Post {
   creationDate: string;
   modifiedDate: string;
   author: PostAuthor;
+  likedByUsers: { id: number }[];
 }
 
 export interface PostsPage {
