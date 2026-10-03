@@ -23,13 +23,28 @@ import {
 } from './post.styles';
 import type { Post as PostType } from '@/entities/post/types';
 import { useLikePost } from "@/features/like-post/use-like-post.ts";
+import { useAppSelector } from "@/app/store/hooks.ts";
+import { selectUserId } from "@/entities/user/model/selectors.ts";
 
 interface PostProps {
   post: PostType;
 }
 
+const checkLiked = (likes: { id: number }[], userId: number) => {
+    if (userId === -1) {
+      return false;
+    }
+
+    return likes.some((user) => user.id === userId);
+  }
+;
+
 export const Post = ({ post }: PostProps) => {
   const { isAuth } = useAuth();
+
+  const currentUserId = Number(useAppSelector(selectUserId)) || -1;
+  const [liked, setLiked] = useState(checkLiked(post.likedByUsers, currentUserId));
+  const [likes, setLikes] = useState(post.likesCount);
   const [showComments, setShowComments] = useState(false);
 
   const { mutate: toggleLike, isPending: isLiking } = useLikePost();
@@ -39,7 +54,9 @@ export const Post = ({ post }: PostProps) => {
       return;
     }
 
-    toggleLike({ postId: post.id, liked: false });
+    toggleLike({ postId: post.id, liked: liked });
+    setLikes(prev => liked ? prev - 1 : prev + 1);
+    setLiked(prev => !prev);
   };
 
   const toggleComments = () => {
@@ -65,10 +82,10 @@ export const Post = ({ post }: PostProps) => {
       <PostControl $auth={ isAuth }>
         <CoverButton onClick={ handleLike }>
           <ControlContainer>
-            <StyledSVG $active={ false }>
+            <StyledSVG $active={ liked }>
               <HeartIcon/>
             </StyledSVG>
-            <ControlText>{ post.likesCount } likes</ControlText>
+            <ControlText>{ likes } likes</ControlText>
           </ControlContainer>
         </CoverButton>
 
