@@ -22,6 +22,7 @@ import {
   StyledSVG,
 } from './post.styles';
 import type { Post as PostType } from '@/entities/post/types';
+import { useLikePost } from "@/features/like-post/use-like-post.ts";
 
 interface PostProps {
   post: PostType;
@@ -29,22 +30,21 @@ interface PostProps {
 
 export const Post = ({ post }: PostProps) => {
   const { isAuth } = useAuth();
-  const [liked, setLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);
 
-  const toggleLike = () => {
-    if (!isAuth) {
+  const { mutate: toggleLike, isPending: isLiking } = useLikePost();
+
+  const handleLike = () => {
+    if (!isAuth || isLiking) {
       return;
     }
-    setLiked((prev) => !prev);
-    // TODO: POST /api/like { postId: post.id }
+
+    toggleLike({ postId: post.id, liked: false });
   };
 
   const toggleComments = () => {
     setShowComments((prev) => !prev);
   };
-
-  const likesCount = liked ? post.likesCount + 1 : post.likesCount;
 
   return (
     <StyledPost>
@@ -63,12 +63,12 @@ export const Post = ({ post }: PostProps) => {
       <Description>{ post.content }</Description>
 
       <PostControl $auth={ isAuth }>
-        <CoverButton onClick={ toggleLike }>
+        <CoverButton onClick={ handleLike }>
           <ControlContainer>
-            <StyledSVG $active={ liked }>
+            <StyledSVG $active={ false }>
               <HeartIcon/>
             </StyledSVG>
-            <ControlText>{ likesCount } likes</ControlText>
+            <ControlText>{ post.likesCount } likes</ControlText>
           </ControlContainer>
         </CoverButton>
 
