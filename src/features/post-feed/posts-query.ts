@@ -3,7 +3,6 @@ import { graphqlClient } from '@/shared/api/graphql-client';
 import type { Post, PostsPage } from '@/entities/post/types';
 import { gql } from 'graphql-request';
 
-const STALE_TIME = 5 * 60 * 1000;
 const POSTS_LIMIT = 20;
 
 const ALL_POSTS_QUERY = gql`
@@ -61,18 +60,13 @@ const fetchPosts = async (limit = 20, offset = 0): Promise<PostsPage> => {
   };
 };
 
+// without cache
 export const postsQueries = {
-  all: () =>
-    queryOptions({
-      queryKey: ['posts'],
-      queryFn: () => fetchPosts(),
-      staleTime: STALE_TIME,
-    }),
-
   list: (limit = POSTS_LIMIT, offset = 0) =>
     queryOptions({
       queryKey: ['posts', { limit, offset }],
       queryFn: () => fetchPosts(limit, offset),
-      staleTime: STALE_TIME,
+      staleTime: 0,
+      gcTime: 0,
     }),
 };
