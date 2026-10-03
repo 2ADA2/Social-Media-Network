@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query';
-import { apiClient } from '@/shared/api/api-client';
+import { apiClient } from '@/shared/api/api-client.ts';
 import type { CommentInterface } from "@/entities/comment/types.ts";
 
 const STALE_TIME = 5 * 60 * 1000;
