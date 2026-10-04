@@ -15,6 +15,7 @@ import {
 } from "@/pages/profile/profile-info/edit-profile/edit-profile-schema.ts";
 import { useUpdateProfile } from "@/features/edit-profile/use-update-profile.ts";
 import { useModal } from "@/shared/lib/hooks/use-modal/use-modal.ts";
+import { UpdateProfileImageModal } from "@/pages/profile/profile-info/edit-profile/update-profile-image-modal";
 
 
 export const EditProfile = () => {
@@ -35,10 +36,10 @@ export const EditProfile = () => {
     data.username = data.username.slice(1);
     updateProfile(data, {
       onSuccess: () => {
-        alert("Your profile successfully updated");
+        alert("Your profile successfully updated");// TODO: custom message
       },
       onError: (error) => {
-        alert("Cannot update your profile: " + error.message);
+        alert("Cannot update your profile: " + error.message);// TODO: custom message
       },
     });
   };
@@ -50,9 +51,10 @@ export const EditProfile = () => {
         <img src={ user!.avatar } alt='your avatar'/>
         <div className='user-info'>
           <div>{ user!.name } { user!.surname }</div>
-          <CoverButton>
+          <CoverButton onClick={open}>
             <span>Change profile photo</span>
           </CoverButton>
+          <UpdateProfileImageModal isOpen={ isOpen } onClose={ close }/>
         </div>
       </div>
       <form onSubmit={ handleSubmit(saveChanges) } noValidate>
