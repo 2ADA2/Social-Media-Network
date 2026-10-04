@@ -20,6 +20,23 @@ export interface Post {
   likedByUsers: { id: number }[];
 }
 
+export interface Like {
+  id: number,
+  postId: number;
+  userId: number;
+  creationDate: string;
+}
+
+export interface Comment {
+  id: number,
+  text: string;
+  postId: number;
+  authorId: number;
+  creationDate: string;
+  modifiedDate: string;
+}
+
+
 export interface PostsPage {
   items: Post[];
   total: number;
