@@ -11,7 +11,6 @@
     "copy404": "cpy dist/index.html dist --rename=404.html --flat",
     "predeploy": "run-s build copy404",
     "deploy": "gh-pages -d dist",
-    "server": "npx internship-backend serve social --port 4000",
     "backend": "internship-backend serve social --port 4000",
     "dev:all": "concurrently -n next,api \"npm:dev\" \"npm:backend\""
   },
