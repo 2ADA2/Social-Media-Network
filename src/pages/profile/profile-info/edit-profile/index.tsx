@@ -13,22 +13,34 @@ import {
   editProfileSchema,
   type EditProfileSchema,
 } from "@/pages/profile/profile-info/edit-profile/edit-profile-schema.ts";
+import { useUpdateProfile } from "@/features/edit-profile/use-update-profile.ts";
+import { useModal } from "@/shared/lib/hooks/use-modal/use-modal.ts";
 
 
 export const EditProfile = () => {
   const { user } = useUser();
+  const { mutate: updateProfile, isPending } = useUpdateProfile();
+  const { isOpen, open, close } = useModal();
 
   const {
     control,
     handleSubmit,
   } = useForm<EditProfileSchema>({
     resolver: zodResolver(editProfileSchema),
-    defaultValues: { username: user!.username, email: user!.email, description: user!.description },
+    defaultValues: { username: "@" + user!.username, email: user!.email, description: user!.description },
     mode: 'onChange',
   });
 
   const saveChanges = (data: EditProfileSchema) => {
-    console.log(data);
+    data.username = data.username.slice(1);
+    updateProfile(data, {
+      onSuccess: () => {
+        alert("Your profile successfully updated");
+      },
+      onError: (error) => {
+        alert("Cannot update your profile: " + error.message);
+      },
+    });
   };
 
   return (
@@ -86,12 +98,12 @@ export const EditProfile = () => {
                 icon={ <Pen/> }
                 info='Max 200 chars'
                 placeholder='Write your description here...'
-                errorMessage={error?.message}
+                errorMessage={ error?.message }
               />
             ) }
           />
         </div>
-        <Button type="submit" className='save-profile-button'>Save profile changes</Button>
+        <Button disabled={ isPending } type="submit" className='save-profile-button'>Save profile changes</Button>
       </form>
     </section>
   );
