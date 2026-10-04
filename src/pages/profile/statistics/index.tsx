@@ -3,30 +3,47 @@ import './statistics.css';
 import { useState } from "react";
 import { TableView } from "@/pages/profile/statistics/table-view";
 import { ChartView } from "./chart-view";
-
-const STATS = [
-  { title: 'Title', value: '45,678.90', delta: '+20%', positive: true },
-  { title: 'Title', value: '2,405', delta: '+33%', positive: true },
-  { title: 'Title', value: '10,353', delta: '-8%', positive: false },
-];
+import { useQuery } from "@tanstack/react-query";
+import { statsQueries } from "@/features/get-statistics/stats.ts";
+import { countByMonth } from "@/shared/lib/date-stats.ts";
 
 export const Statistics = () => {
   const [enableChartView, setEnableChartView] = useState(false);
+  const { data: posts } = useQuery(statsQueries.posts());
+  const { data: comments } = useQuery(statsQueries.comments());
+  const { data: likes } = useQuery(statsQueries.likes());
+
+  const postsStats = countByMonth(
+    (posts ?? []).map((p) => p.creationDate),
+  );
+  const likesStats = countByMonth(
+    (likes ?? []).map((l) => l.creationDate),
+  );
+  const commentsStats = countByMonth(
+    (comments ?? []).map((c) => c.creationDate),
+  );
 
   const switchChartView = () => {
     setEnableChartView(!enableChartView);
   };
 
+  const stats = [
+    { title: 'Likes', value: likesStats.current, percents: likesStats.percents },
+    { title: 'Comments', value: commentsStats.current, percents: likesStats.percents },
+    { title: 'Posts', value: postsStats.current, percents: likesStats.percents },
+  ];
+
   return (
     <section className="stats">
       <div className="stats-cards">
-        { STATS.map((stat, i) => (
+        { stats.map((stat, i) => (
           <div key={ i } className="stats-card">
             <div className="stats-card-title">{ stat.title }</div>
-            <div className="stats-card-value">{ stat.value }</div>
+            <div className="stats-card-value">{ stat.value || 0 }</div>
             <div
-              className={ `stats-card-delta ${ stat.positive ? 'stats-card-delta--positive' : 'stats-card-delta--negative' }` }>
-              { stat.delta } month over month
+              className='stats-card-delta'>
+              { stat.percents > 0 ? `+${ stat.percents }% ` : `-${ stat.percents }% ` }
+              month over month
             </div>
           </div>
         )) }
