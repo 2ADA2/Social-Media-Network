@@ -1,0 +1,15 @@
+{
+  "nav": {
+    "signIn": "Войти",
+    "signUp": "Зарегистрироваться",
+    "profile": "Профиль",
+    "statistics": "Статистика"
+  },
+  "fileInput": {
+    "selectFile": "Выберите файл",
+    "orDragAndDrop": "или перетащите сюда",
+    "formats": "JPG, PNG, PDF",
+    "sizeLimit": "размер файла не более 10 МБ",
+    "remove": "Удалить файл"
+  }
+}

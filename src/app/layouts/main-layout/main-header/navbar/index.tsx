@@ -4,6 +4,7 @@ import { ROUTES } from "@/shared/config/routes.ts";
 import { Link } from "react-router-dom";
 import { Avatar } from "@/shared/ui/avatar";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useBlockScroll } from "@/shared/lib/hooks/block-scroll/use-block-scroll.tsx";
 import { useAuth } from "@/features/auth/use-auth.tsx";
 import { useUser } from "@/entities/user/model/use-user.tsx";
@@ -13,6 +14,7 @@ interface NavBarProps {
 }
 
 export const NavBar = ({ setNavBar }: NavBarProps) => {
+  const { t } = useTranslation('common');
   const { isAuth } = useAuth();
   const { user } = useUser();
   const { blockScroll, unblockScroll } = useBlockScroll();
@@ -39,13 +41,13 @@ export const NavBar = ({ setNavBar }: NavBarProps) => {
         <div className='nav-container'>
           { !isAuth ? (
             <>
-              <Link to={ ROUTES.SIGNIN }>Sign in</Link>
-              <Link to={ ROUTES.SIGNUP }>Sign up</Link>
+              <Link to={ ROUTES.SIGNIN }>{ t('nav.signIn') }</Link>
+              <Link to={ ROUTES.SIGNUP }>{ t('nav.signUp') }</Link>
             </>
           ) : (
             <>
-              <Link to={ ROUTES.PROFILE }>Profile</Link>
-              <Link to={ ROUTES.STATISTICS }>Statistics</Link>
+              <Link to={ ROUTES.PROFILE }>{ t('nav.profile') }</Link>
+              <Link to={ ROUTES.STATISTICS }>{ t('nav.statistics') }</Link>
 
             </>
           ) }

@@ -1,0 +1,15 @@
+{
+  "nav": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "profile": "Profile",
+    "statistics": "Statistics"
+  },
+  "fileInput": {
+    "selectFile": "Select a file",
+    "orDragAndDrop": "or drag and drop here",
+    "formats": "JPG, PNG, PDF",
+    "sizeLimit": "file size no more than 10MB",
+    "remove": "Remove file"
+  }
+}
