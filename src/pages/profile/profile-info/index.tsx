@@ -4,6 +4,7 @@ import { Button } from "@/shared/ui/button";
 import { EditProfile } from "./edit-profile";
 import "./profile-info.css";
 import { useAuth } from "@/features/auth/use-auth.tsx";
+import { LanguageSwitcher } from "@/features/language-switcher";
 
 export const ProfileInfo = () => {
   const { t } = useTranslation('profile');
@@ -16,6 +17,9 @@ export const ProfileInfo = () => {
           <h2>{ t('preferences.title') }</h2>
           <div className='switcher-container'>
             <ThemeSwitcher/> { t('preferences.darkTheme') }
+          </div>
+          <div className='switcher-container'>
+            <LanguageSwitcher/>
           </div>
         </section>
         <section>
