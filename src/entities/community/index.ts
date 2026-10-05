@@ -1,1 +1,1 @@
-export { type Community } from "./model/types.ts";
+export { type Community } from "./types.ts";

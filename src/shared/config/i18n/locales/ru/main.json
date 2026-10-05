@@ -1,0 +1,11 @@
+{
+  "post": {
+    "likes_one": "{{count}} лайк",
+    "likes_few": "{{count}} лайка",
+    "likes_many": "{{count}} лайков",
+    "comments_one": "{{count}} комментарий",
+    "comments_few": "{{count}} комментария",
+    "comments_many": "{{count}} комментариев",
+    "loginToSeeComments": "Войдите, чтобы увидеть комментарии"
+  }
+}

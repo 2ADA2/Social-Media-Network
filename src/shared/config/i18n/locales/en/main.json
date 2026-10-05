@@ -1,0 +1,9 @@
+{
+  "post": {
+    "likes_one": "{{count}} like",
+    "likes_other": "{{count}} likes",
+    "comments_one": "{{count}} Comment",
+    "comments_other": "{{count}} Comments",
+    "loginToSeeComments": "You have to login to see the comments"
+  }
+}

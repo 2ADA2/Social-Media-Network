@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import HeartIcon from '@/shared/assets/icons/heart.svg?react';
 import CommentIcon from '@/shared/assets/icons/comment.svg?react';
 import { CoverButton } from '@/shared/ui/cover-button';
@@ -39,6 +40,7 @@ const checkLiked = (likes: { id: number }[], userId: number) => {
 ;
 
 export const Post = ({ post }: PostProps) => {
+  const { t } = useTranslation('main');
   const { isAuth } = useAuth();
 
   const currentUserId = Number(useAppSelector(selectUserId)) || -1;
@@ -90,7 +92,7 @@ export const Post = ({ post }: PostProps) => {
             <StyledSVG $active={ liked }>
               <HeartIcon/>
             </StyledSVG>
-            <ControlText>{ likes } likes</ControlText>
+            <ControlText>{ t('post.likes', { count: likes }) }</ControlText>
           </ControlContainer>
         </CoverButton>
 
@@ -101,8 +103,8 @@ export const Post = ({ post }: PostProps) => {
             </StyledSVG>
             <ControlText>
               { isAuth
-                ? `${ comments } Comments`
-                : 'You have to login to see the comments' }
+                ? t('post.comments', { count: comments })
+                : t('post.loginToSeeComments') }
             </ControlText>
             <StyledArrowIcon>
               { isAuth && (showComments ? <ArrowDown/> : <ArrowUp/>) }

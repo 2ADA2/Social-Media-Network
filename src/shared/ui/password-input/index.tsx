@@ -1,4 +1,5 @@
 import { type InputHTMLAttributes, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import CheckIcon from "@/shared/assets/icons/check.svg?react";
 import CrossIcon from "@/shared/assets/icons/cross.svg?react";
 import EyeIcon from "@/shared/assets/icons/eye.svg?react";
@@ -16,9 +17,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
-const DEFAULT_INFO = "Your password is strong";
-
 export const PasswordInput = ({ icon, label, info, custom, error, ...props }: InputProps) => {
+  const { t } = useTranslation('common');
   const isOk = custom && !error && props.value;
   const [isShow, setIsShow] = useState(false);
 
@@ -49,7 +49,7 @@ export const PasswordInput = ({ icon, label, info, custom, error, ...props }: In
       </div>
 
       { (error || isOk) &&
-        (<ShowInputInfo error={ error } info={ info || DEFAULT_INFO } icon={ <LikeIcon/> }/>)
+        (<ShowInputInfo error={ error } info={ info || t('passwordInput.defaultInfo') } icon={ <LikeIcon/> }/>)
       }
     </label>
   );
