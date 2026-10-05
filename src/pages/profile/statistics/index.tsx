@@ -5,7 +5,7 @@ import { TableView } from "@/pages/profile/statistics/table-view";
 import { ChartView } from "./chart-view";
 import { useQuery } from "@tanstack/react-query";
 import { statsQueries } from "@/features/get-statistics/stats.ts";
-import { countByWeek } from "@/shared/lib/date-stats.ts";
+import { countByWeek } from "@/shared/lib/stats/date-stats.ts";
 import { StatsCard } from "@/pages/profile/statistics/stats-card.tsx";
 
 export const Statistics = () => {
