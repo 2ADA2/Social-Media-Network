@@ -6,6 +6,7 @@ import UserIcon from "@/shared/assets/icons/user.svg?react";
 import Pen from "@/shared/assets/icons/pen.svg?react";
 import { TextArea } from "@/shared/ui/text-area";
 import { Button } from "@/shared/ui/button";
+import { useTranslation } from "react-i18next";
 import "./edit-profile.css";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,6 +20,7 @@ import { UpdateProfileImageModal } from "@/pages/profile/profile-info/edit-profi
 
 
 export const EditProfile = () => {
+  const { t } = useTranslation('profile');
   const { user } = useUser();
   const { mutate: updateProfile, isPending } = useUpdateProfile();
   const { isOpen, open, close } = useModal();
@@ -36,23 +38,23 @@ export const EditProfile = () => {
     data.username = data.username.slice(1);
     updateProfile(data, {
       onSuccess: () => {
-        alert("Your profile successfully updated");// TODO: custom message
+        alert(t('editProfile.success'));
       },
       onError: (error) => {
-        alert("Cannot update your profile: " + error.message);// TODO: custom message
+        alert(t('editProfile.error', { message: error.message }));
       },
     });
   };
 
   return (
     <section className='edit-profile'>
-      <h2>Edit profile</h2>
+      <h2>{ t('editProfile.title') }</h2>
       <div className='profile-row profile-avatar'>
         <img src={ user!.avatar } alt='your avatar'/>
         <div className='user-info'>
           <div>{ user!.name } { user!.surname }</div>
           <CoverButton onClick={open}>
-            <span>Change profile photo</span>
+            <span>{ t('editProfile.changePhoto') }</span>
           </CoverButton>
           <UpdateProfileImageModal isOpen={ isOpen } onClose={ close }/>
         </div>
@@ -64,7 +66,7 @@ export const EditProfile = () => {
           render={ ({ field, fieldState: { error } }) => (
             <Input
               { ...field }
-              label='Username'
+              label={ t('editProfile.username') }
               name='username'
               type='text'
               placeholder='@username'
@@ -80,8 +82,8 @@ export const EditProfile = () => {
           render={ ({ field, fieldState: { error } }) => (
             <Input
               { ...field }
-              label="Email"
-              placeholder="Enter email"
+              label={ t('editProfile.email') }
+              placeholder={ t('editProfile.emailPlaceholder') }
               icon={ <MailIcon/> }
               error={ error?.message }
               custom
@@ -95,17 +97,17 @@ export const EditProfile = () => {
             render={ ({ field, fieldState: { error } }) => (
               <TextArea
                 { ...field }
-                label='Description'
+                label={ t('editProfile.description') }
                 name='description'
                 icon={ <Pen/> }
-                info='Max 200 chars'
-                placeholder='Write your description here...'
+                info={ t('editProfile.maxChars') }
+                placeholder={ t('editProfile.descriptionPlaceholder') }
                 errorMessage={ error?.message }
               />
             ) }
           />
         </div>
-        <Button disabled={ isPending } type="submit" className='save-profile-button'>Save profile changes</Button>
+        <Button disabled={ isPending } type="submit" className='save-profile-button'>{ t('editProfile.submit') }</Button>
       </form>
     </section>
   );

@@ -1,5 +1,6 @@
 import { useBlockScroll } from "@/shared/lib/hooks/block-scroll/use-block-scroll.tsx";
 import { type ChangeEvent, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   StyledCreatePostModal, StyledTitle,
 } from "@/features/create-post/create-post-modal/create-post-modal.styles.ts";
@@ -16,6 +17,7 @@ export interface CreateModalProps {
 }
 
 export const UpdateProfileImageModal = ({ isOpen, onClose }: CreateModalProps) => {
+  const { t } = useTranslation('profile');
   const { blockScroll, unblockScroll } = useBlockScroll();
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState('');
@@ -40,14 +42,14 @@ export const UpdateProfileImageModal = ({ isOpen, onClose }: CreateModalProps) =
     }
 
     if (!ALLOWED_TYPES.includes(selectedFile.type)) {
-      alert('File must be .PNG, .JPG or .pdf');
+      alert(t('updateAvatar.fileTypeError'));
       e.target.value = '';
       setFile(null);
       return;
     }
 
     if (selectedFile.size > MAX_SIZE) {
-      alert('no more than 2 MB');
+      alert(t('updateAvatar.fileSizeError'));
       e.target.value = '';
       setFile(null);
       return;
@@ -59,25 +61,25 @@ export const UpdateProfileImageModal = ({ isOpen, onClose }: CreateModalProps) =
 
   const updateProfileImage = () => {
     if (!file) {
-      alert("You need to choose a new photo"); // TODO: custom message
+      alert(t('updateAvatar.noFile'));
       return;
     }
     updateAvatar(file, {
       onSuccess: () => {
-        alert("Profile image updated successfully"); // TODO: custom message
+        alert(t('updateAvatar.success'));
         onClose();
       },
       onError: (error) => {
-        alert("Cannot update your profile page: " + error.message); // TODO: custom message
+        alert(t('updateAvatar.error', { message: error.message }));
       },
     });
   };
 
   return (
     <StyledCreatePostModal isOpen={ isOpen } onClose={ onClose }>
-      <StyledTitle>Update your profile photo</StyledTitle>
+      <StyledTitle>{ t('updateAvatar.title') }</StyledTitle>
       <FileInput name='image' fileName={ fileName } onChange={ changeFile }/>
-      <StyledButton disabled={ isPending } type='submit' onClick={ updateProfileImage }>Update</StyledButton>
+      <StyledButton disabled={ isPending } type='submit' onClick={ updateProfileImage }>{ t('updateAvatar.submit') }</StyledButton>
     </StyledCreatePostModal>
   );
 };

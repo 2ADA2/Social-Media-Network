@@ -1,0 +1,56 @@
+{
+  "title": "Edit profile",
+  "tabs": {
+    "info": "Profile Info",
+    "stats": "Statistics"
+  },
+  "preferences": {
+    "title": "Preferences",
+    "darkTheme": "Dark theme"
+  },
+  "actions": {
+    "title": "Actions",
+    "logout": "Logout"
+  },
+  "editProfile": {
+    "title": "Edit profile",
+    "changePhoto": "Change profile photo",
+    "username": "Username",
+    "email": "Email",
+    "emailPlaceholder": "Enter email",
+    "description": "Description",
+    "descriptionPlaceholder": "Write your description here...",
+    "maxChars": "Max 200 chars",
+    "submit": "Save profile changes",
+    "success": "Your profile successfully updated",
+    "error": "Cannot update your profile: {{message}}"
+  },
+  "updateAvatar": {
+    "title": "Update your profile photo",
+    "submit": "Update",
+    "fileTypeError": "File must be .PNG, .JPG or .pdf",
+    "fileSizeError": "no more than 10 MB",
+    "noFile": "You need to choose a new photo",
+    "success": "Profile image updated successfully",
+    "error": "Cannot update your profile page: {{message}}"
+  },
+  "stats": {
+    "likes": "Likes",
+    "comments": "Comments",
+    "posts": "Posts",
+    "tableView": "Table view",
+    "enableChartView": "Enable Chart view",
+    "weekOverWeek": "week over week",
+    "lastWeek": "Last week",
+    "day": "Day",
+    "count": "Count"
+  },
+  "validation": {
+    "usernameStart": "Username must start with @",
+    "usernameMin": "Username must be at least 4 characters",
+    "usernameMax": "Username must be at most 20 characters",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Email is not valid",
+    "descriptionMax": "Reached the {{count}} text limit"
+  }
+}

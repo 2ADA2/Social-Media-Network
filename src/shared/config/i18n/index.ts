@@ -6,11 +6,13 @@ import enCommon from './locales/en/common.json';
 import enAuth from './locales/en/auth.json';
 import enNotFound from './locales/en/not-found.json';
 import enMain from './locales/en/main.json';
+import enProfile from './locales/en/profile.json';
 
 import ruCommon from './locales/ru/common.json';
 import ruAuth from './locales/ru/auth.json';
 import ruNotFound from './locales/ru/not-found.json';
 import ruMain from './locales/ru/main.json';
+import ruProfile from './locales/ru/profile.json';
 
 const format: FormatFunction = (value, formatKey, lng) => {
   if (formatKey === 'compact' && typeof value === 'number') {
@@ -32,12 +34,14 @@ const options: InitOptions = {
       common: enCommon,
       auth: enAuth,
       main: enMain,
+      profile: enProfile,
       'not-found': enNotFound,
     },
     ru: {
       common: ruCommon,
       auth: ruAuth,
       main: ruMain,
+      profile: ruProfile,
       'not-found': ruNotFound,
     },
   },
