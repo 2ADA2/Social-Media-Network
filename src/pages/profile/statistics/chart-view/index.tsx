@@ -1,68 +1,13 @@
 import './chart-view.css';
 import Chart from 'react-apexcharts';
-import type { ApexOptions } from 'apexcharts';
 import type { DailyCount } from '@/shared/lib/stats/count-by-day';
+import { buildOptions } from "@/pages/profile/statistics/chart-view/options.ts";
 
 interface ChartViewProps {
   likesByDay: DailyCount[];
   commentsByDay: DailyCount[];
   theme: 'light' | 'dark';
 }
-
-const buildOptions = (
-  categories: string[],
-  theme: 'light' | 'dark',
-): ApexOptions => ({
-  chart: {
-    type: 'bar',
-    toolbar: { show: false },
-    background: 'transparent',
-  },
-  colors: ["var(--chart-primary)"],
-  plotOptions: {
-    bar: {
-      columnWidth: '80%',
-      borderRadius: 4,
-    },
-  },
-  fill: {
-    opacity: 1,
-  },
-  grid: {
-    borderColor: 'var(--chart-primary)',
-  },
-  xaxis: {
-    categories,
-    axisBorder: {
-      show: false,
-    },
-    axisTicks: {
-      show: false,
-    },
-    labels: {
-      style: {
-        colors: 'var(--color-muted)',
-      },
-    },
-  },
-  yaxis: {
-    tickAmount: 5,
-    min: 0,
-    max: (maxValue) => {
-      return Math.max(10, maxValue * 1.5);
-    },
-    labels: {
-      formatter: function (val) {
-        return val.toFixed(0);
-      },
-      style: {
-        colors: 'var(--color-muted)',
-      },
-    },
-  },
-  dataLabels: { enabled: false },
-  theme: { mode: theme },
-});
 
 export const ChartView = ({
                             likesByDay,
@@ -84,7 +29,7 @@ export const ChartView = ({
         <Chart
           options={ buildOptions(likesByDay.map((d) => d.date), theme) }
           series={ likesSeries }
-          type="bar"
+          type="line"
           width='90%'
           height='80%'
           className="chart"
