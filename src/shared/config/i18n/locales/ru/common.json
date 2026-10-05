@@ -11,5 +11,19 @@
     "formats": "JPG, PNG, PDF",
     "sizeLimit": "размер файла не более 10 МБ",
     "remove": "Удалить файл"
+  },
+  "error": {
+    "title": "Ой...",
+    "subtitle": "Что-то пошло не так",
+    "youCan": "Вы можете",
+    "backToHome": "Вернуться на главную",
+    "orTryTo": "или попробовать",
+    "reload": "перезагрузить",
+    "thePage": "страницу",
+    "details": "Детали",
+    "unknownError": "неизвестная ошибка"
+  },
+  "passwordInput": {
+    "defaultInfo": "Ваш пароль надёжный"
   }
 }

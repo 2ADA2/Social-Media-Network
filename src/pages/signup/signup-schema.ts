@@ -1,15 +1,16 @@
 import { z } from 'zod';
+import i18n from '@/shared/config/i18n';
 
 export const signupSchema = z.object({
   email: z
     .string()
-    .min(1, 'Email is required')
-    .email('Email is not valid'),
+    .min(1, i18n.t('validation.emailRequired', { ns: 'auth' }))
+    .email(i18n.t('validation.emailInvalid', { ns: 'auth' })),
   password: z
     .string()
-    .min(8, 'Password must be at least 8 characters')
-    .regex(/[a-zA-Z]/, 'Password must contain at least one letter')
-    .regex(/[0-9]/, 'Password must contain at least one digit'),
+    .min(8, i18n.t('validation.passwordMin', { ns: 'auth' }))
+    .regex(/[a-zA-Z]/, i18n.t('validation.passwordLetter', { ns: 'auth' }))
+    .regex(/[0-9]/, i18n.t('validation.passwordDigit', { ns: 'auth' })),
 });
 
 export type SignUpFormData = z.infer<typeof signupSchema>;
