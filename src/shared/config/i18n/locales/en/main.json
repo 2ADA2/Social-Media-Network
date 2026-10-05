@@ -5,5 +5,40 @@
     "comments_one": "{{count}} Comment",
     "comments_other": "{{count}} Comments",
     "loginToSeeComments": "You have to login to see the comments"
+  },
+  "comment": {
+    "label": "Add a comment",
+    "placeholder": "Write a comment...",
+    "submit": "Add a comment",
+    "lengthError": "Comment length at least 1, at most 200",
+    "successTitle": "Success",
+    "successMessage": "You commented the post",
+    "errorTitle": "Error",
+    "errorMessage": "Cannot add your comment"
+  },
+  "createPost": {
+    "placeholder": "What's happening?",
+    "submit": "Tell everyone"
+  },
+  "createPostModal": {
+    "title": "Create a new post",
+    "titleLabel": "Post Title",
+    "titlePlaceholder": "Enter post title",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Write description here...",
+    "submit": "Create",
+    "fileTypeError": "File must be .PNG, .JPG or .pdf",
+    "fileSizeError": "no more than 10 MB",
+    "success": "Post created",
+    "error": "Something went wrong: {{message}}"
+  },
+  "validation": {
+    "titleMin": "Title must be at least 2 characters",
+    "titleMax": "Title must be at most 100 characters",
+    "descriptionMax": "Reached the {{count}} text limit"
+  },
+  "sidebar": {
+    "suggestedPeople": "Suggested people",
+    "communities": "Communities you might like"
   }
 }

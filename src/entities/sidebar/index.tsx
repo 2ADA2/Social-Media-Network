@@ -1,5 +1,7 @@
 import "./sidebar.css";
+import { useTranslation } from "react-i18next";
 import { UserCard } from "@/entities/user";
+import { formatCompact } from "@/shared/lib/localization/format-number";
 import type { CommunityResponse, SuggestedPeopleResponse } from "@/features/sidebar/types.ts";
 
 type SidebarEntities = SuggestedPeopleResponse[] | CommunityResponse[];
@@ -14,6 +16,8 @@ const isUserArray = (items: SidebarEntities): items is SuggestedPeopleResponse[]
 };
 
 export const Sidebar = ({ title, users }: SidebarProps) => {
+  const { i18n } = useTranslation();
+
   if (users.length === 0) {
     return null;
   }
@@ -43,7 +47,7 @@ export const Sidebar = ({ title, users }: SidebarProps) => {
           key={ user.id }
           { ...user }
           title={ user.title }
-          subtitle={ String(user.membersCount) + " members" }
+          subtitle={ formatCompact(user.membersCount, i18n.language) }
           avatarUrl={ user.photo || "" }
         />
       )) }
