@@ -1,11 +1,12 @@
 import { Toggle } from '@/shared/ui/toggle';
 import './statistics.css';
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { TableView } from "@/pages/profile/statistics/table-view";
 import { ChartView } from "./chart-view";
 import { useQuery } from "@tanstack/react-query";
 import { statsQueries } from "@/features/get-statistics/stats.ts";
-import { countByMonth } from "@/shared/lib/date-stats.ts";
+import { countByWeek } from "@/shared/lib/date-stats.ts";
+import { StatsCard } from "@/pages/profile/statistics/stats-card.tsx";
 
 export const Statistics = () => {
   const [enableChartView, setEnableChartView] = useState(false);
@@ -13,39 +14,31 @@ export const Statistics = () => {
   const { data: comments } = useQuery(statsQueries.comments());
   const { data: likes } = useQuery(statsQueries.likes());
 
-  const postsStats = countByMonth(
+  const postsStats = useMemo(() => countByWeek(
     (posts ?? []).map((p) => p.creationDate),
-  );
-  const likesStats = countByMonth(
+  ), [posts]);
+  const likesStats = useMemo(() => countByWeek(
     (likes ?? []).map((l) => l.creationDate),
-  );
-  const commentsStats = countByMonth(
+  ), [likes]);
+  const commentsStats = useMemo(() => countByWeek(
     (comments ?? []).map((c) => c.creationDate),
-  );
+  ), [comments]);
 
   const switchChartView = () => {
     setEnableChartView(!enableChartView);
   };
 
   const stats = [
-    { title: 'Likes', value: likesStats.current, percents: likesStats.percents },
-    { title: 'Comments', value: commentsStats.current, percents: likesStats.percents },
-    { title: 'Posts', value: postsStats.current, percents: likesStats.percents },
+    { id: 1, title: 'Likes', value: likesStats.current, percents: likesStats.percents },
+    { id: 2, title: 'Comments', value: commentsStats.current, percents: commentsStats.percents },
+    { id: 3, title: 'Posts', value: postsStats.current, percents: postsStats.percents },
   ];
 
   return (
     <section className="stats">
       <div className="stats-cards">
-        { stats.map((stat, i) => (
-          <div key={ i } className="stats-card">
-            <div className="stats-card-title">{ stat.title }</div>
-            <div className="stats-card-value">{ stat.value || 0 }</div>
-            <div
-              className='stats-card-delta'>
-              { stat.percents > 0 ? `+${ stat.percents }% ` : `-${ stat.percents }% ` }
-              month over month
-            </div>
-          </div>
+        { stats.map((stat) => (
+          <StatsCard { ...stat } key={ stat.id }/>
         )) }
       </div>
 

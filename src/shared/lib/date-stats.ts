@@ -1,19 +1,20 @@
 const DAY = 24 * 60 * 60 * 1000;
-const PERIOD_DAYS = 30;
+const PERIOD_DAYS = 7;
+const PREV_PERIOD_DAYS = 3;
 
-export interface MonthStats {
+export interface WeekStats {
   current: number;
   previous: number;
   percents: number;
 }
 
-export const countByMonth = (
+export const countByWeek = (
   dates: string[],
   now: Date = new Date(),
-): MonthStats => {
+): WeekStats => {
   const nowTime = now.getTime();
   const currentStart = nowTime - PERIOD_DAYS * DAY;
-  const previousStart = nowTime - 2 * PERIOD_DAYS * DAY;
+  const previousStart = nowTime - (PREV_PERIOD_DAYS + PERIOD_DAYS) * DAY;
 
   let current = 0;
   let previous = 0;
@@ -37,7 +38,6 @@ export const countByMonth = (
   }
 
   percents = Math.round(percents);
-
   return {
     current,
     previous,
