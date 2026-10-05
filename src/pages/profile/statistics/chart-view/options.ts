@@ -16,15 +16,23 @@ const getMonthName = (dateStr?: string): string => {
 export const buildOptions = (
   categories: string[],
   theme: 'light' | 'dark',
+  id: string,
+  type: 'line' | 'bar',
 ): ApexOptions => {
 
   const firstMonth = getMonthName(categories[0]);
   const lastMonth = getMonthName(categories.at(-1));
+  const firstDate = type === "line" ? categories[0].split(".")[0] : categories[0];
+  const lastDate = type === "line" ? categories[categories.length - 1].split(".")[0] : categories.at(-1);
+
+  console.log(categories);
 
   return {
     chart: {
       toolbar: { show: false },
       background: 'transparent',
+      id: id,
+      type: type,
     },
     colors: ["var(--chart-primary)"],
     plotOptions: {
@@ -43,10 +51,11 @@ export const buildOptions = (
     grid: {
       borderColor: 'var(--chart-primary)',
       padding: {
-        right: 30,
+        right: 50,
       },
     },
     xaxis: {
+      type: 'category',
       categories,
       axisBorder: {
         show: false,
@@ -63,7 +72,7 @@ export const buildOptions = (
             return '';
           }
 
-          return String(value).substring(0, 2); // Displays only the day (e.g., '01')
+          return String(value).substring(0, 2);
         },
       },
     },
@@ -87,7 +96,7 @@ export const buildOptions = (
     annotations: {
       xaxis: [
         {
-          x: categories[0],
+          x: firstDate,
           borderColor: 'transparent',
           label: {
             text: firstMonth,
@@ -95,12 +104,12 @@ export const buildOptions = (
             orientation: 'horizontal',
             offsetY: 26,
             offsetX: -30,
-            borderWidth:0,
-            style: { color: 'var(--color-muted)', fontSize: '12px', fontWeight: 'bold', background:"none" },
+            borderWidth: 0,
+            style: { color: 'var(--color-muted)', fontSize: '12px', fontWeight: 'bold', background: "none" },
           },
         },
         {
-          x: categories.at(-1),
+          x: lastDate,
           borderColor: 'transparent',
           label: {
             text: lastMonth,
@@ -108,8 +117,8 @@ export const buildOptions = (
             orientation: 'horizontal',
             offsetY: 26,
             offsetX: 30,
-            borderWidth:0,
-            style: { color: 'var(--color-muted)', fontSize: '12px', fontWeight: 'bold', background:"none" },
+            borderWidth: 0,
+            style: { color: 'var(--color-muted)', fontSize: '12px', fontWeight: 'bold', background: "none" },
           },
         },
       ],
