@@ -1,23 +1,12 @@
 import "./table-view.css";
-import { useQuery } from "@tanstack/react-query";
-import { statsQueries } from "@/features/get-statistics/stats.ts";
-import { useMemo } from "react";
-import { countByDay } from "@/shared/lib/stats/count-by-day.ts";
+import { type DailyCount } from "@/shared/lib/stats/count-by-day.ts";
 
-export const TableView = () => {
-  const { data: comments } = useQuery(statsQueries.comments());
-  const { data: likes } = useQuery(statsQueries.likes());
+interface TableViewProps {
+  likesByDay: DailyCount[];
+  commentsByDay: DailyCount[];
+}
 
-  const likesByDay = useMemo(
-    () => countByDay((likes ?? []).map((l) => l.creationDate), 7),
-    [likes],
-  );
-
-  const commentsByDay = useMemo(
-    () => countByDay((comments ?? []).map((c) => c.creationDate), 7),
-    [comments],
-  );
-
+export const TableView = ({ likesByDay, commentsByDay }: TableViewProps) => {
   return (
     <div className='stats-container'>
       <div className="stats-block">
@@ -57,7 +46,7 @@ export const TableView = () => {
             <tbody>
             { commentsByDay.map((row, i) => (
               <tr key={ i } className="stats-table-row">
-                <td className="text-left">{row.date}</td>
+                <td className="text-left">{ row.date }</td>
                 <td className="text-right">{ row.count || "-" }</td>
               </tr>
             )) }
