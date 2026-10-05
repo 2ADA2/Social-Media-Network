@@ -24,6 +24,7 @@ body {
   --bg-border: #E0E2E7;
 
   --hover-primary: #dcdcdc;
+  --chart-primary: #F0F1F3;
 
   --button-hover: #08B94E;
   --button-pressed: #6236CC;
@@ -57,7 +58,7 @@ body {
   --input-bg: #151A2D;
 
   --hover-primary: #151a2c;
-
+  --chart-primary: #2F3757;
 
   --toggle-bg: #151A2D;
 

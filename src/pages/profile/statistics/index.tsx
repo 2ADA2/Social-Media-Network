@@ -7,22 +7,38 @@ import { useQuery } from "@tanstack/react-query";
 import { statsQueries } from "@/features/get-statistics/stats.ts";
 import { countByWeek } from "@/shared/lib/stats/date-stats.ts";
 import { StatsCard } from "@/pages/profile/statistics/stats-card.tsx";
+import { countByDay } from "@/shared/lib/stats/count-by-day.ts";
+import { useThemeStore } from "@/app/store/theme-store.ts";
 
 export const Statistics = () => {
   const [enableChartView, setEnableChartView] = useState(false);
   const { data: posts } = useQuery(statsQueries.posts());
   const { data: comments } = useQuery(statsQueries.comments());
   const { data: likes } = useQuery(statsQueries.likes());
+  const theme = useThemeStore((state) => state.theme);
+
 
   const postsStats = useMemo(() => countByWeek(
     (posts ?? []).map((p) => p.creationDate),
   ), [posts]);
+
   const likesStats = useMemo(() => countByWeek(
     (likes ?? []).map((l) => l.creationDate),
   ), [likes]);
+
   const commentsStats = useMemo(() => countByWeek(
     (comments ?? []).map((c) => c.creationDate),
   ), [comments]);
+
+  const likesByDay = useMemo(
+    () => countByDay((likes ?? []).map((l) => l.creationDate), 7),
+    [likes],
+  );
+
+  const commentsByDay = useMemo(
+    () => countByDay((comments ?? []).map((c) => c.creationDate), 7),
+    [comments],
+  );
 
   const switchChartView = () => {
     setEnableChartView(!enableChartView);
@@ -48,8 +64,8 @@ export const Statistics = () => {
         <span>Enable Chart view</span>
       </div>
 
-      { enableChartView && <ChartView/> }
-      { !enableChartView && <TableView/> }
+      { enableChartView && <ChartView commentsByDay={commentsByDay} likesByDay={likesByDay} theme={theme}/> }
+      { !enableChartView && <TableView likesByDay={ likesByDay} commentsByDay={commentsByDay} /> }
 
     </section>
   );
