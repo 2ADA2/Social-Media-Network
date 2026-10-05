@@ -1,7 +1,8 @@
-import React, { type ChangeEvent, type InputHTMLAttributes, useRef } from "react";
-import "./file-input.css";
-import DownloadIcon from "@/shared/assets/icons/download-file.svg?react";
-import CrossIcon from "@/shared/assets/icons/cross.svg?react";
+import React, { type ChangeEvent, type InputHTMLAttributes, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import './file-input.css';
+import DownloadIcon from '@/shared/assets/icons/download-file.svg?react';
+import CrossIcon from '@/shared/assets/icons/cross.svg?react';
 
 export interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
   fileName?: string;
@@ -10,6 +11,7 @@ export interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const FileInput = ({ onChange, fileName = '', hasPDF = true, maxSize = 10, ...props }: FileInputProps) => {
+  const { t } = useTranslation('common');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
@@ -30,7 +32,7 @@ export const FileInput = ({ onChange, fileName = '', hasPDF = true, maxSize = 10
   const handleKeyDown = (e: React.KeyboardEvent<HTMLLabelElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      inputRef?.current?.click();
+      inputRef.current?.click();
     }
   };
 
@@ -51,28 +53,45 @@ export const FileInput = ({ onChange, fileName = '', hasPDF = true, maxSize = 10
 
   return (
     <label
-      className='file-input-label'
-      onDragOver={ (e) => e.preventDefault() }
-      onDrop={ handleDrop }
-      tabIndex={ 0 }
-      onKeyDown={ handleKeyDown }
+      className="file-input-label"
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={handleDrop}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
     >
-      <input type={ "file" } { ...props } onChange={ onChange } ref={ inputRef }/>
-      <div className='file-input-container'>
-        { fileName &&
-            <button className='close-button' onClick={ handleClear }>
-                <CrossIcon/>
-            </button>
-        }
+      <input type="file" {...props} onChange={onChange} ref={inputRef} />
+
+      <div className="file-input-container">
+        {fileName && (
+          <button
+            type="button"
+            className="close-button"
+            onClick={handleClear}
+            aria-label={t('fileInput.remove')}
+          >
+            <CrossIcon />
+          </button>
+        )}
+
         <div>
-          <DownloadIcon/>
+          <DownloadIcon />
         </div>
-        <div>{ fileName ? <span>{ fileName }</span> :
-          <div className='file-input-caption'>
-            <div className='input-title'>Select a file <span>or drag and drop here</span></div>
-            <div>JPG, PNG,{ hasPDF && <span> PDF, </span> } file size no more than { maxSize }MB</div>
-          </div>
-        }</div>
+
+        <div>
+          {fileName ? (
+            <span>{fileName}</span>
+          ) : (
+            <div className="file-input-caption">
+              <div className="input-title">
+                {t('fileInput.selectFile')}{' '}
+                <span>{t('fileInput.orDragAndDrop')}</span>
+              </div>
+              <div>
+                {t('fileInput.formats')} — {t('fileInput.sizeLimit')}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </label>
   );
