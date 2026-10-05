@@ -44,7 +44,7 @@
 
   .text-right{
     width: 50px;
-    text-align: right;
+    text-align: center;
   }
 
   .stats-table-row:last-child {
