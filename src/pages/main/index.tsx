@@ -4,24 +4,23 @@ import { SUGGESTED_COMMUNITIES, SUGGESTED_PEOPLE } from "@/pages/main/data.ts";
 import { CreatePost } from "@/features/create-post";
 import { useAuth } from "@/features/auth/use-auth.tsx";
 import { PostsList } from "@/features/post-feed/posts-list.tsx";
-import { Notifications } from "@/widgets/notifications";
-import { useContext, useState } from "react";
-import { NotificationsContext } from "@/app/providers/notifications-context/context.ts";
+import { useNotifications } from "@/app/providers/notifications-context/useNotifications.ts";
 
 export const MainPage = () => {
   const { isAuth } = useAuth();
-  const [counter, setCounter] = useState(1);
-  const context = useContext(NotificationsContext);
+  const { add } = useNotifications();
 
   const addNote = () => {
-    context?.addNotification({ message: "message " + counter, title: "title" + counter });
-    setCounter(prev => prev + 1);
+    add({
+      type: "error",
+      message: "Time: " + String(new Date().toLocaleTimeString()) + "And a very very long long long text that wants some extra space"
+    });
   };
 
   return (
     <div className='main-page'>
-      <button onClick={ addNote }>Create note</button>
-      <Notifications/>
+      <button onClick={ addNote }>Show time</button>
+
       <CreatePost/>
 
       <PostsList/>
