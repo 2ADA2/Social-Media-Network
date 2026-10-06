@@ -8,7 +8,7 @@ export interface NotificationProps {
   onClose: () => void;
 }
 
-const TIMEOUT = 50000;
+const TIMEOUT = 5000;
 
 export const Notification = ({ message, type = "success", onClose }: NotificationProps) => {
   useEffect(() => {
