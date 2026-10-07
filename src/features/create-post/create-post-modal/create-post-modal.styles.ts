@@ -10,6 +10,10 @@ export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  
+  .input-label input{
+    max-width: 100%;
+  }
 `;
 
 export const StyledTitle = styled.span`

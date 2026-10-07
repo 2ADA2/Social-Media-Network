@@ -2,7 +2,7 @@ import { ThemeSwitcher } from "@/features/theme-switcher";
 import { Button } from "@/shared/ui/button";
 import { EditProfile } from "./edit-profile";
 import "./profile-info.css";
-import { useAuth } from "@/entities/user/model/use-auth.tsx";
+import { useAuth } from "@/features/auth/use-auth.tsx";
 
 export const ProfileInfo = () => {
   const { logout } = useAuth();
