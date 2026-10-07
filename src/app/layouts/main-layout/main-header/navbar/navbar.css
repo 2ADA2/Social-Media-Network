@@ -1,63 +1,53 @@
-.navbar {
-  background: var(--bg-secondary);
-  height: 100vh;
+.nav-wrapper {
   position: fixed;
-  right: 0;
-  top: 0;
-  width: 70%;
-  z-index: 2;
-  border-left: 2px solid var(--border-primary);
-
-  .nav-container {
-    box-sizing: border-box;
-    margin-top: 10px;
-    padding: 0 12px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  a {
-    box-sizing: border-box;
-    text-decoration: none;
-    height: 44px;
-    color: var(--color-muted);
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-  }
-
-  a,
-  .nav-header {
-    background: var(--bg-primary);
-    padding: 8px;
-  }
-
-  .nav-close {
-    background: none;
-    border: none;
-    color: var(--color-primary);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  a:hover {
-    background-color: var(--hover-primary);
-    color: var(--color-primary);
-  }
+  inset: 0;
+  z-index: 1000;
 }
 
 .nav-background {
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  position: fixed;
-  z-index: 1;
+  position: absolute;
+  inset: 0;
   backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.navbar {
+  box-sizing: border-box;
+  background: var(--bg-secondary);
+  height: 100dvh;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 70%;
+  border-left: 2px solid var(--border-primary);
+  will-change: transform;
+}
+
+.nav-container {
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding: 0 12px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.navbar a {
+  box-sizing: border-box;
+  text-decoration: none;
+  height: 44px;
+  color: var(--color-muted);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 8px;
+}
+
+.navbar a:hover {
+  background-color: var(--hover-primary);
+  color: var(--color-primary);
 }
 
 .nav-header {
@@ -68,15 +58,28 @@
   justify-content: space-between;
   gap: 8px;
   font-size: 12px;
+  background: var(--bg-primary);
+}
 
-  div {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
+.nav-header div {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 
-  svg {
-    width: 1rem;
-    height: 1rem;
-  }
+.nav-header svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.nav-close {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  cursor: pointer;
+  display: flex;
+  height: 24px;
+  padding: 0 4px;
+  align-items: center;
+  gap: 4px;
 }

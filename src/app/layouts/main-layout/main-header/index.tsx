@@ -86,9 +86,7 @@ export const MainHeader = ({ hiddenNav = false }: HeaderProps) => {
 
             {isDesktop && (isAuth ? <UserNav /> : <AuthButtons />)}
 
-            {isNavBar && (
-              <NavBar setNavBar={() => setIsNavBar(false)} isOpen={isNavBar} />
-            )}
+            <NavBar setNavBar={() => setIsNavBar(false)} isOpen={isNavBar} />
           </>
         )}
       </Toolbar>
