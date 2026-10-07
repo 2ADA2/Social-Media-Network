@@ -1,12 +1,7 @@
 import { type PropsWithChildren, useState } from "react";
 import type { NotificationProps } from "@/shared/ui/notification";
-import { NotificationsContext } from "./context";
+import { type AddNotificationProps, NotificationsContext } from "./context";
 import { Notifications } from "@/widgets/notifications";
-
-export interface AddNotificationProps {
-  message: string;
-  type?: "success" | "error";
-}
 
 export const NotificationsProvider = (props: PropsWithChildren) => {
   const [notifications, setNotifications] = useState<NotificationProps[]>([]);
@@ -19,6 +14,7 @@ export const NotificationsProvider = (props: PropsWithChildren) => {
     const notification: NotificationProps = {
       ...newNotification,
       onClose: () => deleteNotification(notification),
+      id: Date.now(),
     };
 
     setNotifications((prev) => [...prev, notification]);

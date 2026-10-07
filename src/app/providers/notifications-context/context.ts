@@ -1,6 +1,10 @@
 import { createContext } from "react";
 import type { NotificationProps } from "@/shared/ui/notification";
-import type { AddNotificationProps } from "@/app/providers/notifications-context/index.tsx";
+
+export interface AddNotificationProps {
+  message: string;
+  type?: "success" | "error";
+}
 
 interface NotificationsContextInterface {
   notifications: NotificationProps[];
