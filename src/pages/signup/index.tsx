@@ -8,18 +8,20 @@ import { ROUTES } from '@/shared/config/routes';
 import { PasswordInput } from '@/shared/ui/password-input';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { type SignUpFormData, signupSchema } from '@/pages/signup/signup-schema';
+import {
+  type SignUpFormData,
+  signupSchema,
+} from '@/pages/signup/signup-schema';
 import { useAuth } from '@/features/auth/use-auth';
 import { useTranslation } from 'react-i18next';
+import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
 
 const SignUp = () => {
   const { t } = useTranslation('auth');
   const { signup } = useAuth();
+  const { add } = useNotifications();
 
-  const {
-    control,
-    handleSubmit,
-  } = useForm<SignUpFormData>({
+  const { control, handleSubmit } = useForm<SignUpFormData>({
     resolver: zodResolver(signupSchema),
     defaultValues: { email: '', password: '' },
     mode: 'onChange',
@@ -28,9 +30,12 @@ const SignUp = () => {
   const onSubmit = async (data: SignUpFormData) => {
     try {
       await signup(data);
+      add({ message: t('signUp.success') });
     } catch (e) {
-      alert(t('signUp.error', { message: String(e) }));
-      console.error(e);
+      add({
+        message: t('signUp.error', { message: String(e) }),
+        type: 'error',
+      });
     }
   };
 
@@ -45,7 +50,11 @@ const SignUp = () => {
           </p>
         </div>
 
-        <form className="auth-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form
+          className="auth-form"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+        >
           <div className="input-container">
             <Controller
               name="email"
@@ -83,10 +92,8 @@ const SignUp = () => {
         </form>
 
         <small>
-          {t('signUp.termsPrefix')}{' '}
-          <b>{t('signUp.termsOfService')}</b>{' '}
-          {t('signUp.and')}{' '}
-          <b>{t('signUp.privacyPolicy')}</b>
+          {t('signUp.termsPrefix')} <b>{t('signUp.termsOfService')}</b>{' '}
+          {t('signUp.and')} <b>{t('signUp.privacyPolicy')}</b>
         </small>
 
         <p className="auth-form-footer">
