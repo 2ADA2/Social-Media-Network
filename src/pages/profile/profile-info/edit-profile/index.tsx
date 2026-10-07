@@ -17,12 +17,14 @@ import {
 import { useUpdateProfile } from '@/features/edit-profile/use-update-profile.ts';
 import { useModal } from '@/shared/lib/hooks/use-modal.ts';
 import { UpdateProfileImageModal } from '@/pages/profile/profile-info/edit-profile/update-profile-image-modal';
+import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
 
 export const EditProfile = () => {
   const { t } = useTranslation('profile');
   const { user } = useUser();
   const { mutate: updateProfile, isPending } = useUpdateProfile();
   const { isOpen, open, close } = useModal();
+  const { add } = useNotifications();
 
   const { control, handleSubmit } = useForm<EditProfileSchema>({
     resolver: zodResolver(editProfileSchema),
@@ -38,10 +40,13 @@ export const EditProfile = () => {
     data.username = data.username.slice(1);
     updateProfile(data, {
       onSuccess: () => {
-        alert(t('editProfile.success'));
+        add({ message: t('editProfile.success') });
       },
       onError: (error) => {
-        alert(t('editProfile.error', { message: error.message }));
+        add({
+          message: t('editProfile.error', { message: error.message }),
+          type: 'error',
+        });
       },
     });
   };

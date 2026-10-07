@@ -18,6 +18,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCreatePost } from '@/features/create-post/hooks/use-create-post.ts';
 import { Modal } from '@/shared/ui/modal';
+import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
 
 const MAX_SIZE = 10 * 1024 * 1024;
 const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf'];
@@ -31,6 +32,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
   const { t } = useTranslation('main');
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState('');
+  const { add } = useNotifications();
 
   const { mutate: createPost } = useCreatePost();
 
@@ -50,14 +52,14 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
     }
 
     if (!ALLOWED_TYPES.includes(selectedFile.type)) {
-      alert(t('createPostModal.fileTypeError'));
+      add({ message: t('createPostModal.fileTypeError') });
       e.target.value = '';
       setFile(null);
       return;
     }
 
     if (selectedFile.size > MAX_SIZE) {
-      alert(t('createPostModal.fileSizeError'));
+      add({ message: t('createPostModal.fileSizeError') });
       e.target.value = '';
       setFile(null);
       return;
@@ -76,10 +78,13 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
           setFile(null);
           setFileName('');
           onClose();
-          alert(t('createPostModal.success'));
+          add({ message: t('createPostModal.success') });
         },
         onError: (e) => {
-          alert(t('createPostModal.error', { message: e.message }));
+          add({
+            message: t('createPostModal.error', { message: e.message }),
+            type: 'error',
+          });
         },
       },
     );
