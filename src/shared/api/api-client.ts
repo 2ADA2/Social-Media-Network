@@ -32,10 +32,15 @@ const getNewToken = (): Promise<string> => {
   return refreshPromise;
 };
 
-const forceLogout = () => {
-  localStorage.removeItem('token');
-  store.dispatch(logout());
-  fetchLogout();
+const forceLogout = async () => {
+  try {
+    await fetchLogout();
+  } catch (error) {
+    console.error('Logout request failed:', error);
+  } finally {
+    localStorage.removeItem('token');
+    store.dispatch(logout());
+  }
 };
 
 apiClient.interceptors.response.use(

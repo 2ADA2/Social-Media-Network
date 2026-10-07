@@ -26,9 +26,14 @@ const SignIn = () => {
   const onSubmit = async (data: SignInFormData) => {
     try {
       await signin(data.email, data.password);
-    } catch (e) {
-      alert("Cannot signup: " + e);
-      console.error(e);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert("Cannot sign in: " + error.message);
+      } else {
+        alert("unknown sign in error");
+      }
+
+      console.error(error);
     }
   };
 
@@ -43,34 +48,34 @@ const SignIn = () => {
           </p>
         </div>
 
-        <form className="auth-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="auth-form" onSubmit={ handleSubmit(onSubmit) } noValidate>
           <Controller
             name="email"
-            control={control}
-            render={({ field, fieldState: { error } }) => (
+            control={ control }
+            render={ ({ field, fieldState: { error } }) => (
               <Input
-                {...field}
+                { ...field }
                 label="Email"
                 type="email"
                 placeholder="Enter email"
-                icon={<MailIcon />}
-                error={error?.message}
+                icon={ <MailIcon/> }
+                error={ error?.message }
               />
-            )}
+            ) }
           />
 
           <Controller
             name="password"
-            control={control}
-            render={({ field, fieldState: { error } }) => (
+            control={ control }
+            render={ ({ field, fieldState: { error } }) => (
               <PasswordInput
-                {...field}
+                { ...field }
                 label="Password"
                 placeholder="Enter password"
-                icon={<KeyboardIcon />}
-                error={error?.message}
+                icon={ <KeyboardIcon/> }
+                error={ error?.message }
               />
-            )}
+            ) }
           />
           <Button type="submit">
             Sign in

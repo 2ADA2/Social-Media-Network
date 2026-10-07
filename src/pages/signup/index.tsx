@@ -26,9 +26,14 @@ const SignUp = () => {
   const onSubmit = async (data: SignUpFormData) => {
     try {
       await signup(data);
-    } catch (e) {
-      alert("Cannot signup: " + e);
-      console.error(e);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert("Cannot sign up: " + error.message);
+      } else {
+        alert("unknown sign up error");
+      }
+
+      console.error(error);
     }
   };
 
