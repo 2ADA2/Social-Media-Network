@@ -10,8 +10,8 @@ export const Notifications = () => {
 
   return createPortal(
     <div className='notifications-container'>
-      { notifications.slice(0, NOTIFICATIONS_LIMIT).map((e, id) => (
-        <Notification { ...e } key={ id }/>
+      { notifications.slice(0, NOTIFICATIONS_LIMIT).map((e) => (
+        <Notification { ...e } key={ e.id }/>
       )) }
     </div>,
     document.body);
