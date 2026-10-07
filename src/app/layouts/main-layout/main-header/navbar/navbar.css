@@ -28,12 +28,23 @@
     align-items: center;
   }
 
-  a, .nav-header {
+  a,
+  .nav-header {
     background: var(--bg-primary);
     padding: 8px;
   }
 
-  a:hover{
+  .nav-close {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  a:hover {
     background-color: var(--hover-primary);
     color: var(--color-primary);
   }
@@ -42,14 +53,14 @@
 .nav-background {
   width: 100vw;
   height: 100vh;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   position: fixed;
   z-index: 1;
   backdrop-filter: blur(10px);
 }
 
-.nav-header{
+.nav-header {
   box-sizing: border-box;
   padding: 6px 12px;
   display: flex;
