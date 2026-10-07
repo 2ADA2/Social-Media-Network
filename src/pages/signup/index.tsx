@@ -1,19 +1,17 @@
-import { Input } from '@/shared/ui/input';
+import { Input } from "@/shared/ui/input";
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
 import KeyboardIcon from '@/shared/assets/icons/keyboard.svg?react';
 import './sign-up.css';
-import { Button } from '@/shared/ui/button';
-import { Link } from 'react-router-dom';
-import { ROUTES } from '@/shared/config/routes';
-import { PasswordInput } from '@/shared/ui/password-input';
-import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { type SignUpFormData, signupSchema } from '@/pages/signup/signup-schema';
-import { useAuth } from '@/features/auth/use-auth';
-import { useTranslation } from 'react-i18next';
+import { Button } from "@/shared/ui/button";
+import { Link } from "react-router-dom";
+import { ROUTES } from "@/shared/config/routes.ts";
+import { PasswordInput } from "@/shared/ui/password-input";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { type SignUpFormData, signupSchema } from "@/pages/signup/signup-schema.ts";
+import { useAuth } from "@/features/auth/use-auth.tsx";
 
 const SignUp = () => {
-  const { t } = useTranslation('auth');
   const { signup } = useAuth();
 
   const {
@@ -30,7 +28,7 @@ const SignUp = () => {
       await signup(data);
     } catch (error) {
       if (error instanceof Error) {
-        alert(t('signUp.error', { message: error.message }));
+        alert("Cannot sign up: " + error.message);
       } else {
         alert("unknown sign up error");
       }
@@ -41,62 +39,60 @@ const SignUp = () => {
 
   return (
     <div className="auth-container">
-      <section className="sign-up">
-        <div className="sign-up-header">
-          <h1>{t('signUp.title')}</h1>
+      <section className='sign-up'>
+        <div className='sign-up-header'>
+          <h1>Create an account</h1>
           <p>
-            {t('signUp.subtitleLine1')} <br />
-            {t('signUp.subtitleLine2')}
+            Enter your email and password <br/>
+            to sign up for this app
           </p>
         </div>
 
-        <form className="auth-form" onSubmit={handleSubmit(onSubmit)} noValidate>
-          <div className="input-container">
+        <form className='auth-form' onSubmit={ handleSubmit(onSubmit) } noValidate>
+          <div className='input-container'>
             <Controller
               name="email"
-              control={control}
-              render={({ field, fieldState: { error } }) => (
+              control={ control }
+              render={ ({ field, fieldState: { error } }) => (
                 <Input
-                  {...field}
-                  label={t('signUp.email')}
+                  { ...field }
+                  label="Email"
                   type="email"
-                  placeholder={t('signUp.emailPlaceholder')}
-                  icon={<MailIcon />}
-                  error={error?.message}
+                  placeholder="Enter email"
+                  icon={ <MailIcon/> }
+                  error={ error?.message }
                   custom
                 />
-              )}
+              ) }
             />
 
             <Controller
               name="password"
-              control={control}
-              render={({ field, fieldState: { error } }) => (
+              control={ control }
+              render={ ({ field, fieldState: { error } }) => (
                 <PasswordInput
-                  {...field}
-                  label={t('signUp.password')}
-                  placeholder={t('signUp.passwordPlaceholder')}
-                  icon={<KeyboardIcon />}
-                  error={error?.message}
+                  { ...field }
+                  label="Password"
+                  placeholder="Enter password"
+                  icon={ <KeyboardIcon/> }
+                  error={ error?.message }
                   custom
                 />
-              )}
+              ) }
             />
           </div>
-
-          <Button type="submit">{t('signUp.submit')}</Button>
+          <Button type='submit'>
+            Sign up
+          </Button>
         </form>
 
-        <small>
-          {t('signUp.termsPrefix')}{' '}
-          <b>{t('signUp.termsOfService')}</b>{' '}
-          {t('signUp.and')}{' '}
-          <b>{t('signUp.privacyPolicy')}</b>
-        </small>
+        <small>By clicking continue, you agree to our <b>Terms of Service</b> and <b>Privacy Policy</b></small>
 
-        <p className="auth-form-footer">
-          {t('signUp.footer')}{' '}
-          <Link to={ROUTES.SIGNIN}>{t('signUp.signInLink')}</Link>
+        <p className='auth-form-footer'>
+          Already have an account?{ ' ' }
+          <Link to={ ROUTES.SIGNIN }>
+            Sign in
+          </Link>
         </p>
       </section>
     </div>
