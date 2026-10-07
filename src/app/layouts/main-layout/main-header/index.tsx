@@ -27,7 +27,11 @@ export const MainHeader = ({ hiddenNav = false }: HeaderProps) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
-  const toggleNavBar = () => setIsNavBar((prev) => !prev);
+  const toggleNavBar = () => {
+    setTimeout(() => {
+      setIsNavBar((prev) => !prev);
+    }, 10);
+  };
 
   return (
     <AppBar position="static" elevation={0}>
@@ -86,7 +90,7 @@ export const MainHeader = ({ hiddenNav = false }: HeaderProps) => {
 
             {isDesktop && (isAuth ? <UserNav /> : <AuthButtons />)}
 
-            <NavBar setNavBar={() => setIsNavBar(false)} isOpen={isNavBar} />
+            <NavBar setNavBar={toggleNavBar} isOpen={isNavBar} />
           </>
         )}
       </Toolbar>
