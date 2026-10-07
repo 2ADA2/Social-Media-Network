@@ -1,29 +1,27 @@
-import { type PropsWithChildren, useState } from "react";
-import type { NotificationProps } from "@/shared/ui/notification";
-import { type AddNotificationProps, NotificationsContext } from "./context";
-import { Notifications } from "@/widgets/notifications";
+import { type PropsWithChildren, useCallback, useState } from 'react';
+import { type AddNotificationProps, NotificationsContext } from './context';
+import { Notifications } from '@/widgets/notifications';
 
-export const NotificationsProvider = (props: PropsWithChildren) => {
-  const [notifications, setNotifications] = useState<NotificationProps[]>([]);
+export interface NotificationItem extends AddNotificationProps {
+  id: string;
+}
 
-  const deleteNotification = (notification: NotificationProps) => {
-    setNotifications(prev => prev.filter((e) => e !== notification));
-  };
+export const NotificationsProvider = ({ children }: PropsWithChildren) => {
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
 
-  const addNotification = (newNotification: AddNotificationProps) => {
-    const notification: NotificationProps = {
-      ...newNotification,
-      onClose: () => deleteNotification(notification),
-      id: Date.now(),
-    };
+  const deleteNotification = useCallback((id: string) => {
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
+  }, []);
 
-    setNotifications((prev) => [...prev, notification]);
-  };
+  const addNotification = useCallback((data: AddNotificationProps) => {
+    const id = crypto.randomUUID();
+    setNotifications((prev) => [...prev, { ...data, id }]);
+  }, []);
 
   return (
-    <NotificationsContext.Provider value={ { notifications, addNotification } }>
-      <Notifications/>
-      { props.children }
+    <NotificationsContext.Provider value={{ notifications, addNotification }}>
+      <Notifications onDelete={deleteNotification} />
+      {children}
     </NotificationsContext.Provider>
   );
 };
