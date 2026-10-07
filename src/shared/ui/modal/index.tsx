@@ -20,7 +20,7 @@ export const Modal = ({
 }: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
   useFocusTrap(modalRef, isOpen);
-  useBlockScroll();
+  useBlockScroll(isOpen);
 
   if (!isOpen) {
     return null;
