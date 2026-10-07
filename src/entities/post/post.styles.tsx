@@ -117,6 +117,9 @@ export const PostCommentsContainer = styled.ol`
   padding: 0;
   margin: 0;
   margin-bottom: 16px;
+  max-height: 500px;
+  overflow-y: auto;
+  scrollbar-color: var(--bg-border) transparent;
 
   li {
     counter-increment: item;

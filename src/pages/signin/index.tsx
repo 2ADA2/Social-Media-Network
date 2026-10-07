@@ -1,25 +1,27 @@
-import { Input } from "@/shared/ui/input";
-import { Button } from "@/shared/ui/button";
+import { Input } from '@/shared/ui/input';
+import { Button } from '@/shared/ui/button';
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
 import KeyboardIcon from '@/shared/assets/icons/keyboard.svg?react';
 import './sign-in.css';
-import { Link } from "react-router-dom";
-import { ROUTES } from "@/shared/config/routes.ts";
-import { PasswordInput } from "@/shared/ui/password-input";
-import { useAuth } from "@/features/auth/use-auth.tsx";
-import { type SignInFormData, signInSchema } from "@/pages/signin/signin-schema.ts";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslation } from "react-i18next";
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/shared/config/routes.ts';
+import { PasswordInput } from '@/shared/ui/password-input';
+import { useAuth } from '@/features/auth/use-auth.tsx';
+import {
+  type SignInFormData,
+  signInSchema,
+} from '@/pages/signin/signin-schema.ts';
+import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslation } from 'react-i18next';
+import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
 
 const SignIn = () => {
   const { t } = useTranslation('auth');
   const { signin } = useAuth();
+  const { add } = useNotifications();
 
-  const {
-    control,
-    handleSubmit,
-  } = useForm<SignInFormData>({
+  const { control, handleSubmit } = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
     defaultValues: { email: '', password: '' },
     mode: 'onChange',
@@ -28,9 +30,12 @@ const SignIn = () => {
   const onSubmit = async (data: SignInFormData) => {
     try {
       await signin(data.email, data.password);
+      add({ message: t('signIn.success') });
     } catch (e) {
-      alert(t('signIn.error', { message: String(e) }));
-      console.error(e);
+      add({
+        message: t('signIn.error', { message: String(e) }),
+        type: 'error',
+      });
     }
   };
 
@@ -52,9 +57,9 @@ const SignIn = () => {
             render={ ({ field, fieldState: { error } }) => (
               <Input
                 { ...field }
-                label="Email"
+                label={ t('signIn.email') }
                 type="email"
-                placeholder="Enter email"
+                placeholder={ t('signIn.emailPlaceholder') }
                 icon={ <MailIcon/> }
                 error={ error?.message }
               />
@@ -67,8 +72,8 @@ const SignIn = () => {
             render={ ({ field, fieldState: { error } }) => (
               <PasswordInput
                 { ...field }
-                label="Password"
-                placeholder="Enter password"
+                label={ t('signIn.password') }
+                placeholder={ t('signIn.passwordPlaceholder') }
                 icon={ <KeyboardIcon/> }
                 error={ error?.message }
               />
@@ -88,6 +93,5 @@ const SignIn = () => {
     </div>
   );
 };
-
 
 export default SignIn;
