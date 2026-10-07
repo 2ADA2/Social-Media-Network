@@ -12,15 +12,16 @@ import { useRef } from 'react';
 
 interface NavBarProps {
   setNavBar: () => void;
+  isOpen: boolean;
 }
 
-export const NavBar = ({ setNavBar }: NavBarProps) => {
+export const NavBar = ({ setNavBar, isOpen }: NavBarProps) => {
   const navRef = useRef(null);
   const { t } = useTranslation('common');
   const { isAuth } = useAuth();
   const { user } = useUser();
-  useBlockScroll();
-  useFocusTrap(navRef, true);
+  useBlockScroll(isOpen);
+  useFocusTrap(navRef, isOpen);
 
   return (
     <>

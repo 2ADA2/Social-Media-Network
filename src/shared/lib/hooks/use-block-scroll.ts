@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 
-export const useBlockScroll = () => {
+export const useBlockScroll = (isOpen: boolean) => {
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
 
     return () => {
       document.body.style.overflowY = 'auto';
     };
-  }, []);
+  }, [isOpen]);
 };
