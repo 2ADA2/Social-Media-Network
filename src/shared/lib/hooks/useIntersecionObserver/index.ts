@@ -25,7 +25,7 @@ export const useIntersectionObserver = ({
     observer.observe(ref.current);
 
     return () => observer.disconnect();
-  }, [ref, onIntersect]);
+  }, [onIntersect]);
 
   return ref;
 };

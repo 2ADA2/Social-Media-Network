@@ -2,7 +2,7 @@ import { Post } from "@/entities/post";
 import { Loader } from "@/shared/ui/loader";
 import { usePosts } from "@/features/post-feed/usePosts.ts";
 import { useIntersectionObserver } from "@/shared/lib/hooks/useIntersecionObserver";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Post as PostType } from "@/entities/post/types.ts";
 import "./posts-list.css";
 
@@ -26,13 +26,13 @@ export const PostsList = () => {
 
   const hasMore = data ? posts.length < data.total : false;
 
-  const loadPosts = () => {
+  const loadPosts = useCallback(() => {
     if (isFetching || !hasMore) {
       return;
     }
 
     setOffset((prev) => prev + LIMIT);
-  };
+  }, []);
 
   const ref = useIntersectionObserver({ onIntersect: loadPosts });
 
@@ -50,7 +50,7 @@ export const PostsList = () => {
 
   return (
     <div className='posts-container'>
-      { posts.map((post, i) => <Post key={ i } post={ post }/>) }
+      { posts.map((post) => <Post key={ post.id } post={ post }/>) }
       { hasMore && <Loader isBlock={ false }/> }
 
       <div ref={ ref }></div>
