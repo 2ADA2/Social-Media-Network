@@ -56,7 +56,7 @@ export const CreateComment = ({ postId }: CreateCommentProps) => {
         errorMessage={ error }
         disabled={ isPending }
       />
-      <Button type="button" onClick={ createComment }>Add a comment</Button>
+      <Button disabled={ isPending } type="button" onClick={ createComment }>Add a comment</Button>
     </div>
   );
 };
