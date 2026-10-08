@@ -5,9 +5,11 @@ import CrossIcon from "@/shared/assets/icons/cross.svg?react";
 
 export interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
   fileName?: string;
+  hasPDF?: boolean;
+  maxSize?: number;
 }
 
-export const FileInput = ({ onChange, fileName = '', ...props }: FileInputProps) => {
+export const FileInput = ({ onChange, fileName = '', hasPDF = true, maxSize = 10, ...props }: FileInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
@@ -68,7 +70,7 @@ export const FileInput = ({ onChange, fileName = '', ...props }: FileInputProps)
         <div>{ fileName ? <span>{ fileName }</span> :
           <div className='file-input-caption'>
             <div className='input-title'>Select a file <span>or drag and drop here</span></div>
-            <div>JPG, PNG,<span> PDF, </span> file size no more than 10MB</div>
+            <div>JPG, PNG,{ hasPDF && <span> PDF, </span> } file size no more than { maxSize }MB</div>
           </div>
         }</div>
       </div>

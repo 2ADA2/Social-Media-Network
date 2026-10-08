@@ -7,8 +7,8 @@ import { FileInput } from "@/shared/ui/file-input";
 import { StyledButton } from "@/features/create-post/create-post.styles.ts";
 import { useUpdateAvatar } from "@/features/edit-profile/use-update-avatar.ts";
 
-const MAX_SIZE = 10 * 1024 * 1024;
-const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf'];
+const MAX_SIZE = 2 * 1024 * 1024;
+const ALLOWED_TYPES = ['image/png', 'image/jpeg'];
 
 export interface CreateModalProps {
   isOpen: boolean;
@@ -47,7 +47,7 @@ export const UpdateProfileImageModal = ({ isOpen, onClose }: CreateModalProps) =
     }
 
     if (selectedFile.size > MAX_SIZE) {
-      alert('no more than 10 MB');
+      alert('no more than 2 MB');
       e.target.value = '';
       setFile(null);
       return;
