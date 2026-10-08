@@ -16,7 +16,7 @@ const isUserArray = (items: SidebarEntities): items is SuggestedPeopleResponse[]
 };
 
 export const Sidebar = ({ title, users }: SidebarProps) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation('main');
 
   if (users.length === 0) {
     return null;
@@ -47,7 +47,7 @@ export const Sidebar = ({ title, users }: SidebarProps) => {
           key={ user.id }
           { ...user }
           title={ user.title }
-          subtitle={ formatCompact(user.membersCount, i18n.language) }
+          subtitle={ `${formatCompact(user.membersCount, i18n.language)} ${t('sidebar.members')}` }
           avatarUrl={ user.photo || "" }
         />
       )) }

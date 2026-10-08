@@ -41,6 +41,7 @@
   },
   "sidebar": {
     "suggestedPeople": "Suggested people",
-    "communities": "Communities you might like"
+    "communities": "Communities you might like",
+    "members": "members"
   }
 }
