@@ -7,9 +7,10 @@ import { Comment } from "@/entities/comment";
 
 interface PostCommentsProps {
   postId: number;
+  onAdd: () => void;
 }
 
-export const PostComments = ({ postId }: PostCommentsProps) => {
+export const PostComments = ({ postId, onAdd }: PostCommentsProps) => {
   const { data, isPending, isError } = useQuery(commentsQueries.forPost(postId));
 
   if (isPending) {
@@ -22,7 +23,7 @@ export const PostComments = ({ postId }: PostCommentsProps) => {
         { isError && <div>Cannot get comments</div> }
         { data && data.map((comment) => <Comment { ...comment } key={ comment.id }/>) }
       </PostCommentsContainer>
-      <CreateComment postId={ postId }/>
+      <CreateComment postId={ postId } onAdd={ onAdd }/>
     </>
   );
 };

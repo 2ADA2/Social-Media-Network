@@ -1,34 +1,60 @@
 import { Toggle } from '@/shared/ui/toggle';
 import './statistics.css';
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { TableView } from "@/pages/profile/statistics/table-view";
 import { ChartView } from "./chart-view";
-
-const STATS = [
-  { title: 'Title', value: '45,678.90', delta: '+20%', positive: true },
-  { title: 'Title', value: '2,405', delta: '+33%', positive: true },
-  { title: 'Title', value: '10,353', delta: '-8%', positive: false },
-];
+import { useQuery } from "@tanstack/react-query";
+import { statsQueries } from "@/features/get-statistics/stats.ts";
+import { countByWeek } from "@/shared/lib/stats/date-stats.ts";
+import { StatsCard } from "@/pages/profile/statistics/stats-card.tsx";
+import { countByDay } from "@/shared/lib/stats/count-by-day.ts";
+import { useThemeStore } from "@/app/store/theme-store.ts";
 
 export const Statistics = () => {
   const [enableChartView, setEnableChartView] = useState(false);
+  const { data: posts } = useQuery(statsQueries.posts());
+  const { data: comments } = useQuery(statsQueries.comments());
+  const { data: likes } = useQuery(statsQueries.likes());
+  const theme = useThemeStore((state) => state.theme);
+
+
+  const postsStats = useMemo(() => countByWeek(
+    (posts ?? []).map((p) => p.creationDate),
+  ), [posts]);
+
+  const likesStats = useMemo(() => countByWeek(
+    (likes ?? []).map((l) => l.creationDate),
+  ), [likes]);
+
+  const commentsStats = useMemo(() => countByWeek(
+    (comments ?? []).map((c) => c.creationDate),
+  ), [comments]);
+
+  const likesByDay = useMemo(
+    () => countByDay((likes ?? []).map((l) => l.creationDate), 7),
+    [likes],
+  );
+
+  const commentsByDay = useMemo(
+    () => countByDay((comments ?? []).map((c) => c.creationDate), 7),
+    [comments],
+  );
 
   const switchChartView = () => {
     setEnableChartView(!enableChartView);
   };
 
+  const stats = [
+    { id: 1, title: 'Likes', value: likesStats.current, percents: likesStats.percents },
+    { id: 2, title: 'Comments', value: commentsStats.current, percents: commentsStats.percents },
+    { id: 3, title: 'Posts', value: postsStats.current, percents: postsStats.percents },
+  ];
+
   return (
     <section className="stats">
       <div className="stats-cards">
-        { STATS.map((stat, i) => (
-          <div key={ i } className="stats-card">
-            <div className="stats-card-title">{ stat.title }</div>
-            <div className="stats-card-value">{ stat.value }</div>
-            <div
-              className={ `stats-card-delta ${ stat.positive ? 'stats-card-delta--positive' : 'stats-card-delta--negative' }` }>
-              { stat.delta } month over month
-            </div>
-          </div>
+        { stats.map((stat) => (
+          <StatsCard { ...stat } key={ stat.id }/>
         )) }
       </div>
 
@@ -38,8 +64,8 @@ export const Statistics = () => {
         <span>Enable Chart view</span>
       </div>
 
-      { enableChartView && <ChartView/> }
-      { !enableChartView && <TableView/> }
+      { enableChartView && <ChartView commentsByDay={commentsByDay} likesByDay={likesByDay} theme={theme}/> }
+      { !enableChartView && <TableView likesByDay={ likesByDay} commentsByDay={commentsByDay} /> }
 
     </section>
   );

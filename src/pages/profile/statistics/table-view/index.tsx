@@ -1,46 +1,30 @@
 import "./table-view.css";
+import { type DailyCount } from "@/shared/lib/stats/count-by-day.ts";
 
-const LIKES = [
-  { col1: 123, col2: 456 },
-  { col1: 123, col2: 456 },
-  { col1: 123, col2: 456 },
-  { col1: 123, col2: 456 },
-  { col1: 123, col2: 456 },
-  { col1: 123, col2: 456 },
-  { col1: 123, col2: 456 },
-];
+interface TableViewProps {
+  likesByDay: DailyCount[];
+  commentsByDay: DailyCount[];
+}
 
-const COMMENTS = [
-  { col1: 123, col2: 456 },
-  { col1: 123, col2: 456 },
-  { col1: 123, col2: 456 },
-  { col1: 123, col2: 456 },
-  { col1: 123, col2: 456 },
-  { col1: 123, col2: 456 },
-  { col1: 123, col2: 456 },
-];
-
-export const TableView = () => {
+export const TableView = ({ likesByDay, commentsByDay }: TableViewProps) => {
   return (
     <div className='stats-container'>
       <div className="stats-block">
         <h2 className="stats-heading">Likes</h2>
         <div className="stats-table">
-          <div className="stats-table-title">Title</div>
+          <div className="stats-table-title">Last week</div>
           <table className="stats-table-content">
             <thead>
             <tr className="stats-table-head">
-              <th className="text-left">Col 1</th>
-              <th className="text-right">Col 2</th>
-              <th className="text-right">Col 3</th>
+              <th className="text-left">Day</th>
+              <th className="text-right">Count</th>
             </tr>
             </thead>
             <tbody>
-            { LIKES.map((row, i) => (
+            { likesByDay.map((row, i) => (
               <tr key={ i } className="stats-table-row">
-                <td className="text-left">Row { i + 1 }</td>
-                <td className="text-right">{ row.col1 }</td>
-                <td className="text-right">{ row.col2 }</td>
+                <td className="text-left">{ row.date }</td>
+                <td className="text-right">{ row.count || "-" }</td>
               </tr>
             )) }
             </tbody>
@@ -51,21 +35,19 @@ export const TableView = () => {
       <div className="stats-block">
         <h2 className="stats-heading">Comments</h2>
         <div className="stats-table">
-          <div className="stats-table-title">Title</div>
+          <div className="stats-table-title">Last week</div>
           <table className="stats-table-content">
             <thead>
             <tr className="stats-table-head">
-              <th className="text-left">Col 1</th>
-              <th className="text-right">Col 2</th>
-              <th className="text-right">Col 3</th>
+              <th className="text-left">Day</th>
+              <th className="text-right">Count</th>
             </tr>
             </thead>
             <tbody>
-            { COMMENTS.map((row, i) => (
+            { commentsByDay.map((row, i) => (
               <tr key={ i } className="stats-table-row">
-                <td className="text-left">Row { i + 1 }</td>
-                <td className="text-right">{ row.col1 }</td>
-                <td className="text-right">{ row.col2 }</td>
+                <td className="text-left">{ row.date }</td>
+                <td className="text-right">{ row.count || "-" }</td>
               </tr>
             )) }
             </tbody>
