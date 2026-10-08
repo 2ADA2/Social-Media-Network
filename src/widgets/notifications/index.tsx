@@ -20,6 +20,7 @@ export const Notifications = ({ onDelete }: NotificationsProps) => {
           message={e.message}
           type={e.type}
           onClose={() => onDelete(e.id)}
+          id={e.id}
         />
       ))}
     </div>,
