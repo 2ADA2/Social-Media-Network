@@ -1,15 +1,17 @@
 import { Toggle } from '@/shared/ui/toggle';
 import './statistics.css';
-import { useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { TableView } from "@/pages/profile/statistics/table-view";
-import { ChartView } from "./chart-view";
-import { useQuery } from "@tanstack/react-query";
-import { statsQueries } from "@/features/get-statistics/stats.ts";
-import { countByWeek } from "@/shared/lib/stats/date-stats.ts";
-import { StatsCard } from "@/pages/profile/statistics/stats-card.tsx";
-import { countByDay } from "@/shared/lib/stats/count-by-day.ts";
-import { useThemeStore } from "@/app/store/theme-store.ts";
+import { lazy, Suspense, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { TableView } from '@/pages/profile/statistics/table-view';
+import { useQuery } from '@tanstack/react-query';
+import { statsQueries } from '@/features/get-statistics/stats.ts';
+import { countByWeek } from '@/shared/lib/stats/date-stats.ts';
+import { StatsCard } from '@/pages/profile/statistics/stats-card.tsx';
+import { countByDay } from '@/shared/lib/stats/count-by-day.ts';
+import { useThemeStore } from '@/app/store/theme-store.ts';
+import { Loader } from '@/shared/ui/loader';
+
+const ChartView = lazy(() => import('./chart-view'));
 
 export const Statistics = () => {
   const { t } = useTranslation('profile');
@@ -19,26 +21,36 @@ export const Statistics = () => {
   const { data: likes } = useQuery(statsQueries.likes());
   const theme = useThemeStore((state) => state.theme);
 
+  const postsStats = useMemo(
+    () => countByWeek((posts ?? []).map((p) => p.creationDate)),
+    [posts],
+  );
 
-  const postsStats = useMemo(() => countByWeek(
-    (posts ?? []).map((p) => p.creationDate),
-  ), [posts]);
+  const likesStats = useMemo(
+    () => countByWeek((likes ?? []).map((l) => l.creationDate)),
+    [likes],
+  );
 
-  const likesStats = useMemo(() => countByWeek(
-    (likes ?? []).map((l) => l.creationDate),
-  ), [likes]);
-
-  const commentsStats = useMemo(() => countByWeek(
-    (comments ?? []).map((c) => c.creationDate),
-  ), [comments]);
+  const commentsStats = useMemo(
+    () => countByWeek((comments ?? []).map((c) => c.creationDate)),
+    [comments],
+  );
 
   const likesByDay = useMemo(
-    () => countByDay((likes ?? []).map((l) => l.creationDate), 7),
+    () =>
+      countByDay(
+        (likes ?? []).map((l) => l.creationDate),
+        7,
+      ),
     [likes],
   );
 
   const commentsByDay = useMemo(
-    () => countByDay((comments ?? []).map((c) => c.creationDate), 7),
+    () =>
+      countByDay(
+        (comments ?? []).map((c) => c.creationDate),
+        7,
+      ),
     [comments],
   );
 
@@ -47,28 +59,52 @@ export const Statistics = () => {
   };
 
   const stats = [
-    { id: 1, title: t('stats.likes'), value: likesStats.current, percents: likesStats.percents },
-    { id: 2, title: t('stats.comments'), value: commentsStats.current, percents: commentsStats.percents },
-    { id: 3, title: t('stats.posts'), value: postsStats.current, percents: postsStats.percents },
+    {
+      id: 1,
+      title: t('stats.likes'),
+      value: likesStats.current,
+      percents: likesStats.percents,
+    },
+    {
+      id: 2,
+      title: t('stats.comments'),
+      value: commentsStats.current,
+      percents: commentsStats.percents,
+    },
+    {
+      id: 3,
+      title: t('stats.posts'),
+      value: postsStats.current,
+      percents: postsStats.percents,
+    },
   ];
 
   return (
     <section className="stats">
       <div className="stats-cards">
-        { stats.map((stat) => (
-          <StatsCard { ...stat } key={ stat.id }/>
-        )) }
+        {stats.map((stat) => (
+          <StatsCard {...stat} key={stat.id} />
+        ))}
       </div>
 
       <div className="stats-toggle">
-        <span>{ t('stats.tableView') }</span>
-        <Toggle checked={ enableChartView } onChange={ switchChartView }/>
-        <span>{ t('stats.enableChartView') }</span>
+        <span>{t('stats.tableView')}</span>
+        <Toggle checked={enableChartView} onChange={switchChartView} />
+        <span>{t('stats.enableChartView')}</span>
       </div>
 
-      { enableChartView && <ChartView commentsByDay={commentsByDay} likesByDay={likesByDay} theme={theme}/> }
-      { !enableChartView && <TableView likesByDay={ likesByDay} commentsByDay={commentsByDay} /> }
-
+      {enableChartView && (
+        <Suspense fallback={<Loader />}>
+          <ChartView
+            commentsByDay={commentsByDay}
+            likesByDay={likesByDay}
+            theme={theme}
+          />
+        </Suspense>
+      )}
+      {!enableChartView && (
+        <TableView likesByDay={likesByDay} commentsByDay={commentsByDay} />
+      )}
     </section>
   );
 };
