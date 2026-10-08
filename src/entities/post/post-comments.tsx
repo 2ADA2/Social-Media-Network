@@ -23,7 +23,7 @@ export const PostComments = ({ postId, onAdd }: PostCommentsProps) => {
         { isError && <div>Cannot get comments</div> }
         { data && data.map((comment) => <Comment { ...comment } key={ comment.id }/>) }
       </PostCommentsContainer>
-      <CreateComment postId={ postId } onAdd = {onAdd}/>
+      <CreateComment postId={ postId } onAdd={ onAdd }/>
     </>
   );
 };
