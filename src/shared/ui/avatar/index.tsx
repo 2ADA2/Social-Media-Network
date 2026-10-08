@@ -1,5 +1,5 @@
-import "./avatar.css";
-import React from "react";
+import './avatar.css';
+import React, { useState } from 'react';
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLImageElement> {
   src: string;
@@ -8,12 +8,30 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLImageElement> {
   className?: string;
 }
 
-export const Avatar = ({ src, size, alt, className, ...props }: AvatarProps) => {
+const DEFAULT_AVATAR = '/assets/default-avatar.jpg';
+
+export const Avatar = ({
+  src,
+  size,
+  alt,
+  className,
+  ...props
+}: AvatarProps) => {
+  const [hasError, setHasError] = useState(false);
+
+  const handleError = () => {
+    setHasError(true);
+  };
+
   return (
-    <img src={ src }
-         className={ "avatar " + className }
-         alt={ alt || "avatar" }
-         width={ size }
-         height={ size } { ...props }/>
+    <img
+      src={hasError ? DEFAULT_AVATAR : src}
+      className={'avatar ' + className}
+      alt={alt || 'avatar'}
+      width={size}
+      height={size}
+      {...props}
+      onError={handleError}
+    />
   );
 };

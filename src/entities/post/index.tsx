@@ -28,6 +28,8 @@ import { selectUserId } from '@/entities/user/model/selectors.ts';
 import { PostComments } from '@/entities/post/post-comments.tsx';
 import { animated, useSpring, useTransition } from '@react-spring/web';
 
+const DEFAULT_IMAGE = '/assets/default-image.png';
+
 const MAX_COMMENTS_HEIGHT = 1000;
 
 interface PostProps {
@@ -59,12 +61,13 @@ export const Post = ({ post }: PostProps) => {
 
   const heartSpring = useSpring({
     scale: liked ? 1.15 : 1,
+    color: liked ? 'var(--color-error)' : 'var(--text-muted)',
     config: { tension: 300, friction: 10 },
   });
 
   const transitions = useTransition(showComments, {
     from: { opacity: 0, maxHeight: 0 },
-    enter: { opacity: 1, maxHeight: MAX_COMMENTS_HEIGHT },
+    enter: { opacity: 1, maxHeight: 1000 },
     leave: { opacity: 0, maxHeight: 0 },
     config: { tension: 200, friction: 25 },
   });
