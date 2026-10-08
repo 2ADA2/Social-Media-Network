@@ -71,7 +71,13 @@ export const UpdateProfileImageModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <StyledTitle>{t('updateAvatar.title')}</StyledTitle>
-      <FileInput name="image" fileName={fileName} onChange={changeFile} />
+      <FileInput
+        name="image"
+        hasPDF={false}
+        maxSize={MAX_SIZE_MB}
+        fileName={fileName}
+        onChange={changeFile}
+      />
       <StyledButton
         disabled={isPending}
         type="submit"
