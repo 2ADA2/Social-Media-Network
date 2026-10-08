@@ -3,17 +3,45 @@ import { useQuery } from "@tanstack/react-query";
 import { sidebarQueries } from "@/features/sidebar/sidebar.ts";
 
 export const MainSidebar = () => {
-  const { data: suggestedPeople, isPending: isPeoplePending } = useQuery(sidebarQueries.suggestedPeople());
-  const { data: communities, isPending: isCommunitiesPending } = useQuery(sidebarQueries.community());
+  const {
+    data: suggestedPeople,
+    isPending: isPeoplePending,
+    isError: isPeopleError,
+  } = useQuery(sidebarQueries.suggestedPeople());
+  const {
+    data: communities,
+    isPending: isCommunitiesPending,
+    isError: isCommunitiesError,
+  } = useQuery(sidebarQueries.community());
+
+  const showPeople = () => {
+    if (isPeopleError) {
+      return <Sidebar title='cannot get people' users={ [] }/>;
+    }
+
+    if (!isPeoplePending && suggestedPeople) {
+      return <Sidebar title='Suggested people' users={ suggestedPeople }/>;
+    }
+
+    return null;
+  };
+
+  const showCommunities = () => {
+    if (isCommunitiesError) {
+      return <Sidebar title='cannot get communities' users={ [] }/>;
+    }
+
+    if (!isCommunitiesPending && communities) {
+      return <Sidebar title='Suggested communities' users={ communities }/>;
+    }
+
+    return null;
+  };
 
   return (
     <>
-      { (suggestedPeople && !isPeoplePending) && (
-        <Sidebar title='Suggested people' users={ suggestedPeople }/>
-      ) }
-      { (communities && !isCommunitiesPending) && (
-        <Sidebar title='Communities you might like' users={ communities }/>
-      ) }
+      { showPeople() }
+      { showCommunities() }
     </>
   );
 };

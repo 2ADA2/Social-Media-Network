@@ -27,7 +27,7 @@ export const Sidebar = ({ title, users }: SidebarProps) => {
             key={ user.id }
             { ...user }
             title={ user.firstName + " " + user.secondName }
-            subtitle={ user.username }
+            subtitle={ "@" + user.username }
             avatarUrl={ user.photo || "" }
           />
         )) }
@@ -43,7 +43,7 @@ export const Sidebar = ({ title, users }: SidebarProps) => {
           key={ user.id }
           { ...user }
           title={ user.title }
-          subtitle={ String(user.membersCount) }
+          subtitle={ String(user.membersCount) + " members" }
           avatarUrl={ user.photo || "" }
         />
       )) }

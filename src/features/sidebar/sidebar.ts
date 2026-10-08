@@ -18,6 +18,7 @@ export const sidebarQueries = {
       queryKey: ['sidebar', 'suggested-users'],
       queryFn: fetchSuggestedPeople,
       staleTime: 5 * 60 * 1000,
+      retry: 3,
     }),
 
   community: () =>
@@ -25,5 +26,6 @@ export const sidebarQueries = {
       queryKey: ['sidebar', 'groups'],
       queryFn: fetchGroups,
       staleTime: 5 * 60 * 1000,
+      retry: 3,
     }),
 };
