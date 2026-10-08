@@ -2,6 +2,7 @@ import { TextArea } from "@/shared/ui/text-area";
 import { Button } from "@/shared/ui/button";
 import PenIcon from "@/shared/assets/icons/pen.svg?react";
 import { type ChangeEvent, useState } from "react";
+import { useTranslation } from "react-i18next";
 import "./create-comment.css";
 import { useCreateComment } from "@/features/create-comment/use-create-comment.ts";
 import { useNotifications } from "@/app/providers/notifications-context/useNotifications.ts";
@@ -13,13 +14,14 @@ interface CreateCommentProps {
 
 export const CreateComment = ({ postId, onAdd }: CreateCommentProps) => {
   const { add } = useNotifications();
+  const { t } = useTranslation('main');
   const [comment, setComment] = useState('');
   const [error, setError] = useState('');
   const { mutate: requestCreateComment, isPending } = useCreateComment();
 
   const check = (length: number) => {
     if (1 > length || length > 200) {
-      setError("Comment length at least 1, at most 200");
+      setError(t('comment.lengthError'));
       return false;
     }
 
@@ -36,12 +38,12 @@ export const CreateComment = ({ postId, onAdd }: CreateCommentProps) => {
     if (check(comment.length)) {
       requestCreateComment({ text: comment, postId: postId }, {
         onSuccess: () => {
-          add({ message: "You commented the post" });
-          onAdd();
+          add({ message: t('comment.successMessage') });
           setComment("");
+          onAdd();
         },
         onError: () => {
-          add({ message: "Cannot add your comment", type: "error" });
+          add({ message: t('comment.errorMessage'), type: "error" });
         },
       });
     }
@@ -51,14 +53,14 @@ export const CreateComment = ({ postId, onAdd }: CreateCommentProps) => {
     <div className='add-comment-section'>
       <TextArea
         icon={ <PenIcon/> }
-        label='Add a comment'
-        placeholder='Write a comment...'
+        label={ t('comment.label') }
+        placeholder={ t('comment.placeholder') }
         onChange={ changeComment }
         value={ comment }
         errorMessage={ error }
         disabled={ isPending }
       />
-      <Button disabled={ isPending } type="button" onClick={ createComment }>Add a comment</Button>
+      <Button disabled={ isPending } type="button" onClick={ createComment }>{ t('comment.submit') }</Button>
     </div>
   );
 };

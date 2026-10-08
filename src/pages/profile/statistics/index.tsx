@@ -1,6 +1,7 @@
 import { Toggle } from '@/shared/ui/toggle';
 import './statistics.css';
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { TableView } from "@/pages/profile/statistics/table-view";
 import { ChartView } from "./chart-view";
 import { useQuery } from "@tanstack/react-query";
@@ -11,6 +12,7 @@ import { countByDay } from "@/shared/lib/stats/count-by-day.ts";
 import { useThemeStore } from "@/app/store/theme-store.ts";
 
 export const Statistics = () => {
+  const { t } = useTranslation('profile');
   const [enableChartView, setEnableChartView] = useState(false);
   const { data: posts } = useQuery(statsQueries.posts());
   const { data: comments } = useQuery(statsQueries.comments());
@@ -45,9 +47,9 @@ export const Statistics = () => {
   };
 
   const stats = [
-    { id: 1, title: 'Likes', value: likesStats.current, percents: likesStats.percents },
-    { id: 2, title: 'Comments', value: commentsStats.current, percents: commentsStats.percents },
-    { id: 3, title: 'Posts', value: postsStats.current, percents: postsStats.percents },
+    { id: 1, title: t('stats.likes'), value: likesStats.current, percents: likesStats.percents },
+    { id: 2, title: t('stats.comments'), value: commentsStats.current, percents: commentsStats.percents },
+    { id: 3, title: t('stats.posts'), value: postsStats.current, percents: postsStats.percents },
   ];
 
   return (
@@ -59,9 +61,9 @@ export const Statistics = () => {
       </div>
 
       <div className="stats-toggle">
-        <span>Table view</span>
+        <span>{ t('stats.tableView') }</span>
         <Toggle checked={ enableChartView } onChange={ switchChartView }/>
-        <span>Enable Chart view</span>
+        <span>{ t('stats.enableChartView') }</span>
       </div>
 
       { enableChartView && <ChartView commentsByDay={commentsByDay} likesByDay={likesByDay} theme={theme}/> }

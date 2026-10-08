@@ -1,8 +1,10 @@
 import './chart-view.css';
 import Chart from 'react-apexcharts';
+import { useMemo } from "react";
+import { useTranslation } from 'react-i18next';
 import type { DailyCount } from '@/shared/lib/stats/count-by-day';
 import { buildOptions } from "@/pages/profile/statistics/chart-view/options.ts";
-import { useMemo } from "react";
+import i18n from "i18next";
 
 interface ChartViewProps {
   likesByDay: DailyCount[];
@@ -15,28 +17,30 @@ export const ChartView = ({
                             commentsByDay,
                             theme,
                           }: ChartViewProps) => {
+  const { t } = useTranslation('profile');
+
   const likesSeries = useMemo(() => ([
-    { name: 'Likes', data: likesByDay.map((d) => d.count) },
-  ]), [likesByDay]);
+    { name: t('stats.likes'), data: likesByDay.map((d) => d.count) },
+  ]), [likesByDay, t]);
 
   const commentsSeries = useMemo(() => ([
-    { name: 'Comments', data: commentsByDay.map((d) => d.count) },
-  ]), [commentsByDay]);
+    { name: t('stats.comments'), data: commentsByDay.map((d) => d.count) },
+  ]), [commentsByDay, t]);
 
   const likesOptions = useMemo(() => {
     const categories = likesByDay.map((d) => d.date);
-    return buildOptions(categories, theme, "likes-chart", "line");
+    return buildOptions(categories, theme, "likes-chart", "line", i18n.language);
   }, [likesByDay, theme]);
 
   const commentsOptions = useMemo(() => {
     const categories = commentsByDay.map((d) => d.date);
-    return buildOptions(categories, theme, "comments-chart", "bar");
+    return buildOptions(categories, theme, "comments-chart", "bar", i18n.language);
   }, [commentsByDay, theme]);
 
   return (
     <div className="stats-container">
       <div className="stats-chart">
-        <h2 className="stats-heading">Likes</h2>
+        <h2 className="stats-heading">{ t('stats.likes') }</h2>
         <Chart
           options={ likesOptions }
           series={ likesSeries }
@@ -48,7 +52,7 @@ export const ChartView = ({
       </div>
 
       <div className="stats-chart">
-        <h2 className="chart-heading">Comments</h2>
+        <h2 className="chart-heading">{ t('stats.comments') }</h2>
         <Chart
           options={ commentsOptions }
           series={ commentsSeries }

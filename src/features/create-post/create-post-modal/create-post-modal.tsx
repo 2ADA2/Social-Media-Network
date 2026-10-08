@@ -2,6 +2,7 @@ import { type ChangeEvent, useEffect, useState } from "react";
 import MailIcon from "@/shared/assets/icons/mail.svg?react";
 import PenIcon from "@/shared/assets/icons/pen.svg?react";
 import { FileInput } from "@/shared/ui/file-input";
+import { useTranslation } from "react-i18next";
 import { useBlockScroll } from "@/shared/lib/hooks/block-scroll/use-block-scroll.tsx";
 import {
   StyledCreatePostModal,
@@ -25,6 +26,7 @@ export interface CreateModalProps {
 }
 
 export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
+  const { t } = useTranslation('main');
   const { blockScroll, unblockScroll } = useBlockScroll();
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState('');
@@ -60,14 +62,14 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
     }
 
     if (!ALLOWED_TYPES.includes(selectedFile.type)) {
-      alert('File must be .PNG, .JPG or .pdf');
+      alert(t('createPostModal.fileTypeError'));
       e.target.value = '';
       setFile(null);
       return;
     }
 
     if (selectedFile.size > MAX_SIZE) {
-      alert('no more than 10 MB');
+      alert(t('createPostModal.fileSizeError'));
       e.target.value = '';
       setFile(null);
       return;
@@ -86,10 +88,10 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
           setFile(null);
           setFileName('');
           onClose();
-          alert("Post created"); // TODO: custom message
+          alert(t('createPostModal.success'));
         },
         onError: (e) => {
-          alert("Something went wrong: " + e.message); // TODO: custom message
+          alert(t('createPostModal.error', { message: e.message }));
         },
       },
     );
@@ -98,7 +100,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
   return (
     <StyledCreatePostModal isOpen={ isOpen } onClose={ onClose }>
       <StyledForm onSubmit={ handleSubmit(submitForm) } noValidate>
-        <StyledTitle>Create a new post</StyledTitle>
+        <StyledTitle>{ t('createPostModal.title') }</StyledTitle>
         <Controller
           name="title"
           control={ control }
@@ -106,10 +108,10 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
             <StyledInput
               { ...field }
               icon={ <MailIcon/> }
-              label='Post Title'
+              label={ t('createPostModal.titleLabel') }
               name='titile'
               error={ error?.message }
-              placeholder='Enter post title'
+              placeholder={ t('createPostModal.titlePlaceholder') }
             />
           ) }
         />
@@ -120,15 +122,15 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
             <StyledTextArea $filled={ !!error?.message }
                             { ...field }
                             icon={ <PenIcon/> }
-                            label='Description'
+                            label={ t('createPostModal.descriptionLabel') }
                             name='description'
-                            placeholder='Write description here...'
+                            placeholder={ t('createPostModal.descriptionPlaceholder') }
                             errorMessage={ error?.message }
             />
           ) }
         />
         <FileInput name='image' fileName={ fileName } onChange={ changeFile }/>
-        <StyledButton type='submit'>Create</StyledButton>
+        <StyledButton type='submit'>{ t('createPostModal.submit') }</StyledButton>
       </StyledForm>
     </StyledCreatePostModal>
   );
