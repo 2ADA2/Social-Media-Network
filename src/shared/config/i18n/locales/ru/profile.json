@@ -28,8 +28,8 @@
   "updateAvatar": {
     "title": "Обновить фото профиля",
     "submit": "Обновить",
-    "fileTypeError": "Файл должен быть .PNG, .JPG или .pdf",
-    "fileSizeError": "не более 10 МБ",
+    "fileTypeError": "Файл должен быть .PNG или .JPG",
+    "fileSizeError": "не более {{size}} МБ",
     "noFile": "Выберите новое фото",
     "success": "Фото профиля обновлено",
     "error": "Не удалось обновить фото профиля: {{message}}"

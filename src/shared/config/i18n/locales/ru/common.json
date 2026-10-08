@@ -8,8 +8,9 @@
   "fileInput": {
     "selectFile": "Выберите файл",
     "orDragAndDrop": "или перетащите сюда",
-    "formats": "JPG, PNG, PDF",
-    "sizeLimit": "размер файла не более 10 МБ",
+    "formats": "JPG, PNG",
+    "formatsWithPdf": "JPG, PNG, PDF",
+    "sizeLimit": "размер файла не более {{size}} МБ",
     "remove": "Удалить файл"
   },
   "error": {

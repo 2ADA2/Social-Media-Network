@@ -8,7 +8,8 @@ import { FileInput } from "@/shared/ui/file-input";
 import { StyledButton } from "@/features/create-post/create-post.styles.ts";
 import { useUpdateAvatar } from "@/features/edit-profile/use-update-avatar.ts";
 
-const MAX_SIZE = 2 * 1024 * 1024;
+const MAX_SIZE_MB = 2;
+const MAX_SIZE = MAX_SIZE_MB * 1024 * 1024;
 const ALLOWED_TYPES = ['image/png', 'image/jpeg'];
 
 export interface CreateModalProps {
@@ -49,7 +50,7 @@ export const UpdateProfileImageModal = ({ isOpen, onClose }: CreateModalProps) =
     }
 
     if (selectedFile.size > MAX_SIZE) {
-      alert(t('updateAvatar.fileSizeError'));
+      alert(t('updateAvatar.fileSizeError', { size: MAX_SIZE_MB }));
       e.target.value = '';
       setFile(null);
       return;
@@ -78,8 +79,9 @@ export const UpdateProfileImageModal = ({ isOpen, onClose }: CreateModalProps) =
   return (
     <StyledCreatePostModal isOpen={ isOpen } onClose={ onClose }>
       <StyledTitle>{ t('updateAvatar.title') }</StyledTitle>
-      <FileInput name='image' fileName={ fileName } onChange={ changeFile }/>
-      <StyledButton disabled={ isPending } type='submit' onClick={ updateProfileImage }>{ t('updateAvatar.submit') }</StyledButton>
+      <FileInput name='image' hasPDF={ false } maxSize={ MAX_SIZE_MB } fileName={ fileName } onChange={ changeFile }/>
+      <StyledButton disabled={ isPending } type='submit'
+                    onClick={ updateProfileImage }>{ t('updateAvatar.submit') }</StyledButton>
     </StyledCreatePostModal>
   );
 };

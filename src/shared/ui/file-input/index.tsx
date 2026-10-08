@@ -51,6 +51,8 @@ export const FileInput = ({ onChange, fileName = '', hasPDF = true, maxSize = 10
     onChange?.(fakeEvent);
   };
 
+  const formats = hasPDF ? t('fileInput.formatsWithPdf') : t('fileInput.formats');
+
   return (
     <label
       className="file-input-label"
@@ -87,7 +89,7 @@ export const FileInput = ({ onChange, fileName = '', hasPDF = true, maxSize = 10
                 <span>{t('fileInput.orDragAndDrop')}</span>
               </div>
               <div>
-                {t('fileInput.formats')} — {t('fileInput.sizeLimit')}
+                {formats} — {t('fileInput.sizeLimit', { size: maxSize })}
               </div>
             </div>
           )}
