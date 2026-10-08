@@ -22,30 +22,32 @@ import {
   StyledSVG,
 } from './post.styles';
 import type { Post as PostType } from '@/entities/post/types';
-import { useLikePost } from "@/features/like-post/use-like-post.ts";
-import { useAppSelector } from "@/app/store/hooks.ts";
-import { selectUserId } from "@/entities/user/model/selectors.ts";
-import { PostComments } from "@/entities/post/post-comments.tsx";
+import { useLikePost } from '@/features/like-post/use-like-post.ts';
+import { useAppSelector } from '@/app/store/hooks.ts';
+import { selectUserId } from '@/entities/user/model/selectors.ts';
+import { PostComments } from '@/entities/post/post-comments.tsx';
+import { animated, useSpring, useTransition } from '@react-spring/web';
 
 interface PostProps {
   post: PostType;
 }
 
 const checkLiked = (likes: { id: number }[], userId: number) => {
-    if (userId === -1) {
-      return false;
-    }
-
-    return likes.some((user) => user.id === userId);
+  if (userId === -1) {
+    return false;
   }
-;
+
+  return likes.some((user) => user.id === userId);
+};
 
 export const Post = ({ post }: PostProps) => {
   const { t, i18n } = useTranslation('main');
   const { isAuth } = useAuth();
 
   const currentUserId = Number(useAppSelector(selectUserId)) || -1;
-  const [liked, setLiked] = useState(checkLiked(post.likedByUsers, currentUserId));
+  const [liked, setLiked] = useState(
+    checkLiked(post.likedByUsers, currentUserId),
+  );
   const [likes, setLikes] = useState(post.likesCount);
 
   const [showComments, setShowComments] = useState(false);
@@ -53,14 +55,27 @@ export const Post = ({ post }: PostProps) => {
 
   const { mutate: toggleLike, isPending: isLiking } = useLikePost();
 
+  const heartSpring = useSpring({
+    scale: liked ? 1.15 : 1,
+    color: liked ? 'var(--color-error)' : 'var(--text-muted)',
+    config: { tension: 300, friction: 10 },
+  });
+
+  const transitions = useTransition(showComments, {
+    from: { opacity: 0, maxHeight: 0 },
+    enter: { opacity: 1, maxHeight: 1000 },
+    leave: { opacity: 0, maxHeight: 0 },
+    config: { tension: 200, friction: 25 },
+  });
+
   const handleLike = () => {
     if (!isAuth || isLiking) {
       return;
     }
 
     toggleLike({ postId: post.id, liked: liked });
-    setLikes(prev => liked ? prev - 1 : prev + 1);
-    setLiked(prev => !prev);
+    setLikes((prev) => (liked ? prev - 1 : prev + 1));
+    setLiked((prev) => !prev);
   };
 
   const toggleComments = () => {
@@ -68,61 +83,82 @@ export const Post = ({ post }: PostProps) => {
   };
 
   const addComment = () => {
-    setComments(prev => prev + 1);
+    setComments((prev) => prev + 1);
   };
 
   return (
     <StyledPost>
       <PostHeader>
-        <Avatar src={ post.author.profileImage || "" } alt={ `Post ${ post.id }` } size={ 48 }/>
+        <Avatar
+          src={post.author.profileImage || ''}
+          alt={`Post ${post.id}`}
+          size={48}
+        />
         <HeaderData>
-          <div>{ post.author.firstName } { post.author.secondName }</div>
-          <PostDate>{ new Date(post.creationDate).toLocaleDateString() }</PostDate>
+          <div>
+            {post.author.firstName} {post.author.secondName}
+          </div>
+          <PostDate>
+            {new Date(post.creationDate).toLocaleDateString()}
+          </PostDate>
         </HeaderData>
       </PostHeader>
 
-      { post.image && (
-        <PostImage loading="lazy" src={ post.image } alt={ post.title }/>
-      ) }
+      {post.image && (
+        <PostImage loading="lazy" src={post.image} alt={post.title} />
+      )}
 
-      <Description>{ post.content }</Description>
+      <Description>{post.content}</Description>
 
-      <PostControl $auth={ isAuth }>
-        <CoverButton onClick={ handleLike }>
+      <PostControl $auth={isAuth}>
+        <CoverButton onClick={handleLike}>
           <ControlContainer>
-            <StyledSVG $active={ liked }>
-              <HeartIcon/>
+            <StyledSVG $active={liked}>
+              <animated.div
+                style={{
+                  transform: heartSpring.scale.to((s) => `scale(${s})`),
+                  display: 'flex',
+                }}
+              >
+                <HeartIcon />
+              </animated.div>
             </StyledSVG>
             <ControlText>
-              { likes < 1000
+              {likes < 1000
                 ? t('post.likes', { count: likes })
-                : `${formatCompact(likes, i18n.language)} ${t('post.likesLabel')}` }
+                : `${formatCompact(likes, i18n.language)} ${t('post.likesLabel')}`}
             </ControlText>
           </ControlContainer>
         </CoverButton>
 
-        <CoverButton onClick={ toggleComments }>
+        <CoverButton onClick={toggleComments}>
           <ControlContainer>
-            <StyledSVG $active={ false }>
-              <CommentIcon/>
+            <StyledSVG $active={false}>
+              <CommentIcon />
             </StyledSVG>
             <ControlText>
-              { isAuth
+              {isAuth
                 ? comments < 1000
                   ? t('post.comments', { count: comments })
                   : `${formatCompact(comments, i18n.language)} ${t('post.commentsLabel')}`
-                : t('post.loginToSeeComments') }
+                : t('post.loginToSeeComments')}
             </ControlText>
             <StyledArrowIcon>
-              { isAuth && (showComments ? <ArrowDown/> : <ArrowUp/>) }
+              {isAuth && (showComments ? <ArrowDown /> : <ArrowUp />)}
             </StyledArrowIcon>
           </ControlContainer>
         </CoverButton>
       </PostControl>
 
-      { isAuth && showComments && (
-        <PostComments postId={post.id} onAdd={addComment}/>
-      ) }
+      {isAuth &&
+        transitions(
+          (style, item) =>
+            item && (
+              <animated.div style={style}>
+                <PostComments postId={post.id} onAdd={addComment} />
+              </animated.div>
+            ),
+        )}
     </StyledPost>
   );
 };

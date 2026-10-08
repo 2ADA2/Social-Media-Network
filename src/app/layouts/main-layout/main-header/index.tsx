@@ -14,7 +14,7 @@ import { AuthButtons } from './auth-buttons';
 import { UserNav } from './user-nav';
 import { NavBar } from './navbar';
 import { ROUTES } from '@/shared/config/routes';
-import { useAuth } from "@/features/auth/use-auth.tsx";
+import { useAuth } from '@/features/auth/use-auth.tsx';
 
 export interface HeaderProps {
   hiddenNav?: boolean;
@@ -27,10 +27,14 @@ export const MainHeader = ({ hiddenNav = false }: HeaderProps) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
-  const toggleNavBar = () => setIsNavBar((prev) => !prev);
+  const toggleNavBar = () => {
+    setTimeout(() => {
+      setIsNavBar((prev) => !prev);
+    }, 10);
+  };
 
   return (
-    <AppBar position="static" elevation={ 0 }>
+    <AppBar position="static" elevation={0}>
       <Toolbar
         sx={{
           justifyContent: 'space-between',
@@ -43,44 +47,52 @@ export const MainHeader = ({ hiddenNav = false }: HeaderProps) => {
           alignItems: 'center',
         }}
       >
-
         <Box
-          component={ Link }
-          to={ ROUTES.HOME }
+          component={Link}
+          to={ROUTES.HOME}
           sx={{
             display: 'flex',
             alignItems: 'center',
             gap: 0.75,
             color: 'var(--color-primary)',
             textDecoration: 'none',
-            height: '100%',
           }}
         >
-          <Box sx={{
-            height: 24,
-            display: 'flex',
-            alignItems: 'center',
-            '& svg': {
+          <Box
+            sx={{
+              height: 24,
+              display: 'flex',
+              alignItems: 'center',
+              '& svg': {
                 width: { xs: 12, md: 24 },
                 height: { xs: 12, md: 24 },
-            },
-          }}>
-            <SidekickLogo/>
+              },
+            }}
+          >
+            <SidekickLogo />
           </Box>
-          <Typography component={'span'} sx={{ lineHeight:1, letterSpacing:0, fontSize: { xs: 10, md: 16 }, fontFamily: 'inherit' }}>
+          <Typography
+            component={'span'}
+            sx={{
+              lineHeight: 1,
+              letterSpacing: 0,
+              fontSize: { xs: 10, md: 16 },
+              fontFamily: 'inherit',
+            }}
+          >
             sidekick
           </Typography>
         </Box>
 
-        { !hiddenNav && (
+        {!hiddenNav && (
           <>
-            { !isDesktop && <BurgerMenu onClick={ toggleNavBar }/> }
+            {!isDesktop && <BurgerMenu onClick={toggleNavBar} />}
 
-            { isDesktop && (isAuth ? <UserNav/> : <AuthButtons/>) }
+            {isDesktop && (isAuth ? <UserNav /> : <AuthButtons />)}
 
-            { isNavBar && <NavBar setNavBar={ () => setIsNavBar(false) }/> }
+            <NavBar setNavBar={toggleNavBar} isOpen={isNavBar} />
           </>
-        ) }
+        )}
       </Toolbar>
     </AppBar>
   );

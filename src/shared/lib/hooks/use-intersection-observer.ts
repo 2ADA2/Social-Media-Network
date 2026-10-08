@@ -5,8 +5,8 @@ interface UseIntersectionObserverOptions {
 }
 
 export const useIntersectionObserver = ({
-                                          onIntersect,
-                                        }: UseIntersectionObserverOptions) => {
+  onIntersect,
+}: UseIntersectionObserverOptions) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -14,13 +14,11 @@ export const useIntersectionObserver = ({
       return;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          onIntersect();
-        }
-      },
-    );
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        onIntersect();
+      }
+    });
 
     observer.observe(ref.current);
 

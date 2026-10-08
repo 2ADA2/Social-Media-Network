@@ -1,17 +1,20 @@
-import { Post } from "@/entities/post";
-import { Loader } from "@/shared/ui/loader";
-import { usePosts } from "@/features/post-feed/usePosts.ts";
-import { useIntersectionObserver } from "@/shared/lib/hooks/useIntersecionObserver";
-import { useCallback, useEffect, useState } from "react";
-import type { Post as PostType } from "@/entities/post/types.ts";
-import "./posts-list.css";
+import { Post } from '@/entities/post';
+import { Loader } from '@/shared/ui/loader';
+import { usePosts } from '@/features/post-feed/usePosts.ts';
+import { useIntersectionObserver } from '@/shared/lib/hooks/use-intersection-observer.ts';
+import { useEffect, useState, useCallback } from 'react';
+import type { Post as PostType } from '@/entities/post/types.ts';
+import './posts-list.css';
 
 const LIMIT = 20;
 
 export const PostsList = () => {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [offset, setOffset] = useState(0);
-  const { data, isPending, isError, error, isFetching } = usePosts(LIMIT, offset);
+  const { data, isPending, isError, error, isFetching } = usePosts(
+    LIMIT,
+    offset,
+  );
 
   useEffect(() => {
     if (!data) {
@@ -49,11 +52,13 @@ export const PostsList = () => {
   }
 
   return (
-    <div className='posts-container'>
-      { posts.map((post) => <Post key={ post.id } post={ post }/>) }
-      { hasMore && <Loader isBlock={ false }/> }
+    <div className="posts-container">
+      {posts.map((post, i) => (
+        <Post key={i} post={post} />
+      ))}
+      {hasMore && <Loader isBlock={false} />}
 
-      <div ref={ ref }></div>
+      <div ref={ref}></div>
     </div>
   );
 };
