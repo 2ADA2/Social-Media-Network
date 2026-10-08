@@ -28,8 +28,8 @@
   "updateAvatar": {
     "title": "Update your profile photo",
     "submit": "Update",
-    "fileTypeError": "File must be .PNG, .JPG or .pdf",
-    "fileSizeError": "no more than 10 MB",
+    "fileTypeError": "File must be .PNG or .JPG",
+    "fileSizeError": "no more than {{size}} MB",
     "noFile": "You need to choose a new photo",
     "success": "Profile image updated successfully",
     "error": "Cannot update your profile page: {{message}}"
