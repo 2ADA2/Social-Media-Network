@@ -3,6 +3,8 @@ import { graphqlClient } from '@/shared/api/graphql-client';
 import type { Post, PostsPage } from '@/entities/post/types';
 import { gql } from 'graphql-request';
 
+const POSTS_LIMIT = 20;
+
 const ALL_POSTS_QUERY = gql`
   query AllPosts($limit: Int, $offset: Int) {
     allPosts(limit: $limit, offset: $offset) {
@@ -21,6 +23,10 @@ const ALL_POSTS_QUERY = gql`
         firstName
         secondName
         profileImage
+      }
+      likedByUsers {
+        id
+        username
       }
     }
   }
@@ -54,18 +60,13 @@ const fetchPosts = async (limit = 20, offset = 0): Promise<PostsPage> => {
   };
 };
 
+// without cache
 export const postsQueries = {
-  all: () =>
-    queryOptions({
-      queryKey: ['posts'],
-      queryFn: () => fetchPosts(),
-      staleTime: 5 * 60 * 1000,
-    }),
-
-  list: (limit = 20, offset = 0) =>
+  list: (limit = POSTS_LIMIT, offset = 0) =>
     queryOptions({
       queryKey: ['posts', { limit, offset }],
       queryFn: () => fetchPosts(limit, offset),
-      staleTime: 5 * 60 * 1000,
+      staleTime: 0,
+      gcTime: 0,
     }),
 };
