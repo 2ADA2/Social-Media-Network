@@ -55,7 +55,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
 
     if (!selectedFile) {
       setFile(null);
-      setFileName('')
+      setFileName('');
       return;
     }
 

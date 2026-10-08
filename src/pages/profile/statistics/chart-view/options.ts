@@ -25,8 +25,6 @@ export const buildOptions = (
   const firstDate = type === "line" ? categories[0].split(".")[0] : categories[0];
   const lastDate = type === "line" ? categories[categories.length - 1].split(".")[0] : categories.at(-1);
 
-  console.log(categories);
-
   return {
     chart: {
       toolbar: { show: false },

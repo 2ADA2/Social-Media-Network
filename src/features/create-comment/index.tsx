@@ -8,9 +8,10 @@ import { useNotifications } from "@/app/providers/notifications-context/useNotif
 
 interface CreateCommentProps {
   postId: number;
+  onAdd: () => void;
 }
 
-export const CreateComment = ({ postId }: CreateCommentProps) => {
+export const CreateComment = ({ postId, onAdd }: CreateCommentProps) => {
   const { add } = useNotifications();
   const [comment, setComment] = useState('');
   const [error, setError] = useState('');
@@ -36,6 +37,7 @@ export const CreateComment = ({ postId }: CreateCommentProps) => {
       requestCreateComment({ text: comment, postId: postId }, {
         onSuccess: () => {
           add({ message: "You commented the post" });
+          onAdd();
           setComment("");
         },
         onError: () => {
