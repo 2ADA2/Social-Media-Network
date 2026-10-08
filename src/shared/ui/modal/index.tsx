@@ -1,6 +1,7 @@
 import "./modal.css";
 import React from "react";
 import CrossIcon from "@/shared/assets/icons/cross.svg?react";
+import { createPortal } from "react-dom";
 
 export interface ModalProps {
   children: React.ReactNode;
@@ -14,7 +15,7 @@ export const Modal = ({ children, isOpen, onClose, className = '' }: ModalProps)
     return null;
   }
 
-  return (
+  return createPortal(
     <>
       <div className='modal-background'></div>
       <div className={ 'modal-window ' + className }>
@@ -24,6 +25,7 @@ export const Modal = ({ children, isOpen, onClose, className = '' }: ModalProps)
 
         { children }
       </div>
-    </>
+    </>,
+    document.body,
   );
 };
