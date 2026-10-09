@@ -11,7 +11,7 @@
     height: 24px;
 
     path {
-      color: var(--color-primary);
+      fill: var(--color-primary);
     }
   }
 }
@@ -20,6 +20,6 @@
   cursor: default;
 
   svg path {
-    color: var(--color-muted);
+    fill: var(--color-muted);
   }
 }
