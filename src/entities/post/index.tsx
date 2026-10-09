@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import HeartIcon from '@/shared/assets/icons/heart.svg?react';
 import CommentIcon from '@/shared/assets/icons/comment.svg?react';
@@ -86,9 +86,9 @@ export const Post = ({ post }: PostProps) => {
     setShowComments((prev) => !prev);
   };
 
-  const addComment = () => {
+  const addComment = useCallback(() => {
     setComments((prev) => prev + 1);
-  };
+  }, []);
 
   const handeImgError = () => {
     setHasImgError(true);
