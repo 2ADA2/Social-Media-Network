@@ -40,7 +40,8 @@
   "validation": {
     "titleMin": "Title must be at least 2 characters",
     "titleMax": "Title must be at most 100 characters",
-    "descriptionMax": "Reached the {{count}} text limit"
+    "descriptionMax": "Reached the {{count}} text limit",
+    "descriptionMin": "Description required"
   },
   "sidebar": {
     "suggestedPeople": "Suggested people",
