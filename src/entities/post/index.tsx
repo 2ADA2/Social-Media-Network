@@ -27,6 +27,7 @@ import { useAppSelector } from '@/app/store/hooks.ts';
 import { selectUserId } from '@/entities/user/model/selectors.ts';
 import { PostComments } from '@/entities/post/post-comments.tsx';
 import { animated, useSpring, useTransition } from '@react-spring/web';
+import { formatRelativeTime } from '@/shared/lib/localization/format-relative-time.ts';
 
 const MAX_COMMENTS_HEIGHT = 1000;
 
@@ -91,6 +92,8 @@ export const Post = ({ post }: PostProps) => {
     setComments((prev) => prev - 1);
   }, []);
 
+  const date = formatRelativeTime(post.creationDate, i18n.language);
+
   return (
     <StyledPost>
       <PostHeader>
@@ -103,9 +106,7 @@ export const Post = ({ post }: PostProps) => {
           <div>
             {post.author.firstName} {post.author.secondName}
           </div>
-          <PostDate>
-            {new Date(post.creationDate).toLocaleDateString()}
-          </PostDate>
+          <PostDate>{date}</PostDate>
         </HeaderData>
       </PostHeader>
 

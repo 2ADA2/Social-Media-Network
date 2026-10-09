@@ -5,13 +5,14 @@ import { useDeleteComment } from '@/features/delete-comment/use-delete-comment.t
 import TrashCanIcon from '@/shared/assets/icons/trashcan.svg?react';
 import { useUser } from '@/entities/user/model/use-user.tsx';
 import { useTranslation } from 'react-i18next';
+import { formatRelativeTime } from '@/shared/lib/localization/format-relative-time.ts';
 
 interface CommentComponentProps extends CommentInterface {
   onDelete: () => void;
 }
 
 export const Comment = (data: CommentComponentProps) => {
-  const { t } = useTranslation('main');
+  const { t, i18n } = useTranslation('main');
   const { mutate: deleteComment, isPending } = useDeleteComment();
   const { user } = useUser();
 
@@ -28,7 +29,7 @@ export const Comment = (data: CommentComponentProps) => {
   const firstName = data?.author?.firstName || data?.author?.username || 'user';
   const secondName = data?.author?.secondName ?? '';
 
-  const date = data.creationDate;
+  const date = formatRelativeTime(data.creationDate, i18n.language);
 
   return (
     <div className="post-comment">

@@ -8,7 +8,7 @@
 
   .post-comment-header {
     display: flex;
-    gap: 4px;
+    gap: 12px;
 
     .post-comment-info {
       display: flex;
