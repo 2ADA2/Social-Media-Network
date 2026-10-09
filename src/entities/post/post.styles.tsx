@@ -111,29 +111,22 @@ export const StyledArrowIcon = styled.div`
   }
 `;
 
-export const PostCommentsContainer = styled.ol`
-  list-style: none;
-  counter-reset: item;
+export const PostCommentsContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 0;
   padding: 0;
-  margin: 0;
-  margin-bottom: 16px;
+  margin: 0 0 16px 0;
   max-height: 500px;
   overflow-y: auto;
   scrollbar-color: var(--bg-border) transparent;
 
-  li {
-    counter-increment: item;
+  .post-comment {
     color: var(--color-primary);
     font-size: 14px;
-    margin-bottom: 16px;
   }
 
-  li:last-child {
-    margin-bottom: 0;
-  }
-
-  li::before {
-    content: '#' counter(item) '. ';
-    color: var(--color-primary);
+  .post-comment:last-child {
+    border-width: 0;
   }
 `;

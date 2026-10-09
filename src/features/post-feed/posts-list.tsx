@@ -35,14 +35,14 @@ export const PostsList = () => {
     }
 
     setOffset((prev) => prev + LIMIT);
-  }, []);
+  }, [hasMore, isFetching]);
 
   const ref = useIntersectionObserver({ onIntersect: loadPosts });
 
   if (isPending && !posts.length) {
     return (
-      <div className='posts-list-loader-container'>
-        <Loader/>
+      <div className="posts-list-loader-container">
+        <Loader />
       </div>
     );
   }
@@ -56,9 +56,8 @@ export const PostsList = () => {
       {posts.map((post, i) => (
         <Post key={i} post={post} />
       ))}
-      {hasMore && <Loader isBlock={false} />}
-
       <div ref={ref}></div>
+      {hasMore && <Loader isBlock={false} />}
     </div>
   );
 };
