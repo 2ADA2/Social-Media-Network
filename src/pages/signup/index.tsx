@@ -1,6 +1,7 @@
 import { Input } from '@/shared/ui/input';
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
 import KeyboardIcon from '@/shared/assets/icons/keyboard.svg?react';
+import UserIcon from '@/shared/assets/icons/user.svg?react';
 import './sign-up.css';
 import { Button } from '@/shared/ui/button';
 import { Link } from 'react-router-dom';
@@ -9,23 +10,25 @@ import { PasswordInput } from '@/shared/ui/password-input';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
+  createSignupSchema,
   type SignUpFormData,
-  signupSchema,
 } from '@/pages/signup/signup-schema';
 import { useAuth } from '@/features/auth/use-auth';
 import { useTranslation } from 'react-i18next';
 import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const SignUp = () => {
-  const { t } = useTranslation('auth');
+  const { t, i18n } = useTranslation('auth');
   const { signup } = useAuth();
   const { add } = useNotifications();
   const [isPending, setIsPending] = useState(false);
 
+  const schema = useMemo(() => createSignupSchema(t), [t, i18n.language]);
+
   const { control, handleSubmit } = useForm<SignUpFormData>({
-    resolver: zodResolver(signupSchema),
-    defaultValues: { email: '', password: '' },
+    resolver: zodResolver(schema),
+    defaultValues: { firstName: '', secondName: '', email: '', password: '' },
     mode: 'onTouched',
   });
 
@@ -61,6 +64,34 @@ const SignUp = () => {
           onSubmit={handleSubmit(onSubmit)}
           noValidate
         >
+          <Controller
+            name="firstName"
+            control={control}
+            render={({ field, fieldState: { error, isTouched } }) => (
+              <Input
+                {...field}
+                label={t('signUp.firstName')}
+                placeholder={t('signUp.firstNamePlaceholder')}
+                icon={<UserIcon />}
+                error={error?.message}
+                custom={isTouched}
+              />
+            )}
+          />
+          <Controller
+            name="secondName"
+            control={control}
+            render={({ field, fieldState: { error, isTouched } }) => (
+              <Input
+                {...field}
+                label={t('signUp.secondName')}
+                placeholder={t('signUp.secondNamePlaceholder')}
+                icon={<UserIcon />}
+                error={error?.message}
+                custom={isTouched}
+              />
+            )}
+          />
           <div className="input-container">
             <Controller
               name="email"

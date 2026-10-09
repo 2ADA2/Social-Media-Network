@@ -1,11 +1,14 @@
 import { useAppSelector, useAppDispatch } from '@/app/store/hooks.ts';
 import { selectIsAuthenticated } from '@/entities/user/model/selectors.ts';
-import { logout as logoutAction, setCredentials } from "@/entities/user/model/user-slice.ts";
-import { signinRequest } from "@/features/auth/signin.ts";
-import { signupRequest } from "@/features/auth/signup.ts";
-import { userQueries } from "@/features/auth/me.ts";
-import { queryClient } from "@/shared/api/queryClient.ts";
-import { fetchLogout } from "@/features/auth/logout.ts";
+import {
+  logout as logoutAction,
+  setCredentials,
+} from '@/entities/user/model/user-slice.ts';
+import { signinRequest } from '@/features/auth/signin.ts';
+import { signupRequest } from '@/features/auth/signup.ts';
+import { userQueries } from '@/features/auth/me.ts';
+import { queryClient } from '@/shared/api/queryClient.ts';
+import { fetchLogout } from '@/features/auth/logout.ts';
 
 export const useAuth = () => {
   const isAuth = useAppSelector(selectIsAuthenticated);
@@ -30,7 +33,8 @@ export const useAuth = () => {
   const signup = async (data: {
     email: string;
     password: string;
-    username?: string;
+    firstName: string;
+    secondName: string;
   }) => {
     await signupRequest(data);
     await signin(data.email, data.password);
@@ -56,4 +60,3 @@ export const useAuth = () => {
     signup,
   };
 };
-

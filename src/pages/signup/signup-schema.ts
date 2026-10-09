@@ -1,16 +1,25 @@
 import { z } from 'zod';
-import i18n from '@/shared/config/i18n';
+import type { TFunction } from 'i18next';
 
-export const signupSchema = z.object({
-  email: z
-    .string()
-    .min(1, i18n.t('validation.emailRequired', { ns: 'auth' }))
-    .email(i18n.t('validation.emailInvalid', { ns: 'auth' })),
-  password: z
-    .string()
-    .min(8, i18n.t('validation.passwordMin', { ns: 'auth' }))
-    .regex(/[a-zA-Z]/, i18n.t('validation.passwordLetter', { ns: 'auth' }))
-    .regex(/[0-9]/, i18n.t('validation.passwordDigit', { ns: 'auth' })),
-});
+export const createSignupSchema = (t: TFunction<'auth'>) =>
+  z.object({
+    firstName: z
+      .string()
+      .min(1, t('validation.firstNameRequired'))
+      .max(15, t('validation.firstNameMax')),
+    secondName: z
+      .string()
+      .min(1, t('validation.secondNameRequired'))
+      .max(15, t('validation.secondNameMax')),
+    email: z
+      .string()
+      .min(1, t('validation.emailRequired'))
+      .email(t('validation.emailInvalid')),
+    password: z
+      .string()
+      .min(8, t('validation.passwordMin'))
+      .regex(/[a-zA-Z]/, t('validation.passwordLetter'))
+      .regex(/[0-9]/, t('validation.passwordDigit')),
+  });
 
-export type SignUpFormData = z.infer<typeof signupSchema>;
+export type SignUpFormData = z.infer<ReturnType<typeof createSignupSchema>>;
