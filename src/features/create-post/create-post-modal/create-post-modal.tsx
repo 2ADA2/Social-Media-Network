@@ -1,4 +1,4 @@
-import { type ChangeEvent, useState } from 'react';
+import { type ChangeEvent, useMemo, useState } from 'react';
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
 import PenIcon from '@/shared/assets/icons/pen.svg?react';
 import { FileInput } from '@/shared/ui/file-input';
@@ -29,15 +29,17 @@ export interface CreateModalProps {
 }
 
 export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
-  const { t } = useTranslation('main');
+  const { t, i18n } = useTranslation('main');
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState('');
   const { add } = useNotifications();
 
   const { mutate: createPost } = useCreatePost();
 
+  const schema = useMemo(() => createPostSchema(), [i18n.language]);
+
   const { control, handleSubmit, reset } = useForm<CreatePostData>({
-    resolver: zodResolver(createPostSchema),
+    resolver: zodResolver(schema),
     defaultValues: { title: '', description: '' },
     mode: 'onTouched',
   });
