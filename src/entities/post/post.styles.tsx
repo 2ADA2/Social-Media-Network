@@ -114,7 +114,7 @@ export const StyledArrowIcon = styled.div`
 export const PostCommentsContainer = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0;
   padding: 0;
   margin: 0 0 16px 0;
   max-height: 500px;

@@ -90,6 +90,10 @@ export const Post = ({ post }: PostProps) => {
     setComments((prev) => prev + 1);
   }, []);
 
+  const deleteComment = useCallback(() => {
+    setComments((prev) => prev - 1);
+  }, []);
+
   const handeImgError = () => {
     setHasImgError(true);
   };
@@ -168,7 +172,11 @@ export const Post = ({ post }: PostProps) => {
           (style, item) =>
             item && (
               <animated.div style={style}>
-                <PostComments postId={post.id} onAdd={addComment} />
+                <PostComments
+                  postId={post.id}
+                  onAdd={addComment}
+                  onDelete={deleteComment}
+                />
               </animated.div>
             ),
         )}
