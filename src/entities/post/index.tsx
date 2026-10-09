@@ -34,6 +34,7 @@ const DEFAULT_IMAGE = '/assets/default-image.png';
 
 interface PostProps {
   post: PostType;
+  onDelete: (postId: number) => void;
 }
 
 const checkLiked = (likes: { id: number }[], userId: number) => {
@@ -44,7 +45,7 @@ const checkLiked = (likes: { id: number }[], userId: number) => {
   return likes.some((user) => user.id === userId);
 };
 
-export const Post = ({ post }: PostProps) => {
+export const Post = ({ post, onDelete }: PostProps) => {
   const { t, i18n } = useTranslation('main');
   const { isAuth } = useAuth();
 
@@ -110,6 +111,7 @@ export const Post = ({ post }: PostProps) => {
             postId={post.id}
             currentUserId={currentUserId}
             authorId={post.authorId}
+            onDelete={onDelete}
           />
         )}
         <Avatar

@@ -5,7 +5,11 @@ import { useAuth } from '@/features/auth/use-auth.tsx';
 import { useUser } from '@/entities/user/model/use-user.tsx';
 import { useModal } from '@/shared/lib/hooks/use-modal.ts';
 
-export const CreatePost = () => {
+interface CreatePostProps {
+  onAdd: (postId: number) => void;
+}
+
+export const CreatePost = ({ onAdd }: CreatePostProps) => {
   const { t } = useTranslation('main');
   const { isAuth } = useAuth();
   const { user } = useUser();
@@ -22,7 +26,7 @@ export const CreatePost = () => {
       <Text>{t('createPost.placeholder')}</Text>
       <StyledButton onClick={open}>{t('createPost.submit')}</StyledButton>
 
-      <CreatePostModal isOpen={isOpen} onClose={close} />
+      <CreatePostModal isOpen={isOpen} onClose={close} onAdd={onAdd} />
     </Card>
   );
 };
