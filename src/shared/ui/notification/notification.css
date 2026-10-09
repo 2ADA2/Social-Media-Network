@@ -1,11 +1,11 @@
 .notification {
   box-sizing: border-box;
-  width: 350px;
+  width: 200px;
   padding: 16px;
   color: var(--color-primary-static);
   background-color: var(--color-accent);
   line-height: 20px;
-  font-size: 14px;
+  font-size: 12px;
   position: relative;
   border-radius: 8px;
 
@@ -29,7 +29,7 @@
   }
 }
 
-.notification.notification-error{
+.notification.notification-error {
   background-color: var(--color-danger);
 }
 
@@ -41,8 +41,8 @@
     font-size: 18px;
 
     .notification-close svg {
-        width: 10px;
-        height: 10px;
+      width: 10px;
+      height: 10px;
     }
   }
 }
