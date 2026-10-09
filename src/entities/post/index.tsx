@@ -27,6 +27,7 @@ import { useAppSelector } from '@/app/store/hooks.ts';
 import { selectUserId } from '@/entities/user/model/selectors.ts';
 import { PostComments } from '@/entities/post/post-comments.tsx';
 import { animated, useSpring, useTransition } from '@react-spring/web';
+import { formatRelativeTime } from '@/shared/lib/localization/format-relative-time.ts';
 
 const DEFAULT_IMAGE = '/assets/default-image.png';
 
@@ -98,6 +99,8 @@ export const Post = ({ post }: PostProps) => {
     setHasImgError(true);
   };
 
+  const date = formatRelativeTime(post.creationDate, i18n.language);
+
   return (
     <StyledPost>
       <PostHeader>
@@ -110,9 +113,7 @@ export const Post = ({ post }: PostProps) => {
           <div>
             {post.author.firstName} {post.author.secondName}
           </div>
-          <PostDate>
-            {new Date(post.creationDate).toLocaleDateString()}
-          </PostDate>
+          <PostDate>{date}</PostDate>
         </HeaderData>
       </PostHeader>
 
