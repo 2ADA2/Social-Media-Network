@@ -23,6 +23,7 @@
     "maxChars": "Max 200 chars",
     "submit": "Save profile changes",
     "success": "Your profile successfully updated",
+    "emailSuccess": "Your email successfully updated",
     "error": "Cannot update your profile: {{message}}",
     "firstName": "First name",
     "firstNamePlaceholder": "Enter first name",
@@ -63,5 +64,13 @@
     "firstNameMax": "First name must be at most {{count}} characters",
     "secondNameMax": "Second name must be at most {{count}} characters",
     "secondNameMin": "Second name must be at least {{count}} characters"
+  },
+  "confirmPassword": {
+    "title": "Confirm password",
+    "password": "Current password",
+    "passwordPlaceholder": "Enter current password",
+    "submit": "Confirm",
+    "required": "Password is required",
+    "wrongPassword": "Wrong password"
   }
 }

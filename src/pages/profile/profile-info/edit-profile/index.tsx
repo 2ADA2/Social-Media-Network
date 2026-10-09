@@ -20,12 +20,22 @@ import { UpdateProfileImageModal } from '@/pages/profile/profile-info/edit-profi
 import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
 import { Avatar } from '@/shared/ui/avatar';
 import { useMemo } from 'react';
+import { ConfirmPasswordModal } from '@/pages/profile/profile-info/edit-profile/modals/confirm-password-modal.tsx';
 
 export const EditProfile = () => {
   const { t, i18n } = useTranslation('profile');
   const { user } = useUser();
   const { mutate: updateProfile, isPending } = useUpdateProfile();
-  const { isOpen, open, close } = useModal();
+  const {
+    isOpen: isUpdateImageOpen,
+    open: openUpdateImage,
+    close: closeUpdateImage,
+  } = useModal();
+  const {
+    isOpen: isConfirmOpen,
+    open: openConfirm,
+    close: closeConfirm,
+  } = useModal();
   const { add } = useNotifications();
 
   const schema = useMemo(() => editProfileSchema(), [i18n.language]);
@@ -46,11 +56,14 @@ export const EditProfile = () => {
     handleSubmit,
     formState: { dirtyFields },
     reset,
+    watch,
   } = useForm<EditProfileSchema>({
     resolver: zodResolver(schema),
     defaultValues,
     mode: 'onChange',
   });
+
+  const emailValue = watch('email');
 
   const saveChanges = (data: EditProfileSchema) => {
     data.username = data.username.slice(1);
@@ -95,6 +108,14 @@ export const EditProfile = () => {
     );
   };
 
+  const shouldConfirmPassword = (data: EditProfileSchema) => {
+    if (dirtyFields.email) {
+      openConfirm();
+    } else {
+      saveChanges(data);
+    }
+  };
+
   return (
     <section className="edit-profile">
       <h2>{t('editProfile.title')}</h2>
@@ -104,13 +125,16 @@ export const EditProfile = () => {
           <div>
             {user!.name} {user!.surname}
           </div>
-          <CoverButton onClick={open}>
+          <CoverButton onClick={openUpdateImage}>
             <span>{t('editProfile.changePhoto')}</span>
           </CoverButton>
-          <UpdateProfileImageModal isOpen={isOpen} onClose={close} />
+          <UpdateProfileImageModal
+            isOpen={isUpdateImageOpen}
+            onClose={closeUpdateImage}
+          />
         </div>
       </div>
-      <form onSubmit={handleSubmit(saveChanges)} noValidate>
+      <form onSubmit={handleSubmit(shouldConfirmPassword)} noValidate>
         <Controller
           name="firstName"
           control={control}
@@ -168,6 +192,12 @@ export const EditProfile = () => {
               custom
             />
           )}
+        />
+        <ConfirmPasswordModal
+          newEmail={emailValue}
+          isOpen={isConfirmOpen}
+          onClose={closeConfirm}
+          onSuccess={handleSubmit(saveChanges)}
         />
         <div>
           <Controller

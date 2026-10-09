@@ -23,6 +23,7 @@
     "maxChars": "Максимум 200 символов",
     "submit": "Сохранить изменения",
     "success": "Профиль успешно обновлён",
+    "emailSuccess": "Ваш email успешно обновлен",
     "error": "Не удалось обновить профиль: {{message}}",
     "firstName": "Имя",
     "firstNamePlaceholder": "Введите имя",
@@ -63,5 +64,13 @@
     "firstNameMax": "Имя должно содержать максимум {{count}} символов",
     "secondNameMax": "Фамилия должна содержать максимум {{count}} символов",
     "secondNameMin": "Фамилия должна содержать минимум {{count}} символов"
+  },
+  "confirmPassword": {
+    "title": "Подтвердите пароль",
+    "password": "Текущий пароль",
+    "passwordPlaceholder": "Введите текущий пароль",
+    "submit": "Подтвердить",
+    "required": "Пароль обязателен",
+    "wrongPassword": "Неверный пароль"
   }
 }
