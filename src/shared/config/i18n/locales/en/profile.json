@@ -23,7 +23,15 @@
     "maxChars": "Max 200 chars",
     "submit": "Save profile changes",
     "success": "Your profile successfully updated",
-    "error": "Cannot update your profile: {{message}}"
+    "error": "Cannot update your profile: {{message}}",
+    "firstName": "First name",
+    "firstNamePlaceholder": "Enter first name",
+    "secondName": "Second name",
+    "secondNamePlaceholder": "Enter second name",
+    "noChanges": "Nothing changed",
+    "passwordRequired": "Enter your current password to change email",
+    "currentPassword": "Current password",
+    "currentPasswordPlaceholder": "Enter current password"
   },
   "updateAvatar": {
     "title": "Update your profile photo",
@@ -51,6 +59,9 @@
     "usernameMax": "Username must be at most 20 characters",
     "emailRequired": "Email is required",
     "emailInvalid": "Email is not valid",
-    "descriptionMax": "Reached the {{count}} text limit"
+    "descriptionMax": "Reached the {{count}} text limit",
+    "firstNameMax": "First name must be at most {{count}} characters",
+    "secondNameMax": "Second name must be at most {{count}} characters",
+    "secondNameMin": "Second name must be at least {{count}} characters"
   }
 }

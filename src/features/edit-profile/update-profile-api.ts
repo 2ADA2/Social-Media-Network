@@ -3,7 +3,6 @@ import type { User, UserResponse } from '@/entities/user';
 
 export interface UpdateProfileParams {
   username?: string;
-  email?: string;
   firstName?: string;
   secondName?: string;
   description?: string;
