@@ -1,5 +1,6 @@
+import { useTranslation } from 'react-i18next';
 import { Modal } from '@/shared/ui/modal';
-import { StyledTitle } from '@/features/create-post/create-post-modal/create-post-modal.styles.ts';
+import { StyledTitle } from '@/features/create-post/create-post-modal/create-post-modal.styles';
 import { Button } from '@/shared/ui/button';
 
 export interface DeletePostModalProps {
@@ -13,6 +14,8 @@ export const DeletePostModal = ({
   onClose,
   onSubmit,
 }: DeletePostModalProps) => {
+  const { t } = useTranslation('main');
+
   const handleSubmit = () => {
     onSubmit();
     onClose();
@@ -20,8 +23,8 @@ export const DeletePostModal = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <StyledTitle>Are you sure?</StyledTitle>
-      <Button onClick={handleSubmit}>Delete</Button>
+      <StyledTitle>{t('deletePost.title')}</StyledTitle>
+      <Button onClick={handleSubmit}>{t('deletePost.submit')}</Button>
     </Modal>
   );
 };

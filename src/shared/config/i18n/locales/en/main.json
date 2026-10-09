@@ -6,7 +6,9 @@
     "comments_one": "{{count}} Comment",
     "comments_other": "{{count}} Comments",
     "commentsLabel": "Comments",
-    "loginToSeeComments": "You have to login to see the comments"
+    "loginToSeeComments": "You have to login to see the comments",
+    "deleteSuccess": "Post deleted",
+    "deleteError": "Cannot delete post"
   },
   "comment": {
     "label": "Add a comment",
@@ -47,5 +49,9 @@
     "suggestedPeople": "Suggested people",
     "communities": "Communities you might like",
     "members": "members"
+  },
+  "deletePost": {
+    "title": "Are you sure?",
+    "submit": "Delete"
   }
 }
