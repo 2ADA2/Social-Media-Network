@@ -87,6 +87,10 @@ export const Post = ({ post }: PostProps) => {
     setComments((prev) => prev + 1);
   }, []);
 
+  const deleteComment = useCallback(() => {
+    setComments((prev) => prev - 1);
+  }, []);
+
   return (
     <StyledPost>
       <PostHeader>
@@ -155,11 +159,15 @@ export const Post = ({ post }: PostProps) => {
         transitions(
           (style, item) =>
             item && (
-              <animated.div style={{ ...style, overflow: 'hidden' }}>
-                <PostComments postId={post.id} onAdd={addComment} />
+              <animated.div style={ { ...style, overflow: 'hidden' } }>
+                <PostComments
+                  postId={ post.id }
+                  onAdd={ addComment }
+                  onDelete={ deleteComment }
+                />
               </animated.div>
             ),
-        )}
+        ) }
     </StyledPost>
   );
 };

@@ -10,10 +10,11 @@ import React from 'react';
 interface PostCommentsProps {
   postId: number;
   onAdd: () => void;
+  onDelete: () => void;
 }
 
 export const PostComments = React.memo(
-  ({ postId, onAdd }: PostCommentsProps) => {
+  ({ postId, onAdd, onDelete }: PostCommentsProps) => {
     const {
       data: comments = [],
       isPending,
@@ -33,6 +34,7 @@ export const PostComments = React.memo(
             <Comment
               key={comment.id}
               {...comment}
+              onDelete={onDelete}
               author={usersMap.get(comment.authorId) ?? null}
             />
           ))}
