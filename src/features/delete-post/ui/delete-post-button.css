@@ -1,0 +1,25 @@
+.delete-post-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+
+  svg {
+    width: 24px;
+    height: 24px;
+
+    path {
+      color: var(--color-primary);
+    }
+  }
+}
+
+.delete-post-button[disabled] {
+  cursor: default;
+
+  svg path {
+    color: var(--color-muted);
+  }
+}

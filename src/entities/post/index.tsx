@@ -28,6 +28,7 @@ import { selectUserId } from '@/entities/user/model/selectors.ts';
 import { PostComments } from '@/entities/post/post-comments.tsx';
 import { animated, useSpring, useTransition } from '@react-spring/web';
 import { formatRelativeTime } from '@/shared/lib/localization/format-relative-time.ts';
+import { DeletePostButton } from '@/features/delete-post';
 
 const MAX_COMMENTS_HEIGHT = 1000;
 
@@ -97,6 +98,13 @@ export const Post = ({ post }: PostProps) => {
   return (
     <StyledPost>
       <PostHeader>
+        {isAuth && (
+          <DeletePostButton
+            postId={post.id}
+            currentUserId={currentUserId}
+            authorId={post.authorId}
+          />
+        )}
         <Avatar
           src={post.author.profileImage || ''}
           alt={`Post ${post.id}`}
