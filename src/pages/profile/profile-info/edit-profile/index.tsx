@@ -16,40 +16,104 @@ import {
 } from '@/pages/profile/profile-info/edit-profile/edit-profile-schema.ts';
 import { useUpdateProfile } from '@/features/edit-profile/use-update-profile.ts';
 import { useModal } from '@/shared/lib/hooks/use-modal.ts';
-import { UpdateProfileImageModal } from '@/pages/profile/profile-info/edit-profile/update-profile-image-modal';
+import { UpdateProfileImageModal } from '@/pages/profile/profile-info/edit-profile/modals/update-profile-image-modal.tsx';
 import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
 import { Avatar } from '@/shared/ui/avatar';
+import { useMemo } from 'react';
+import { ConfirmPasswordModal } from '@/pages/profile/profile-info/edit-profile/modals/confirm-password-modal.tsx';
 
 export const EditProfile = () => {
-  const { t } = useTranslation('profile');
+  const { t, i18n } = useTranslation('profile');
   const { user } = useUser();
   const { mutate: updateProfile, isPending } = useUpdateProfile();
-  const { isOpen, open, close } = useModal();
+  const {
+    isOpen: isUpdateImageOpen,
+    open: openUpdateImage,
+    close: closeUpdateImage,
+  } = useModal();
+  const {
+    isOpen: isConfirmOpen,
+    open: openConfirm,
+    close: closeConfirm,
+  } = useModal();
   const { add } = useNotifications();
 
-  const { control, handleSubmit } = useForm<EditProfileSchema>({
-    resolver: zodResolver(editProfileSchema),
-    defaultValues: {
-      username: '@' + user!.username,
-      email: user!.email,
-      description: user!.description,
-    },
+  const schema = useMemo(() => editProfileSchema(), [i18n.language]);
+
+  const defaultValues = useMemo(
+    () => ({
+      firstName: user?.name ?? '',
+      secondName: user?.surname ?? '',
+      username: '@' + (user?.username ?? ''),
+      email: user?.email ?? '',
+      description: user?.description ?? '',
+    }),
+    [user],
+  );
+
+  const {
+    control,
+    handleSubmit,
+    formState: { dirtyFields },
+    reset,
+    watch,
+  } = useForm<EditProfileSchema>({
+    resolver: zodResolver(schema),
+    defaultValues,
     mode: 'onChange',
   });
 
+  const emailValue = watch('email');
+
   const saveChanges = (data: EditProfileSchema) => {
     data.username = data.username.slice(1);
-    updateProfile(data, {
-      onSuccess: () => {
-        add({ message: t('editProfile.success') });
+
+    const hasProfileChanges =
+      dirtyFields.firstName ||
+      dirtyFields.secondName ||
+      dirtyFields.username ||
+      dirtyFields.description;
+    const hasEmailChanges = dirtyFields.email;
+
+    if (!hasProfileChanges && !hasEmailChanges) {
+      add({ message: t('editProfile.noChanges') });
+      return;
+    }
+
+    updateProfile(
+      {
+        firstName: data.firstName,
+        secondName: data.secondName,
+        username: data.username,
+        description: data.description,
       },
-      onError: (error) => {
-        add({
-          message: t('editProfile.error', { message: error.message }),
-          type: 'error',
-        });
+      {
+        onSuccess: () => {
+          add({ message: t('editProfile.success') });
+          reset({
+            firstName: data.firstName,
+            secondName: data.secondName,
+            username: '@' + data.username,
+            email: data.email,
+            description: data.description,
+          });
+        },
+        onError: (error) => {
+          add({
+            message: t('editProfile.error', { message: error.message }),
+            type: 'error',
+          });
+        },
       },
-    });
+    );
+  };
+
+  const shouldConfirmPassword = (data: EditProfileSchema) => {
+    if (dirtyFields.email) {
+      openConfirm();
+    } else {
+      saveChanges(data);
+    }
   };
 
   return (
@@ -61,13 +125,44 @@ export const EditProfile = () => {
           <div>
             {user!.name} {user!.surname}
           </div>
-          <CoverButton onClick={open}>
+          <CoverButton onClick={openUpdateImage}>
             <span>{t('editProfile.changePhoto')}</span>
           </CoverButton>
-          <UpdateProfileImageModal isOpen={isOpen} onClose={close} />
+          <UpdateProfileImageModal
+            isOpen={isUpdateImageOpen}
+            onClose={closeUpdateImage}
+          />
         </div>
       </div>
-      <form onSubmit={handleSubmit(saveChanges)} noValidate>
+      <form onSubmit={handleSubmit(shouldConfirmPassword)} noValidate>
+        <Controller
+          name="firstName"
+          control={control}
+          render={({ field, fieldState: { error } }) => (
+            <Input
+              {...field}
+              label={t('editProfile.firstName')}
+              placeholder={t('editProfile.firstNamePlaceholder')}
+              icon={<UserIcon />}
+              error={error?.message}
+              custom
+            />
+          )}
+        />
+        <Controller
+          name="secondName"
+          control={control}
+          render={({ field, fieldState: { error } }) => (
+            <Input
+              {...field}
+              label={t('editProfile.secondName')}
+              placeholder={t('editProfile.secondNamePlaceholder')}
+              icon={<UserIcon />}
+              error={error?.message}
+              custom
+            />
+          )}
+        />
         <Controller
           name="username"
           control={control}
@@ -97,6 +192,12 @@ export const EditProfile = () => {
               custom
             />
           )}
+        />
+        <ConfirmPasswordModal
+          newEmail={emailValue}
+          isOpen={isConfirmOpen}
+          onClose={closeConfirm}
+          onSuccess={handleSubmit(saveChanges)}
         />
         <div>
           <Controller

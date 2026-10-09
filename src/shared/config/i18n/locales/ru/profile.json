@@ -23,7 +23,16 @@
     "maxChars": "Максимум 200 символов",
     "submit": "Сохранить изменения",
     "success": "Профиль успешно обновлён",
-    "error": "Не удалось обновить профиль: {{message}}"
+    "emailSuccess": "Ваш email успешно обновлен",
+    "error": "Не удалось обновить профиль: {{message}}",
+    "firstName": "Имя",
+    "firstNamePlaceholder": "Введите имя",
+    "secondName": "Фамилия",
+    "secondNamePlaceholder": "Введите фамилию",
+    "noChanges": "Ничего не изменилось",
+    "passwordRequired": "Введите текущий пароль, чтобы изменить email",
+    "currentPassword": "Текущий пароль",
+    "currentPasswordPlaceholder": "Введите текущий пароль"
   },
   "updateAvatar": {
     "title": "Обновить фото профиля",
@@ -51,6 +60,17 @@
     "usernameMax": "Имя должно содержать максимум 20 символов",
     "emailRequired": "Email обязателен",
     "emailInvalid": "Некорректный email",
-    "descriptionMax": "Достигнут лимит в {{count}} символов"
+    "descriptionMax": "Достигнут лимит в {{count}} символов",
+    "firstNameMax": "Имя должно содержать максимум {{count}} символов",
+    "secondNameMax": "Фамилия должна содержать максимум {{count}} символов",
+    "secondNameMin": "Фамилия должна содержать минимум {{count}} символов"
+  },
+  "confirmPassword": {
+    "title": "Подтвердите пароль",
+    "password": "Текущий пароль",
+    "passwordPlaceholder": "Введите текущий пароль",
+    "submit": "Подтвердить",
+    "required": "Пароль обязателен",
+    "wrongPassword": "Неверный пароль"
   }
 }
