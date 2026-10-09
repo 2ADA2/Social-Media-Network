@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { uploadImage } from "@/features/create-post/api/upload-image.ts";
-import { createPostRequest } from "@/features/create-post/api/create-post.ts";
+import { useMutation } from '@tanstack/react-query';
+import { uploadImage } from '@/features/create-post/api/upload-image.ts';
+import { createPostRequest } from '@/features/create-post/api/create-post.ts';
 
 export interface UseCreatePostParams {
   title: string;
@@ -9,8 +9,6 @@ export interface UseCreatePostParams {
 }
 
 export const useCreatePost = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: async ({ title, content, file }: UseCreatePostParams) => {
       let imageUrl;
@@ -20,9 +18,6 @@ export const useCreatePost = () => {
       }
 
       return createPostRequest({ title, content, image: imageUrl });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['posts'] });
     },
   });
 };

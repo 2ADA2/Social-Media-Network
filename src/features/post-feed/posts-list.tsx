@@ -56,9 +56,8 @@ export const PostsList = () => {
       {posts.map((post, i) => (
         <Post key={i} post={post} />
       ))}
+      {!isFetching && <div ref={ref}></div>}
       {hasMore && <Loader isBlock={false} />}
-
-      <div ref={ref}></div>
     </div>
   );
 };
