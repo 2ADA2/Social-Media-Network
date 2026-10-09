@@ -6,7 +6,9 @@
     "comments_one": "{{count}} Comment",
     "comments_other": "{{count}} Comments",
     "commentsLabel": "Comments",
-    "loginToSeeComments": "You have to login to see the comments"
+    "loginToSeeComments": "You have to login to see the comments",
+    "deleteSuccess": "Post deleted",
+    "deleteError": "Cannot delete post"
   },
   "comment": {
     "label": "Add a comment",
@@ -40,11 +42,16 @@
   "validation": {
     "titleMin": "Title must be at least 2 characters",
     "titleMax": "Title must be at most 100 characters",
-    "descriptionMax": "Reached the {{count}} text limit"
+    "descriptionMax": "Reached the {{count}} text limit",
+    "descriptionMin": "Description required"
   },
   "sidebar": {
     "suggestedPeople": "Suggested people",
     "communities": "Communities you might like",
     "members": "members"
+  },
+  "deletePost": {
+    "title": "Are you sure?",
+    "submit": "Delete"
   }
 }

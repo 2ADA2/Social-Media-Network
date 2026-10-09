@@ -32,6 +32,37 @@ const ALL_POSTS_QUERY = gql`
   }
 `;
 
+const POST_QUERY = gql`
+  query Post($id: Int!) {
+    post(id: $id) {
+      id
+      title
+      content
+      image
+      authorId
+      likesCount
+      commentsCount
+      creationDate
+      modifiedDate
+      author {
+        id
+        username
+        firstName
+        secondName
+        profileImage
+      }
+      likedByUsers {
+        id
+        username
+      }
+    }
+  }
+`;
+
+interface PostResponse {
+  post: Post | null;
+}
+
 const POSTS_TOTAL_QUERY = gql`
   query PostsTotal {
     postsTotal
@@ -60,12 +91,26 @@ const fetchPosts = async (limit = 20, offset = 0): Promise<PostsPage> => {
   };
 };
 
+const fetchPost = async (id: number): Promise<Post | null> => {
+  const { post } = await graphqlClient.request<PostResponse>(POST_QUERY, {
+    id,
+  });
+  return post;
+};
+
 // without cache
 export const postsQueries = {
   list: (limit = POSTS_LIMIT, offset = 0) =>
     queryOptions({
       queryKey: ['posts', { limit, offset }],
       queryFn: () => fetchPosts(limit, offset),
+      staleTime: 0,
+      gcTime: 0,
+    }),
+  byId: (id: number) =>
+    queryOptions({
+      queryKey: ['post', id],
+      queryFn: () => fetchPost(id),
       staleTime: 0,
       gcTime: 0,
     }),

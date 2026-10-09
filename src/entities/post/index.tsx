@@ -28,11 +28,13 @@ import { selectUserId } from '@/entities/user/model/selectors.ts';
 import { PostComments } from '@/entities/post/post-comments.tsx';
 import { animated, useSpring, useTransition } from '@react-spring/web';
 import { formatRelativeTime } from '@/shared/lib/localization/format-relative-time.ts';
+import { DeletePostButton } from '@/features/delete-post';
 
 const DEFAULT_IMAGE = '/assets/default-image.png';
 
 interface PostProps {
   post: PostType;
+  onDelete: (postId: number) => void;
 }
 
 const checkLiked = (likes: { id: number }[], userId: number) => {
@@ -43,7 +45,7 @@ const checkLiked = (likes: { id: number }[], userId: number) => {
   return likes.some((user) => user.id === userId);
 };
 
-export const Post = ({ post }: PostProps) => {
+export const Post = ({ post, onDelete }: PostProps) => {
   const { t, i18n } = useTranslation('main');
   const { isAuth } = useAuth();
 
@@ -104,6 +106,14 @@ export const Post = ({ post }: PostProps) => {
   return (
     <StyledPost>
       <PostHeader>
+        {isAuth && (
+          <DeletePostButton
+            postId={post.id}
+            currentUserId={currentUserId}
+            authorId={post.authorId}
+            onDelete={onDelete}
+          />
+        )}
         <Avatar
           src={post.author.profileImage || ''}
           alt={`Post ${post.id}`}

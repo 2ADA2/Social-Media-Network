@@ -1,4 +1,4 @@
-import { type ChangeEvent, useState } from 'react';
+import { type ChangeEvent, useMemo, useState } from 'react';
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
 import PenIcon from '@/shared/assets/icons/pen.svg?react';
 import { FileInput } from '@/shared/ui/file-input';
@@ -26,18 +26,25 @@ const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf'];
 export interface CreateModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onAdd: (postId: number) => void;
 }
 
-export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
-  const { t } = useTranslation('main');
+export const CreatePostModal = ({
+  isOpen,
+  onClose,
+  onAdd,
+}: CreateModalProps) => {
+  const { t, i18n } = useTranslation('main');
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState('');
   const { add } = useNotifications();
 
   const { mutate: createPost } = useCreatePost();
 
+  const schema = useMemo(() => createPostSchema(), [i18n.language]);
+
   const { control, handleSubmit, reset } = useForm<CreatePostData>({
-    resolver: zodResolver(createPostSchema),
+    resolver: zodResolver(schema),
     defaultValues: { title: '', description: '' },
     mode: 'onTouched',
   });
@@ -73,12 +80,13 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
     createPost(
       { title: data.title, content: data.description, file },
       {
-        onSuccess: () => {
+        onSuccess: (newPost) => {
           reset();
           setFile(null);
           setFileName('');
           onClose();
           add({ message: t('createPostModal.success') });
+          onAdd(newPost.id);
         },
         onError: (e) => {
           add({

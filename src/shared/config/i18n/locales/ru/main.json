@@ -8,7 +8,9 @@
     "comments_few": "{{count}} комментария",
     "comments_many": "{{count}} комментариев",
     "commentsLabel": "комментариев",
-    "loginToSeeComments": "Войдите, чтобы увидеть комментарии"
+    "loginToSeeComments": "Войдите, чтобы увидеть комментарии",
+    "deleteSuccess": "Пост удалён",
+    "deleteError": "Не удалось удалить пост"
   },
   "comment": {
     "label": "Оставить комментарий",
@@ -42,11 +44,16 @@
   "validation": {
     "titleMin": "Заголовок должен содержать минимум 2 символа",
     "titleMax": "Заголовок должен содержать максимум 100 символов",
-    "descriptionMax": "Достигнут лимит в {{count}} символов"
+    "descriptionMax": "Достигнут лимит в {{count}} символов",
+    "descriptionMin": "Описание обязательно"
   },
   "sidebar": {
     "suggestedPeople": "Рекомендуемые люди",
     "communities": "Сообщества, которые вам понравятся",
     "members": "участников"
+  },
+  "deletePost": {
+    "title": "Вы уверены?",
+    "submit": "Удалить"
   }
 }

@@ -22,6 +22,7 @@ export const PostHeader = styled.header`
   height: 42px;
   gap: 12px;
   line-height: 24px;
+  position: relative;
 `;
 
 export const PostDate = styled.div`
