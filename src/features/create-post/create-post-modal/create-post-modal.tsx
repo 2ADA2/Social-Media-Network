@@ -26,9 +26,14 @@ const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf'];
 export interface CreateModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onAdd: (postId: number) => void;
 }
 
-export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
+export const CreatePostModal = ({
+  isOpen,
+  onClose,
+  onAdd,
+}: CreateModalProps) => {
   const { t, i18n } = useTranslation('main');
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState('');
@@ -75,12 +80,13 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
     createPost(
       { title: data.title, content: data.description, file },
       {
-        onSuccess: () => {
+        onSuccess: (newPost) => {
           reset();
           setFile(null);
           setFileName('');
           onClose();
           add({ message: t('createPostModal.success') });
+          onAdd(newPost.id);
         },
         onError: (e) => {
           add({

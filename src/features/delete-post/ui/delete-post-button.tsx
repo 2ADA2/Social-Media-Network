@@ -8,18 +8,24 @@ export interface DeletePostButtonProps {
   postId: number;
   currentUserId: number;
   authorId: number;
+  onDelete: (postId: number) => void;
 }
 
 export const DeletePostButton = ({
   postId,
   authorId,
   currentUserId,
+  onDelete,
 }: DeletePostButtonProps) => {
   const { mutate: deletePost, isPending } = useDeletePost();
   const { isOpen, open, close } = useModal();
 
   const handleDelete = () => {
-    deletePost(postId);
+    deletePost(postId, {
+      onSuccess: () => {
+        onDelete(postId);
+      },
+    });
   };
 
   if (Number(currentUserId) !== authorId) {
