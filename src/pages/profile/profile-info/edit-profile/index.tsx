@@ -41,7 +41,12 @@ export const EditProfile = () => {
     [user],
   );
 
-  const { control, handleSubmit } = useForm<EditProfileSchema>({
+  const {
+    control,
+    handleSubmit,
+    formState: { dirtyFields },
+    reset,
+  } = useForm<EditProfileSchema>({
     resolver: zodResolver(schema),
     defaultValues,
     mode: 'onChange',
@@ -49,17 +54,45 @@ export const EditProfile = () => {
 
   const saveChanges = (data: EditProfileSchema) => {
     data.username = data.username.slice(1);
-    updateProfile(data, {
-      onSuccess: () => {
-        add({ message: t('editProfile.success') });
+
+    const hasProfileChanges =
+      dirtyFields.firstName ||
+      dirtyFields.secondName ||
+      dirtyFields.username ||
+      dirtyFields.description;
+    const hasEmailChanges = dirtyFields.email;
+
+    if (!hasProfileChanges && !hasEmailChanges) {
+      add({ message: t('editProfile.noChanges') });
+      return;
+    }
+
+    updateProfile(
+      {
+        firstName: data.firstName,
+        secondName: data.secondName,
+        username: data.username,
+        description: data.description,
       },
-      onError: (error) => {
-        add({
-          message: t('editProfile.error', { message: error.message }),
-          type: 'error',
-        });
+      {
+        onSuccess: () => {
+          add({ message: t('editProfile.success') });
+          reset({
+            firstName: data.firstName,
+            secondName: data.secondName,
+            username: '@' + data.username,
+            email: data.email,
+            description: data.description,
+          });
+        },
+        onError: (error) => {
+          add({
+            message: t('editProfile.error', { message: error.message }),
+            type: 'error',
+          });
+        },
       },
-    });
+    );
   };
 
   return (
