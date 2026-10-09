@@ -28,6 +28,8 @@ import { selectUserId } from '@/entities/user/model/selectors.ts';
 import { PostComments } from '@/entities/post/post-comments.tsx';
 import { animated, useSpring, useTransition } from '@react-spring/web';
 
+const DEFAULT_IMAGE = '/assets/default-image.png';
+
 interface PostProps {
   post: PostType;
 }
@@ -52,6 +54,8 @@ export const Post = ({ post }: PostProps) => {
 
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState(post.commentsCount);
+
+  const [hasImgError, setHasImgError] = useState(false);
 
   const { mutate: toggleLike, isPending: isLiking } = useLikePost();
 
@@ -86,6 +90,10 @@ export const Post = ({ post }: PostProps) => {
     setComments((prev) => prev + 1);
   };
 
+  const handeImgError = () => {
+    setHasImgError(true);
+  };
+
   return (
     <StyledPost>
       <PostHeader>
@@ -105,7 +113,12 @@ export const Post = ({ post }: PostProps) => {
       </PostHeader>
 
       {post.image && (
-        <PostImage loading="lazy" src={post.image} alt={post.title} />
+        <PostImage
+          loading="lazy"
+          src={hasImgError ? DEFAULT_IMAGE : post.image}
+          alt={post.title}
+          onError={handeImgError}
+        />
       )}
 
       <Description>{post.content}</Description>
