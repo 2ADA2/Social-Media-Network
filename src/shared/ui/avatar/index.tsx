@@ -14,7 +14,7 @@ export const Avatar = ({
   src,
   size,
   alt,
-  className,
+  className = '',
   ...props
 }: AvatarProps) => {
   const [hasError, setHasError] = useState(false);
@@ -25,7 +25,7 @@ export const Avatar = ({
 
   return (
     <img
-      src={hasError ? DEFAULT_AVATAR : src}
+      src={hasError || !src ? DEFAULT_AVATAR : src}
       className={'avatar ' + className}
       alt={alt || 'avatar'}
       width={size}
