@@ -8,7 +8,9 @@
     "comments_few": "{{count}} комментария",
     "comments_many": "{{count}} комментариев",
     "commentsLabel": "комментариев",
-    "loginToSeeComments": "Войдите, чтобы увидеть комментарии"
+    "loginToSeeComments": "Войдите, чтобы увидеть комментарии",
+    "deleteSuccess": "Пост удалён",
+    "deleteError": "Не удалось удалить пост"
   },
   "comment": {
     "label": "Оставить комментарий",
@@ -49,5 +51,9 @@
     "suggestedPeople": "Рекомендуемые люди",
     "communities": "Сообщества, которые вам понравятся",
     "members": "участников"
+  },
+  "deletePost": {
+    "title": "Вы уверены?",
+    "submit": "Удалить"
   }
 }
