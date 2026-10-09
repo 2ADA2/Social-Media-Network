@@ -1,29 +1,44 @@
-import { PostCommentsContainer } from "@/entities/post/post.styles.tsx";
-import { CreateComment } from "@/features/create-comment";
-import { useQuery } from "@tanstack/react-query";
-import { commentsQueries } from "@/features/get-comments/get-comments.ts";
-import { Loader } from "@/shared/ui/loader";
-import { Comment } from "@/entities/comment";
+import { useQuery } from '@tanstack/react-query';
+import { PostCommentsContainer } from '@/entities/post/post.styles';
+import { CreateComment } from '@/features/create-comment';
+import { commentsQueries } from '@/features/get-comments/get-comments';
+import { useCommentAuthors } from '@/features/get-comments/use-comment-authors.ts';
+import { Loader } from '@/shared/ui/loader';
+import { Comment } from '@/entities/comment';
+import React from 'react';
 
 interface PostCommentsProps {
   postId: number;
   onAdd: () => void;
 }
 
-export const PostComments = ({ postId, onAdd }: PostCommentsProps) => {
-  const { data, isPending, isError } = useQuery(commentsQueries.forPost(postId));
+export const PostComments = React.memo(
+  ({ postId, onAdd }: PostCommentsProps) => {
+    const {
+      data: comments = [],
+      isPending,
+      isError,
+    } = useQuery(commentsQueries.forPost(postId));
+    const usersMap = useCommentAuthors(comments);
 
-  if (isPending) {
-    return <Loader isBlock={ false }/>;
-  }
+    if (isPending) {
+      return <Loader isBlock={false} />;
+    }
 
-  return (
-    <>
-      <PostCommentsContainer>
-        { isError && <div>Cannot get comments</div> }
-        { data && data.map((comment) => <Comment { ...comment } key={ comment.id }/>) }
-      </PostCommentsContainer>
-      <CreateComment postId={ postId } onAdd={ onAdd }/>
-    </>
-  );
-};
+    return (
+      <>
+        <PostCommentsContainer>
+          {isError && <div>Cannot get comments</div>}
+          {comments.map((comment) => (
+            <Comment
+              key={comment.id}
+              {...comment}
+              author={usersMap.get(comment.authorId) ?? null}
+            />
+          ))}
+        </PostCommentsContainer>
+        <CreateComment postId={postId} onAdd={onAdd} />
+      </>
+    );
+  },
+);
