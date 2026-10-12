@@ -13,9 +13,9 @@
 
 @media (min-width: 1330px) {
   .recommend-sidebars{
-    width: 260px;
+    width: 250px;
     position: absolute;
-    left: calc(50vw + 390px);
+    left: calc(50vw + 340px);
     top: 84px;
 
     display: flex;
@@ -24,8 +24,9 @@
   }
 }
 
-@media (min-width: 1330px) {
+@media (min-width: 1500px) {
   .recommend-sidebars{
+    left: calc(50vw + 370px);
     width: 320px;
   }
 }

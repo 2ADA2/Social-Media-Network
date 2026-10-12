@@ -1,0 +1,52 @@
+import "./sidebar.css";
+import { UserCard } from "@/entities/user";
+import type { CommunityResponse, SuggestedPeopleResponse } from "@/features/sidebar/types.ts";
+
+type SidebarEntities = SuggestedPeopleResponse[] | CommunityResponse[];
+
+export interface SidebarProps {
+  title: string;
+  users: SidebarEntities;
+}
+
+const isUserArray = (items: SidebarEntities): items is SuggestedPeopleResponse[] => {
+  return items.length > 0 && "username" in items[0];
+};
+
+export const Sidebar = ({ title, users }: SidebarProps) => {
+  if (users.length === 0) {
+    return null;
+  }
+
+  if (isUserArray(users)) {
+    return (
+      <aside className="sidebar">
+        <h2>{ title }</h2>
+        { users.map((user) => (
+          <UserCard
+            key={ user.id }
+            { ...user }
+            title={ user.firstName + " " + user.secondName }
+            subtitle={ "@" + user.username }
+            avatarUrl={ user.photo || "" }
+          />
+        )) }
+      </aside>
+    );
+  }
+
+  return (
+    <aside className="sidebar">
+      <h2>{ title }</h2>
+      { users.map((user) => (
+        <UserCard
+          key={ user.id }
+          { ...user }
+          title={ user.title }
+          subtitle={ String(user.membersCount) + " members" }
+          avatarUrl={ user.photo || "" }
+        />
+      )) }
+    </aside>
+  );
+};
