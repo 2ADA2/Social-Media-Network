@@ -46,23 +46,21 @@ export const PostsList = () => {
   };
 
   const addPost = async (postId: number) => {
-    if (hasMore) return;
-
     const newPost = await queryClient.fetchQuery(postsQueries.byId(postId));
 
     if (!newPost) return;
 
     setPosts((prev) => {
       if (prev.some((p) => p.id === postId)) return prev;
-      return [...prev, newPost];
+      return [newPost, ...prev];
     });
   };
   const ref = useIntersectionObserver({ onIntersect: loadPosts });
 
   if (isPending && !posts.length) {
     return (
-      <div className='posts-list-loader-container'>
-        <Loader/>
+      <div className="posts-list-loader-container">
+        <Loader />
       </div>
     );
   }
@@ -75,8 +73,8 @@ export const PostsList = () => {
     <>
       <CreatePost onAdd={addPost} />
       <div className="posts-container">
-        {posts.map((post, i) => (
-          <Post key={i} post={post} onDelete={deletePost} />
+        {posts.map((post) => (
+          <Post key={post.id} post={post} onDelete={deletePost} />
         ))}
         {!isFetching && <div ref={ref}></div>}
         {hasMore && <Loader isBlock={false} />}
