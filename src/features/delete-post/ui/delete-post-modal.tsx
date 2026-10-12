@@ -23,7 +23,7 @@ export const DeletePostModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} className="delete-post-modal">
       <StyledTitle>{t('deletePost.title')}</StyledTitle>
       <Button disabled={isPending} onClick={handleSubmit}>
         {t('deletePost.submit')}

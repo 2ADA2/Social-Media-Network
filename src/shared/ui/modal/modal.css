@@ -25,6 +25,11 @@
   max-height: 90dvh;
   overflow-y: auto;
   will-change: transform, opacity;
+
+  .input-label input,
+  button {
+    max-width: 100%;
+  }
 }
 
 .modal-close {
@@ -38,15 +43,15 @@
   width: 16px;
   height: 16px;
   margin: 0;
-}
 
-.modal-close svg {
-  width: 16px;
-  height: 16px;
-}
+  svg {
+    width: 16px;
+    height: 16px;
 
-.modal-close svg path {
-  fill: var(--color-primary);
+    path {
+      fill: var(--color-primary);
+    }
+  }
 }
 
 @media (min-width: 768px) {
@@ -60,10 +65,10 @@
     right: 24px;
     width: 24px;
     height: 24px;
-  }
 
-  .modal-close svg {
-    width: 24px;
-    height: 24px;
+    svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 }
