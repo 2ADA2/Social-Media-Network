@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { Sidebar } from "@/entities/sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { sidebarQueries } from "@/features/sidebar/sidebar.ts";
 
 export const MainSidebar = () => {
+  const { t } = useTranslation('main');
   const {
     data: suggestedPeople,
     isPending: isPeoplePending,
@@ -20,7 +22,7 @@ export const MainSidebar = () => {
     }
 
     if (!isPeoplePending && suggestedPeople) {
-      return <Sidebar title='Suggested people' users={ suggestedPeople }/>;
+      return <Sidebar title={ t('sidebar.suggestedPeople') } users={ suggestedPeople }/>;
     }
 
     return null;
@@ -32,7 +34,7 @@ export const MainSidebar = () => {
     }
 
     if (!isCommunitiesPending && communities) {
-      return <Sidebar title='Suggested communities' users={ communities }/>;
+      return  <Sidebar title={ t('sidebar.communities') } users={ communities }/>;
     }
 
     return null;

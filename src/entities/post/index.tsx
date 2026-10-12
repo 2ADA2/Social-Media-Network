@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import HeartIcon from '@/shared/assets/icons/heart.svg?react';
 import CommentIcon from '@/shared/assets/icons/comment.svg?react';
 import { CoverButton } from '@/shared/ui/cover-button';
@@ -6,6 +7,7 @@ import ArrowDown from '@/shared/assets/icons/arrow-down.svg?react';
 import ArrowUp from '@/shared/assets/icons/arrow-up.svg?react';
 import { useAuth } from '@/features/auth/use-auth';
 import { Avatar } from '@/shared/ui/avatar';
+import { formatCompact } from '@/shared/lib/localization/format-number';
 import {
   ControlContainer,
   ControlText,
@@ -39,6 +41,7 @@ const checkLiked = (likes: { id: number }[], userId: number) => {
 ;
 
 export const Post = ({ post }: PostProps) => {
+  const { t, i18n } = useTranslation('main');
   const { isAuth } = useAuth();
 
   const currentUserId = Number(useAppSelector(selectUserId)) || -1;
@@ -90,7 +93,11 @@ export const Post = ({ post }: PostProps) => {
             <StyledSVG $active={ liked }>
               <HeartIcon/>
             </StyledSVG>
-            <ControlText>{ likes } likes</ControlText>
+            <ControlText>
+              { likes < 1000
+                ? t('post.likes', { count: likes })
+                : `${formatCompact(likes, i18n.language)} ${t('post.likesLabel')}` }
+            </ControlText>
           </ControlContainer>
         </CoverButton>
 
@@ -101,8 +108,10 @@ export const Post = ({ post }: PostProps) => {
             </StyledSVG>
             <ControlText>
               { isAuth
-                ? `${ comments } Comments`
-                : 'You have to login to see the comments' }
+                ? comments < 1000
+                  ? t('post.comments', { count: comments })
+                  : `${formatCompact(comments, i18n.language)} ${t('post.commentsLabel')}`
+                : t('post.loginToSeeComments') }
             </ControlText>
             <StyledArrowIcon>
               { isAuth && (showComments ? <ArrowDown/> : <ArrowUp/>) }

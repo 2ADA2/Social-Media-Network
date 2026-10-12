@@ -10,8 +10,10 @@ import { useAuth } from "@/features/auth/use-auth.tsx";
 import { type SignInFormData, signInSchema } from "@/pages/signin/signin-schema.ts";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslation } from "react-i18next";
 
 const SignIn = () => {
+  const { t } = useTranslation('auth');
   const { signin } = useAuth();
 
   const {
@@ -26,25 +28,20 @@ const SignIn = () => {
   const onSubmit = async (data: SignInFormData) => {
     try {
       await signin(data.email, data.password);
-    } catch (error) {
-      if (error instanceof Error) {
-        alert("Cannot sign in: " + error.message);
-      } else {
-        alert("unknown sign in error");
-      }
-
-      console.error(error);
+    } catch (e) {
+      alert(t('signIn.error', { message: String(e) }));
+      console.error(e);
     }
   };
 
   return (
-    <div className='auth-container'>
+    <div className="auth-container">
       <section className="sign-in">
-        <div className='auth-header'>
-          <h1>Sign in into an account</h1>
+        <div className="auth-header">
+          <h1>{ t('signIn.title') }</h1>
           <p>
-            Enter your email and password <br/>
-            to sign in into this app
+            { t('signIn.subtitleLine1') } <br/>
+            { t('signIn.subtitleLine2') }
           </p>
         </div>
 
@@ -77,18 +74,20 @@ const SignIn = () => {
               />
             ) }
           />
+
           <Button type="submit">
-            Sign in
+            { t('signIn.submit') }
           </Button>
         </form>
 
         <p className="auth-form-footer">
-          Forgot to create an account?{ ' ' }
-          <Link to={ ROUTES.SIGNUP }>Sign up</Link>
+          { t('signIn.footer') }{ ' ' }
+          <Link to={ ROUTES.SIGNUP }>{ t('signIn.signUpLink') }</Link>
         </p>
       </section>
     </div>
   );
 };
+
 
 export default SignIn;

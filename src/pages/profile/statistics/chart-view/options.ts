@@ -1,16 +1,23 @@
 import type { ApexOptions } from "apexcharts";
 
-const monthsLabels: Record<string, string> = {
-  '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun',
-  '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec',
+const monthsLabels: Record<string, Record<string, string>> = {
+  en: {
+    '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun',
+    '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec',
+  },
+  ru: {
+    '01': 'Янв', '02': 'Фев', '03': 'Мар', '04': 'Апр', '05': 'Май', '06': 'Июн',
+    '07': 'Июл', '08': 'Авг', '09': 'Сен', '10': 'Окт', '11': 'Ноя', '12': 'Дек',
+  },
 };
 
-const getMonthName = (dateStr?: string): string => {
+const getMonthName = (dateStr: string | undefined, lng: string): string => {
   if (!dateStr) {
     return '';
   }
+
   const monthNum = dateStr.split('.')[1];
-  return monthsLabels[monthNum] || '';
+  return monthsLabels[lng]?.[monthNum] || monthsLabels.en[monthNum] || '';
 };
 
 export const buildOptions = (
@@ -18,10 +25,10 @@ export const buildOptions = (
   theme: 'light' | 'dark',
   id: string,
   type: 'line' | 'bar',
+  lng: string = 'en',
 ): ApexOptions => {
-
-  const firstMonth = getMonthName(categories[0]);
-  const lastMonth = getMonthName(categories.at(-1));
+  const firstMonth = getMonthName(categories[0], lng);
+  const lastMonth = getMonthName(categories.at(-1), lng);
   const firstDate = type === "line" ? categories[0].split(".")[0] : categories[0];
   const lastDate = type === "line" ? categories[categories.length - 1].split(".")[0] : categories.at(-1);
 
@@ -50,6 +57,7 @@ export const buildOptions = (
       borderColor: 'var(--chart-primary)',
       padding: {
         right: 50,
+        left: 20,
       },
     },
     xaxis: {

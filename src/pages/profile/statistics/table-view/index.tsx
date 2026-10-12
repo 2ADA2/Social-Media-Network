@@ -1,4 +1,5 @@
 import "./table-view.css";
+import { useTranslation } from "react-i18next";
 import { type DailyCount } from "@/shared/lib/stats/count-by-day.ts";
 
 interface TableViewProps {
@@ -7,17 +8,19 @@ interface TableViewProps {
 }
 
 export const TableView = ({ likesByDay, commentsByDay }: TableViewProps) => {
+  const { t } = useTranslation('profile');
+
   return (
     <div className='stats-container'>
       <div className="stats-block">
-        <h2 className="stats-heading">Likes</h2>
+        <h2 className="stats-heading">{ t('stats.likes') }</h2>
         <div className="stats-table">
-          <div className="stats-table-title">Last week</div>
+          <div className="stats-table-title">{ t('stats.lastWeek') }</div>
           <table className="stats-table-content">
             <thead>
             <tr className="stats-table-head">
-              <th className="text-left">Day</th>
-              <th className="text-right">Count</th>
+              <th className="text-left">{ t('stats.day') }</th>
+              <th className="text-right">{ t('stats.count') }</th>
             </tr>
             </thead>
             <tbody>
@@ -33,14 +36,14 @@ export const TableView = ({ likesByDay, commentsByDay }: TableViewProps) => {
       </div>
 
       <div className="stats-block">
-        <h2 className="stats-heading">Comments</h2>
+        <h2 className="stats-heading">{ t('stats.comments') }</h2>
         <div className="stats-table">
-          <div className="stats-table-title">Last week</div>
+          <div className="stats-table-title">{ t('stats.lastWeek') }</div>
           <table className="stats-table-content">
             <thead>
             <tr className="stats-table-head">
-              <th className="text-left">Day</th>
-              <th className="text-right">Count</th>
+              <th className="text-left">{ t('stats.day') }</th>
+              <th className="text-right">{ t('stats.count') }</th>
             </tr>
             </thead>
             <tbody>

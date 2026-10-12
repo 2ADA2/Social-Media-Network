@@ -23,7 +23,7 @@ export const NotificationsProvider = (props: PropsWithChildren) => {
   return (
     <NotificationsContext.Provider value={ { notifications, addNotification } }>
       <Notifications/>
-      {props.children}
+      { props.children }
     </NotificationsContext.Provider>
   );
 };
