@@ -44,7 +44,9 @@ export const Post = ({ post }: PostProps) => {
   const currentUserId = Number(useAppSelector(selectUserId)) || -1;
   const [liked, setLiked] = useState(checkLiked(post.likedByUsers, currentUserId));
   const [likes, setLikes] = useState(post.likesCount);
+
   const [showComments, setShowComments] = useState(false);
+  const [comments, setComments] = useState(post.commentsCount);
 
   const { mutate: toggleLike, isPending: isLiking } = useLikePost();
 
@@ -60,6 +62,10 @@ export const Post = ({ post }: PostProps) => {
 
   const toggleComments = () => {
     setShowComments((prev) => !prev);
+  };
+
+  const addComment = () => {
+    setComments(prev => prev + 1);
   };
 
   return (
@@ -95,7 +101,7 @@ export const Post = ({ post }: PostProps) => {
             </StyledSVG>
             <ControlText>
               { isAuth
-                ? `${ post.commentsCount } Comments`
+                ? `${ comments } Comments`
                 : 'You have to login to see the comments' }
             </ControlText>
             <StyledArrowIcon>
@@ -106,7 +112,7 @@ export const Post = ({ post }: PostProps) => {
       </PostControl>
 
       { isAuth && showComments && (
-        <PostComments postId={post.id} />
+        <PostComments postId={post.id} onAdd={addComment}/>
       ) }
     </StyledPost>
   );
