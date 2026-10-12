@@ -12,4 +12,4 @@ export const createPostSchema = z.object({
     .max(MAX_DESCRIPTION_LENGTH, `Reached the ${MAX_DESCRIPTION_LENGTH} text limit`),
 });
 
-export type CreatePostSchema = z.infer<typeof createPostSchema>;
+export type CreatePostData = z.infer<typeof createPostSchema>;

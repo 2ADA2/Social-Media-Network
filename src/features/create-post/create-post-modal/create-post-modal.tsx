@@ -11,9 +11,10 @@ import { StyledButton } from "@/features/create-post/create-post.styles.ts";
 import { Controller, useForm } from "react-hook-form";
 import {
   createPostSchema,
-  type CreatePostSchema,
+  type CreatePostData,
 } from "@/features/create-post/create-post-modal/create-post-schema.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCreatePost } from "@/features/create-post/hooks/use-create-post.ts";
 
 const MAX_SIZE = 10 * 1024 * 1024;
 const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf'];
@@ -28,11 +29,13 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState('');
 
+  const { mutate: createPost } = useCreatePost();
+
   const {
     control,
     handleSubmit,
     reset,
-  } = useForm<CreatePostSchema>({
+  } = useForm<CreatePostData>({
     resolver: zodResolver(createPostSchema),
     defaultValues: { title: '', description: '' },
     mode: 'onTouched',
@@ -52,6 +55,7 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
 
     if (!selectedFile) {
       setFile(null);
+      setFileName('')
       return;
     }
 
@@ -73,10 +77,22 @@ export const CreatePostModal = ({ isOpen, onClose }: CreateModalProps) => {
     setFileName(selectedFile.name);
   };
 
-  const submitForm = () => {
-    console.log(file);
-    reset();
-    setFile(null);
+  const submitForm = (data: CreatePostData) => {
+    createPost(
+      { title: data.title, content: data.description, file },
+      {
+        onSuccess: () => {
+          reset();
+          setFile(null);
+          setFileName('');
+          onClose();
+          alert("Post created"); // TODO: custom message
+        },
+        onError: (e) => {
+          alert("Something went wrong: " + e.message); // TODO: custom message
+        },
+      },
+    );
   };
 
   return (

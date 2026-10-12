@@ -1,6 +1,7 @@
 import React, { type ChangeEvent, type InputHTMLAttributes, useRef } from "react";
 import "./file-input.css";
 import DownloadIcon from "@/shared/assets/icons/download-file.svg?react";
+import CrossIcon from "@/shared/assets/icons/cross.svg?react";
 
 export interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
   fileName?: string;
@@ -31,6 +32,21 @@ export const FileInput = ({ onChange, fileName = '', ...props }: FileInputProps)
     }
   };
 
+  const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+
+    const fakeEvent = {
+      target: { files: null, value: '' },
+    } as unknown as ChangeEvent<HTMLInputElement>;
+
+    onChange?.(fakeEvent);
+  };
+
   return (
     <label
       className='file-input-label'
@@ -41,6 +57,11 @@ export const FileInput = ({ onChange, fileName = '', ...props }: FileInputProps)
     >
       <input type={ "file" } { ...props } onChange={ onChange } ref={ inputRef }/>
       <div className='file-input-container'>
+        { fileName &&
+            <button className='close-button' onClick={ handleClear }>
+                <CrossIcon/>
+            </button>
+        }
         <div>
           <DownloadIcon/>
         </div>

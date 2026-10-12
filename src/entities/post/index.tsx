@@ -1,86 +1,74 @@
-import { useState } from "react";
-import HeartIcon from "@/shared/assets/icons/heart.svg?react";
-import CommentIcon from "@/shared/assets/icons/comment.svg?react";
-import { CoverButton } from "@/shared/ui/cover-button";
-import ArrowDown from "@/shared/assets/icons/arrow-down.svg?react";
-import ArrowUp from "@/shared/assets/icons/arrow-up.svg?react";
-import { useAuth } from "@/features/auth/use-auth.tsx";
-import { Avatar } from "@/shared/ui/avatar";
-import { CreateComment } from "@/features/create-comment";
+import { useState } from 'react';
+import HeartIcon from '@/shared/assets/icons/heart.svg?react';
+import CommentIcon from '@/shared/assets/icons/comment.svg?react';
+import { CoverButton } from '@/shared/ui/cover-button';
+import ArrowDown from '@/shared/assets/icons/arrow-down.svg?react';
+import ArrowUp from '@/shared/assets/icons/arrow-up.svg?react';
+import { useAuth } from '@/features/auth/use-auth';
+import { Avatar } from '@/shared/ui/avatar';
+import { CreateComment } from '@/features/create-comment';
 import {
-  ControlContainer, ControlText,
+  ControlContainer,
+  ControlText,
   Description,
   HeaderData,
-  PostComments, PostControl,
+  PostComments,
+  PostControl,
   PostDate,
   PostHeader,
-  PostImage, StyledArrowIcon,
-  StyledPost, StyledSVG,
-} from "@/entities/post/post.styles.tsx";
+  PostImage,
+  StyledArrowIcon,
+  StyledPost,
+  StyledSVG,
+} from './post.styles';
+import type { Post as PostType } from '@/entities/post/types';
 
 interface PostProps {
-  title: string;
-  author: string;
-  avatarUrl: string;
-  date: string;
-  description: string;
-  imgUrl?: string;
-  alt?: string;
-  likes: number;
-  comments: string[];
+  post: PostType;
 }
 
-export const Post = ({
-                       title,
-                       author,
-                       avatarUrl,
-                       date,
-                       imgUrl,
-                       description,
-                       alt = title,
-                       likes = 0,
-                       comments = [],
-                     }: PostProps) => {
+export const Post = ({ post }: PostProps) => {
   const { isAuth } = useAuth();
-
   const [liked, setLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);
 
   const toggleLike = () => {
-    if (isAuth) {
-      setLiked((prev) => !prev);
+    if (!isAuth) {
+      return;
     }
+    setLiked((prev) => !prev);
+    // TODO: POST /api/like { postId: post.id }
   };
 
   const toggleComments = () => {
-    setShowComments(prev => !prev);
+    setShowComments((prev) => !prev);
   };
+
+  const likesCount = liked ? post.likesCount + 1 : post.likesCount;
 
   return (
     <StyledPost>
       <PostHeader>
-        <Avatar src={ avatarUrl } alt={ alt } size={ 48 }/>
+        <Avatar src={ post.author.profileImage || "" } alt={ `Post ${ post.id }` } size={ 48 }/>
         <HeaderData>
-          <div>{ author }</div>
-          <PostDate>{ date }</PostDate>
+          <div>{ post.author.firstName } { post.author.secondName }</div>
+          <PostDate>{ new Date(post.creationDate).toLocaleDateString() }</PostDate>
         </HeaderData>
       </PostHeader>
 
-      { imgUrl && <PostImage
-          loading="lazy"
-          src={ imgUrl }
-          alt={ alt }
-      /> }
+      { post.image && (
+        <PostImage loading="lazy" src={ post.image } alt={ post.title }/>
+      ) }
 
-      <Description>{ description }</Description>
+      <Description>{ post.content }</Description>
 
-      <PostControl $auth={isAuth}>
+      <PostControl $auth={ isAuth }>
         <CoverButton onClick={ toggleLike }>
           <ControlContainer>
             <StyledSVG $active={ liked }>
               <HeartIcon/>
             </StyledSVG>
-            <ControlText className='control-text'>{ liked ? likes + 1 : likes } likes</ControlText>
+            <ControlText>{ likesCount } likes</ControlText>
           </ControlContainer>
         </CoverButton>
 
@@ -89,27 +77,24 @@ export const Post = ({
             <StyledSVG $active={ false }>
               <CommentIcon/>
             </StyledSVG>
-            <ControlText className='control-text'>{
-              isAuth ? ` ${ comments.length } Comments` : "You have to login to see the comments"
-            } </ControlText>
-
+            <ControlText>
+              { isAuth
+                ? `${ post.commentsCount } Comments`
+                : 'You have to login to see the comments' }
+            </ControlText>
             <StyledArrowIcon>
-              {
-                isAuth &&
-                (showComments ? <ArrowDown className='arrow-icon'/> : <ArrowUp className={ 'arrow-icon' }/>)
-              }
+              { isAuth && (showComments ? <ArrowDown/> : <ArrowUp/>) }
             </StyledArrowIcon>
           </ControlContainer>
         </CoverButton>
       </PostControl>
-      { isAuth && showComments && <>
-          <PostComments>
-            { comments.map(
-              (comment, i) => <li key={ i }>{ comment }</li>,
-            ) }
-          </PostComments>
+
+      { isAuth && showComments && (
+        <>
+          <PostComments/>
           <CreateComment/>
-      </> }
+        </>
+      ) }
     </StyledPost>
   );
 };
