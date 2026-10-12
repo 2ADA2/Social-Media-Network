@@ -1,19 +1,18 @@
 import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
 import MailIcon from '@/shared/assets/icons/mail.svg?react';
-import EyeIcon from '@/shared/assets/icons/eye.svg?react';
+import KeyboardIcon from '@/shared/assets/icons/keyboard.svg?react';
 import './sign-in.css';
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/shared/config/routes.ts";
 import { PasswordInput } from "@/shared/ui/password-input";
-import { useAuth } from "@/entities/user/model/use-auth.tsx";
-import { USER_DATA } from "@/app/store/user-data.ts";
+import { useAuth } from "@/features/auth/use-auth.tsx";
 import { type SignInFormData, signInSchema } from "@/pages/signin/signin-schema.ts";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const SignIn = () => {
-  const { auth } = useAuth();
+  const { signin } = useAuth();
 
   const {
     control,
@@ -25,8 +24,17 @@ const SignIn = () => {
   });
 
   const onSubmit = async (data: SignInFormData) => {
-    auth(USER_DATA, "token");
-    console.log(data);
+    try {
+      await signin(data.email, data.password);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert("Cannot sign in: " + error.message);
+      } else {
+        alert("unknown sign in error");
+      }
+
+      console.error(error);
+    }
   };
 
   return (
@@ -40,36 +48,34 @@ const SignIn = () => {
           </p>
         </div>
 
-        <form className="auth-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="auth-form" onSubmit={ handleSubmit(onSubmit) } noValidate>
           <Controller
             name="email"
-            control={control}
-            render={({ field, fieldState: { error } }) => (
+            control={ control }
+            render={ ({ field, fieldState: { error } }) => (
               <Input
-                {...field}
+                { ...field }
                 label="Email"
                 type="email"
                 placeholder="Enter email"
-                icon={<MailIcon />}
-                error={error?.message}
-                custom
+                icon={ <MailIcon/> }
+                error={ error?.message }
               />
-            )}
+            ) }
           />
 
           <Controller
             name="password"
-            control={control}
-            render={({ field, fieldState: { error } }) => (
+            control={ control }
+            render={ ({ field, fieldState: { error } }) => (
               <PasswordInput
-                {...field}
+                { ...field }
                 label="Password"
                 placeholder="Enter password"
-                icon={<EyeIcon />}
-                error={error?.message}
-                custom
+                icon={ <KeyboardIcon/> }
+                error={ error?.message }
               />
-            )}
+            ) }
           />
           <Button type="submit">
             Sign in

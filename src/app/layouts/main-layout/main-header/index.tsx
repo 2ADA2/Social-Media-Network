@@ -14,7 +14,7 @@ import { AuthButtons } from './auth-buttons';
 import { UserNav } from './user-nav';
 import { NavBar } from './navbar';
 import { ROUTES } from '@/shared/config/routes';
-import { useAuth } from "@/entities/user/model/use-auth.tsx";
+import { useAuth } from "@/features/auth/use-auth.tsx";
 
 export interface HeaderProps {
   hiddenNav?: boolean;

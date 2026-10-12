@@ -3,7 +3,7 @@ import { Post } from "@/entities/post";
 import { MainSidebar } from "@/widgets/main-sidebar";
 import { POSTS, SUGGESTED_COMMUNITIES, SUGGESTED_PEOPLE } from "@/pages/main/data.ts";
 import { CreatePost } from "@/features/create-post";
-import { useAuth } from "@/entities/user/model/use-auth.tsx";
+import { useAuth } from "@/features/auth/use-auth.tsx";
 
 export const MainPage = () => {
   const { isAuth } = useAuth();
