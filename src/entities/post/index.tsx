@@ -6,13 +6,11 @@ import ArrowDown from '@/shared/assets/icons/arrow-down.svg?react';
 import ArrowUp from '@/shared/assets/icons/arrow-up.svg?react';
 import { useAuth } from '@/features/auth/use-auth';
 import { Avatar } from '@/shared/ui/avatar';
-import { CreateComment } from '@/features/create-comment';
 import {
   ControlContainer,
   ControlText,
   Description,
   HeaderData,
-  PostComments,
   PostControl,
   PostDate,
   PostHeader,
@@ -22,29 +20,47 @@ import {
   StyledSVG,
 } from './post.styles';
 import type { Post as PostType } from '@/entities/post/types';
+import { useLikePost } from "@/features/like-post/use-like-post.ts";
+import { useAppSelector } from "@/app/store/hooks.ts";
+import { selectUserId } from "@/entities/user/model/selectors.ts";
+import { PostComments } from "@/entities/post/post-comments.tsx";
 
 interface PostProps {
   post: PostType;
 }
 
+const checkLiked = (likes: { id: number }[], userId: number) => {
+    if (userId === -1) {
+      return false;
+    }
+
+    return likes.some((user) => user.id === userId);
+  }
+;
+
 export const Post = ({ post }: PostProps) => {
   const { isAuth } = useAuth();
-  const [liked, setLiked] = useState(false);
+
+  const currentUserId = Number(useAppSelector(selectUserId)) || -1;
+  const [liked, setLiked] = useState(checkLiked(post.likedByUsers, currentUserId));
+  const [likes, setLikes] = useState(post.likesCount);
   const [showComments, setShowComments] = useState(false);
 
-  const toggleLike = () => {
-    if (!isAuth) {
+  const { mutate: toggleLike, isPending: isLiking } = useLikePost();
+
+  const handleLike = () => {
+    if (!isAuth || isLiking) {
       return;
     }
-    setLiked((prev) => !prev);
-    // TODO: POST /api/like { postId: post.id }
+
+    toggleLike({ postId: post.id, liked: liked });
+    setLikes(prev => liked ? prev - 1 : prev + 1);
+    setLiked(prev => !prev);
   };
 
   const toggleComments = () => {
     setShowComments((prev) => !prev);
   };
-
-  const likesCount = liked ? post.likesCount + 1 : post.likesCount;
 
   return (
     <StyledPost>
@@ -63,12 +79,12 @@ export const Post = ({ post }: PostProps) => {
       <Description>{ post.content }</Description>
 
       <PostControl $auth={ isAuth }>
-        <CoverButton onClick={ toggleLike }>
+        <CoverButton onClick={ handleLike }>
           <ControlContainer>
             <StyledSVG $active={ liked }>
               <HeartIcon/>
             </StyledSVG>
-            <ControlText>{ likesCount } likes</ControlText>
+            <ControlText>{ likes } likes</ControlText>
           </ControlContainer>
         </CoverButton>
 
@@ -90,10 +106,7 @@ export const Post = ({ post }: PostProps) => {
       </PostControl>
 
       { isAuth && showComments && (
-        <>
-          <PostComments/>
-          <CreateComment/>
-        </>
+        <PostComments postId={post.id} />
       ) }
     </StyledPost>
   );

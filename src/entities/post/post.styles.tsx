@@ -109,7 +109,7 @@ export const StyledArrowIcon = styled.div`
   }
 `;
 
-export const PostComments = styled.ol`
+export const PostCommentsContainer = styled.ol`
   list-style: none;
   counter-reset: item;
   padding: 0;
