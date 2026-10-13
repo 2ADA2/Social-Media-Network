@@ -4,6 +4,7 @@ import type { Post, PostsPage } from '@/entities/post/types';
 import { gql } from 'graphql-request';
 
 const POSTS_LIMIT = 20;
+const STALE_TIME = 5 * 3600 * 1000;
 
 const ALL_POSTS_QUERY = gql`
   query AllPosts($limit: Int, $offset: Int) {
@@ -98,20 +99,17 @@ const fetchPost = async (id: number): Promise<Post | null> => {
   return post;
 };
 
-// without cache
 export const postsQueries = {
   list: (limit = POSTS_LIMIT, offset = 0) =>
     queryOptions({
       queryKey: ['posts', { limit, offset }],
       queryFn: () => fetchPosts(limit, offset),
-      staleTime: 0,
-      gcTime: 0,
+      staleTime: STALE_TIME,
     }),
   byId: (id: number) =>
     queryOptions({
       queryKey: ['post', id],
       queryFn: () => fetchPost(id),
       staleTime: 0,
-      gcTime: 0,
     }),
 };
