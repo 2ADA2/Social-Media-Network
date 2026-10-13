@@ -8,6 +8,8 @@ import './posts-list.css';
 import { CreatePost } from '@/features/create-post';
 import { useQueryClient } from '@tanstack/react-query';
 import { postsQueries } from '@/features/post-feed/posts-query.ts';
+import { useTranslation } from 'react-i18next';
+import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
 
 const LIMIT = 20;
 
@@ -15,6 +17,8 @@ export const PostsList = () => {
   const queryClient = useQueryClient();
   const [posts, setPosts] = useState<PostType[]>([]);
   const [offset, setOffset] = useState(0);
+  const { t } = useTranslation('main');
+  const { add } = useNotifications();
   const { data, isPending, isError, error, isFetching } = usePosts(
     LIMIT,
     offset,
@@ -46,15 +50,24 @@ export const PostsList = () => {
   };
 
   const addPost = async (postId: number) => {
-    const newPost = await queryClient.fetchQuery(postsQueries.byId(postId));
+    try {
+      const newPost = await queryClient.fetchQuery(postsQueries.byId(postId));
 
-    if (!newPost) return;
+      if (!newPost) {
+        add({ message: t('post.addError'), type: 'error' });
+        return;
+      }
 
-    setPosts((prev) => {
-      if (prev.some((p) => p.id === postId)) return prev;
-      return [newPost, ...prev];
-    });
+      setPosts((prev) => {
+        if (prev.some((p) => p.id === postId)) return prev;
+        return [newPost, ...prev];
+      });
+    } catch (error) {
+      console.error('Failed to add post to feed:', error);
+      add({ message: t('post.addError'), type: 'error' });
+    }
   };
+
   const ref = useIntersectionObserver({ onIntersect: loadPosts });
 
   if (isPending && !posts.length) {

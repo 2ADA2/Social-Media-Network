@@ -21,7 +21,8 @@
     "errorMessage": "Cannot add your comment",
     "delete": "Delete comment",
     "deleteSuccess": "Comment deleted",
-    "deleteError": "Cannot delete comment"
+    "deleteError": "Cannot delete comment",
+    "addError": "Post created, but failed to add to the feed"
   },
   "createPost": {
     "placeholder": "What's happening?",
