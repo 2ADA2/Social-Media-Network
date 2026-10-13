@@ -1,4 +1,5 @@
 import { createPortal } from 'react-dom';
+import { useTranslation } from 'react-i18next';
 import './notifications.css';
 import { Notification } from '@/shared/ui/notification';
 import { useNotifications } from '@/app/providers/notifications-context/useNotifications';
@@ -10,10 +11,17 @@ interface NotificationsProps {
 }
 
 export const Notifications = ({ onDelete }: NotificationsProps) => {
+  const { t } = useTranslation('common');
   const { notifications } = useNotifications();
 
   return createPortal(
-    <div className="notifications-container">
+    <div
+      className="notifications-container"
+      role="status"
+      aria-live="polite"
+      aria-atomic="false"
+      aria-label={t('notifications.region')}
+    >
       {notifications.slice(0, NOTIFICATIONS_LIMIT).map((e) => (
         <Notification
           key={e.id}

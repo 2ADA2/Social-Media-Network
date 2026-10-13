@@ -26,5 +26,15 @@
   },
   "passwordInput": {
     "defaultInfo": "Your password is strong"
+  },
+  "notifications": {
+    "region": "Notifications"
+  },
+  "notification": {
+    "close": "Dismiss notification"
+  },
+  "modal": {
+    "defaultTitle": "Dialog",
+    "close": "Close modal"
   }
 }

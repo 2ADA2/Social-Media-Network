@@ -1,7 +1,8 @@
 import './notification.css';
-import CrossIcon from '@/shared/assets/icons/cross.svg?react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useTransition, animated } from '@react-spring/web';
+import CrossIcon from '@/shared/assets/icons/cross.svg?react';
 
 export interface NotificationProps {
   message: string;
@@ -18,13 +19,14 @@ export const Notification = ({
   type = 'success',
   onClose,
 }: NotificationProps) => {
+  const { t } = useTranslation('common');
   const onCloseRef = useRef(onClose);
   const [isVisible, setIsVisible] = useState(true);
 
   const transitions = useTransition(isVisible, {
     from: { opacity: 0, transform: 'translateY(50%)' },
-    enter: { opacity: 1, transform: 'translateX(0)' },
-    leave: { opacity: 0, transform: 'translateX(50%)' },
+    enter: { opacity: 1, transform: 'translateY(0%)' },
+    leave: { opacity: 0, transform: 'translateY(50%)' },
     config: { tension: 280, friction: 30 },
   });
 
@@ -51,9 +53,15 @@ export const Notification = ({
       <animated.div
         className={`notification notification-${type}`}
         style={style}
+        role={type === 'error' ? 'alert' : 'status'}
       >
         <p>{message}</p>
-        <button onClick={handleClose} className="notification-close">
+        <button
+          type="button"
+          onClick={handleClose}
+          className="notification-close"
+          aria-label={t('notification.close')}
+        >
           <CrossIcon />
         </button>
       </animated.div>
