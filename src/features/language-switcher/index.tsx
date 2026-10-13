@@ -1,19 +1,32 @@
 import { useTranslation } from 'react-i18next';
-import { Toggle } from '@/shared/ui/toggle';
-import "./language-switcher.css";
+import './language-switcher.css';
+import type { ChangeEvent } from 'react';
+
+const LANGUAGES = [
+  { code: 'en', label: 'English' },
+  { code: 'ru', label: 'Русский' },
+] as const;
 
 export const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
-  const isEn = i18n.language === 'en';
+
+  const changeLanguage = (e: ChangeEvent<HTMLSelectElement>) => {
+    i18n.changeLanguage(e.target.value);
+  };
 
   return (
-    <div className='language-switcher'>
-      RU
-      <Toggle
-        checked={ isEn }
-        onChange={ () => i18n.changeLanguage(isEn ? 'ru' : 'en') }
-      />
-      EN
-    </div>
+    <select
+      className="language-switcher"
+      value={i18n.language.split('-')[0]}
+      onChange={changeLanguage}
+      aria-label="Language"
+      name="language"
+    >
+      {LANGUAGES.map(({ code, label }) => (
+        <option key={code} value={code}>
+          {label}
+        </option>
+      ))}
+    </select>
   );
 };
