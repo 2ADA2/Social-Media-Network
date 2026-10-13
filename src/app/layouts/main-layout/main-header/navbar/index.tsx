@@ -1,5 +1,5 @@
 import './navbar.css';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTransition, animated } from '@react-spring/web';
@@ -24,9 +24,23 @@ export const NavBar = ({ setNavBar, isOpen }: NavBarProps) => {
   useBlockScroll(isOpen);
   useFocusTrap(navRef, isOpen);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setNavBar();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, setNavBar]);
+
   const transitions = useTransition(isOpen, {
     from: { opacity: 0, transform: 'translateX(100%)' },
-    enter: { opacity: 1, transform: 'translateX(0)' },
+    enter: { opacity: 1, transform: 'translateX(0%)' },
+    leave: { opacity: 0, transform: 'translateX(100%)' },
     config: { tension: 300, friction: 30 },
   });
 
@@ -39,9 +53,17 @@ export const NavBar = ({ setNavBar, isOpen }: NavBarProps) => {
           style={{ transform: style.transform }}
           tabIndex={-1}
           ref={navRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={t('navbar.label')}
         >
           <div className="nav-header">
-            <button className="nav-close" onClick={setNavBar}>
+            <button
+              type="button"
+              className="nav-close"
+              onClick={setNavBar}
+              aria-label={t('navbar.close')}
+            >
               <SidekickLogo />
               <span>sidekick</span>
             </button>

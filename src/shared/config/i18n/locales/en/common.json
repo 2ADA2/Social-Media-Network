@@ -36,5 +36,9 @@
   "modal": {
     "defaultTitle": "Dialog",
     "close": "Close modal"
+  },
+  "navbar": {
+    "label": "Navigation menu",
+    "close": "Close menu"
   }
 }

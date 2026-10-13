@@ -8,7 +8,7 @@ export interface NotificationProps {
   message: string;
   type?: 'success' | 'error';
   onClose: () => void;
-  id: string;
+  id: number;
 }
 
 const TIMEOUT = 5000;

@@ -7,7 +7,7 @@ import { useNotifications } from '@/app/providers/notifications-context/useNotif
 const NOTIFICATIONS_LIMIT = 5;
 
 interface NotificationsProps {
-  onDelete: (id: string) => void;
+  onDelete: (id: number) => void;
 }
 
 export const Notifications = ({ onDelete }: NotificationsProps) => {

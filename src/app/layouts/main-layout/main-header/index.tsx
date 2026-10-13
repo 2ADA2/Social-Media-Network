@@ -28,9 +28,7 @@ export const MainHeader = ({ hiddenNav = false }: HeaderProps) => {
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   const toggleNavBar = () => {
-    setTimeout(() => {
-      setIsNavBar((prev) => !prev);
-    }, 10);
+    setIsNavBar((prev) => !prev);
   };
 
   return (
