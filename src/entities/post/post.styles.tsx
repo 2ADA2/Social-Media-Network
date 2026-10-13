@@ -10,6 +10,10 @@ export const StyledPost = styled.article`
   border-bottom: 2px solid var(--border-primary);
   color: var(--color-primary);
 
+  &:hover .delete-post-button {
+    opacity: 1;
+  }
+
   @media (min-width: 768px) {
     padding: 24px;
     width: 700px;
@@ -88,7 +92,6 @@ export const StyledSVG = styled.div<{ $active: boolean }>`
 
   svg {
     width: 18px;
-
     height: 18px;
     ${(props) =>
       props.$active &&
@@ -105,6 +108,9 @@ export const StyledSVG = styled.div<{ $active: boolean }>`
 export const StyledArrowIcon = styled.div`
   width: 16px;
   height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   path {
     fill: var(--color-primary);
