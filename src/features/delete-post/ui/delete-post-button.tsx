@@ -6,15 +6,11 @@ import { useModal } from '@/shared/lib/hooks/use-modal.ts';
 
 export interface DeletePostButtonProps {
   postId: number;
-  currentUserId: number;
-  authorId: number;
   onDelete: (postId: number) => void;
 }
 
 export const DeletePostButton = ({
   postId,
-  authorId,
-  currentUserId,
   onDelete,
 }: DeletePostButtonProps) => {
   const { mutate: deletePost, isPending } = useDeletePost();
@@ -24,13 +20,10 @@ export const DeletePostButton = ({
     deletePost(postId, {
       onSuccess: () => {
         onDelete(postId);
+        close();
       },
     });
   };
-
-  if (Number(currentUserId) !== authorId) {
-    return null;
-  }
 
   return (
     <>
@@ -38,6 +31,7 @@ export const DeletePostButton = ({
         isOpen={isOpen}
         onClose={close}
         onSubmit={handleDelete}
+        isPending={isPending}
       />
       <button
         className="delete-post-button"

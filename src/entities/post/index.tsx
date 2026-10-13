@@ -99,13 +99,8 @@ export const Post = ({ post, onDelete }: PostProps) => {
   return (
     <StyledPost>
       <PostHeader>
-        {isAuth && (
-          <DeletePostButton
-            postId={post.id}
-            currentUserId={currentUserId}
-            authorId={post.authorId}
-            onDelete={onDelete}
-          />
+        {isAuth && currentUserId === post.authorId && (
+          <DeletePostButton postId={post.id} onDelete={onDelete} />
         )}
         <Avatar
           src={post.author.profileImage || ''}
@@ -170,15 +165,15 @@ export const Post = ({ post, onDelete }: PostProps) => {
         transitions(
           (style, item) =>
             item && (
-              <animated.div style={ { ...style, overflow: 'hidden' } }>
+              <animated.div style={{ ...style, overflow: 'hidden' }}>
                 <PostComments
-                  postId={ post.id }
-                  onAdd={ addComment }
-                  onDelete={ deleteComment }
+                  postId={post.id}
+                  onAdd={addComment}
+                  onDelete={deleteComment}
                 />
               </animated.div>
             ),
-        ) }
+        )}
     </StyledPost>
   );
 };

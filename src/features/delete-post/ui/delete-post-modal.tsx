@@ -7,24 +7,27 @@ export interface DeletePostModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: () => void;
+  isPending: boolean;
 }
 
 export const DeletePostModal = ({
   isOpen,
   onClose,
   onSubmit,
+  isPending,
 }: DeletePostModalProps) => {
   const { t } = useTranslation('main');
 
   const handleSubmit = () => {
     onSubmit();
-    onClose();
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <StyledTitle>{t('deletePost.title')}</StyledTitle>
-      <Button onClick={handleSubmit}>{t('deletePost.submit')}</Button>
+      <Button disabled={isPending} onClick={handleSubmit}>
+        {t('deletePost.submit')}
+      </Button>
     </Modal>
   );
 };
