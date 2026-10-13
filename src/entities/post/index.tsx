@@ -91,7 +91,7 @@ export const Post = ({ post, onDelete }: PostProps) => {
   }, []);
 
   const deleteComment = useCallback(() => {
-    setComments((prev) => Math.min(0, prev - 1));
+    setComments((prev) => Math.max(0, prev - 1));
   }, []);
 
   const date = formatRelativeTime(post.creationDate, i18n.language);

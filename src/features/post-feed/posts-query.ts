@@ -4,7 +4,7 @@ import type { Post, PostsPage } from '@/entities/post/types';
 import { gql } from 'graphql-request';
 
 const POSTS_LIMIT = 20;
-const STALE_TIME = 5 * 3600 * 1000;
+const CACHE_TIME = 5 * 60 * 1000;
 
 const ALL_POSTS_QUERY = gql`
   query AllPosts($limit: Int, $offset: Int) {
@@ -104,12 +104,14 @@ export const postsQueries = {
     queryOptions({
       queryKey: ['posts', { limit, offset }],
       queryFn: () => fetchPosts(limit, offset),
-      staleTime: STALE_TIME,
+      staleTime: CACHE_TIME,
+      gcTime: CACHE_TIME,
     }),
   byId: (id: number) =>
     queryOptions({
       queryKey: ['post', id],
       queryFn: () => fetchPost(id),
-      staleTime: 0,
+      staleTime: CACHE_TIME,
+      gcTime: CACHE_TIME,
     }),
 };
