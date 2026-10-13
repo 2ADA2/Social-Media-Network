@@ -71,11 +71,7 @@ export const PostsList = () => {
   const ref = useIntersectionObserver({ onIntersect: loadPosts });
 
   if (isPending && !posts.length) {
-    return (
-      <div className="posts-list-loader-container">
-        <Loader />
-      </div>
-    );
+    return <Loader />;
   }
 
   if (isError) {
