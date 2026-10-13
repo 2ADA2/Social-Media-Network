@@ -155,7 +155,7 @@ export const Post = ({ post }: PostProps) => {
         transitions(
           (style, item) =>
             item && (
-              <animated.div style={style}>
+              <animated.div style={{ ...style, overflow: 'hidden' }}>
                 <PostComments postId={post.id} onAdd={addComment} />
               </animated.div>
             ),
