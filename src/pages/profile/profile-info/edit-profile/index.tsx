@@ -67,6 +67,9 @@ export const EditProfile = () => {
 
   const saveChanges = (data: EditProfileSchema) => {
     data.username = data.username.slice(1);
+    reset({
+      email: emailValue,
+    });
 
     const hasProfileChanges =
       dirtyFields.firstName ||
@@ -77,6 +80,10 @@ export const EditProfile = () => {
 
     if (!hasProfileChanges && !hasEmailChanges) {
       add({ message: t('editProfile.noChanges') });
+      return;
+    }
+
+    if (!hasProfileChanges) {
       return;
     }
 

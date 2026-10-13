@@ -1,5 +1,5 @@
 import { apiClient } from '@/shared/api/api-client';
-import type { User } from '@/entities/user';
+import type { UserResponse } from '@/entities/user';
 
 export interface UpdateAccountParams {
   currentPassword: string;
@@ -9,7 +9,7 @@ export interface UpdateAccountParams {
 
 export interface UpdateAccountResponse {
   message: string;
-  user: User;
+  user: UserResponse;
   token?: string;
   refreshToken?: string;
   expiresIn?: number;

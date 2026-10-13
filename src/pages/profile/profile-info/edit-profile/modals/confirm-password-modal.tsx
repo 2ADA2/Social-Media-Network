@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from '@/shared/ui/modal';
 import { StyledTitle } from '@/features/create-post/create-post-modal/create-post-modal.styles';
-import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
 import { useUpdateAccount } from '@/features/edit-profile/use-update-account';
 import { useNotifications } from '@/app/providers/notifications-context/useNotifications';
 import axios from 'axios';
+import { PasswordInput } from '@/shared/ui/password-input';
 
 interface ConfirmPasswordModalProps {
   isOpen: boolean;
@@ -46,13 +46,46 @@ export const ConfirmPasswordModal = ({
           add({ message: t('editProfile.emailSuccess') });
         },
         onError: (error) => {
-          const isWrongPassword =
-            axios.isAxiosError(error) && error.response?.status === 403;
+          if (!axios.isAxiosError(error)) {
+            add({
+              message: t('editProfile.error', { message: String(error) }),
+              type: 'error',
+            });
+            return;
+          }
+
+          const status = error.response?.status;
+          const code = error.response?.data?.code;
+          const serverMessage = error.response?.data?.message;
+
+          if (status === 403 || code === 'INVALID_CURRENT_PASSWORD') {
+            add({
+              message: t('confirmPassword.wrongPassword'),
+              type: 'error',
+            });
+            return;
+          }
+
+          if (status === 409 || code === 'EMAIL_TAKEN') {
+            add({
+              message: t('confirmPassword.emailTaken'),
+              type: 'error',
+            });
+            return;
+          }
+
+          if (status === 400 || code === 'VALIDATION_FAILED') {
+            add({
+              message: serverMessage || t('confirmPassword.validationError'),
+              type: 'error',
+            });
+            return;
+          }
 
           add({
-            message: isWrongPassword
-              ? t('confirmPassword.wrongPassword')
-              : t('editProfile.error', { message: error.message }),
+            message:
+              serverMessage ||
+              t('editProfile.error', { message: error.message }),
             type: 'error',
           });
         },
@@ -69,13 +102,11 @@ export const ConfirmPasswordModal = ({
     <Modal isOpen={isOpen} onClose={handleClose}>
       <StyledTitle>{t('confirmPassword.title')}</StyledTitle>
 
-      <Input
+      <PasswordInput
         label={t('confirmPassword.password')}
-        type="password"
         placeholder={t('confirmPassword.passwordPlaceholder')}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        custom
       />
 
       <Button type="button" disabled={isPending} onClick={handleSubmit}>

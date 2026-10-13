@@ -61,11 +61,11 @@
     "emailRequired": "Email is required",
     "emailInvalid": "Email is not valid",
     "descriptionMax": "Reached the {{count}} text limit",
-    "firstNameMax": "First name must be at most {{count}} characters",
-    "secondNameMax": "Second name must be at most {{count}} characters",
-    "secondNameMin": "Second name must be at least {{count}} characters"
+    "firstNameMax": "First name must be at most {{count}} characters"
   },
   "confirmPassword": {
+    "emailTaken": "This email is already taken",
+    "validationError": "Please check the entered data",
     "title": "Confirm password",
     "password": "Current password",
     "passwordPlaceholder": "Enter current password",

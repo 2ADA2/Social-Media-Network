@@ -29,10 +29,7 @@
     "firstNamePlaceholder": "Введите имя",
     "secondName": "Фамилия",
     "secondNamePlaceholder": "Введите фамилию",
-    "noChanges": "Ничего не изменилось",
-    "passwordRequired": "Введите текущий пароль, чтобы изменить email",
-    "currentPassword": "Текущий пароль",
-    "currentPasswordPlaceholder": "Введите текущий пароль"
+    "noChanges": "Ничего не изменилось"
   },
   "updateAvatar": {
     "title": "Обновить фото профиля",
@@ -63,7 +60,8 @@
     "descriptionMax": "Достигнут лимит в {{count}} символов",
     "firstNameMax": "Имя должно содержать максимум {{count}} символов",
     "secondNameMax": "Фамилия должна содержать максимум {{count}} символов",
-    "secondNameMin": "Фамилия должна содержать минимум {{count}} символов"
+    "firstNameRequired": "Введите имя",
+    "secondNameRequired": "Введите фамилию"
   },
   "confirmPassword": {
     "title": "Подтвердите пароль",
@@ -71,6 +69,8 @@
     "passwordPlaceholder": "Введите текущий пароль",
     "submit": "Подтвердить",
     "required": "Пароль обязателен",
-    "wrongPassword": "Неверный пароль"
+    "wrongPassword": "Неверный пароль",
+    "emailTaken": "Этот email уже занят",
+    "validationError": "Проверьте введённые данные"
   }
 }

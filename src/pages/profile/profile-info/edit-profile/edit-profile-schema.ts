@@ -2,8 +2,7 @@ import { z } from 'zod';
 import i18n from '@/shared/config/i18n';
 
 const MAX_DESCRIPTION_LENGTH = 200;
-const MAX_NAME_LENGTH = 20;
-const MIN_NAME_LENGTH = 1;
+const MAX_NAME_LENGTH = 15;
 
 export const editProfileSchema = () =>
   z.object({
@@ -17,10 +16,9 @@ export const editProfileSchema = () =>
         }),
       )
       .min(
-        MIN_NAME_LENGTH,
-        i18n.t('validation.secondNameMin', {
+        1,
+        i18n.t('validation.firstNameRequired', {
           ns: 'profile',
-          count: MIN_NAME_LENGTH,
         }),
       ),
     secondName: z
@@ -33,10 +31,9 @@ export const editProfileSchema = () =>
         }),
       )
       .min(
-        MIN_NAME_LENGTH,
-        i18n.t('validation.secondNameMin', {
+        1,
+        i18n.t('validation.secondNameRequired', {
           ns: 'profile',
-          count: MIN_NAME_LENGTH,
         }),
       ),
     username: z
@@ -55,7 +52,6 @@ export const editProfileSchema = () =>
         count: MAX_DESCRIPTION_LENGTH,
       }),
     ),
-    currentPassword: z.string().optional(),
   });
 
 export type EditProfileSchema = z.infer<ReturnType<typeof editProfileSchema>>;
