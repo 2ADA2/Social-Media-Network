@@ -78,7 +78,7 @@ export const updatePostLikes = (
 export const updatePostCommentsCount = (
   old: PostsInfiniteData | undefined,
   postId: number,
-  delta: number,
+  delta: 1 | -1,
 ): PostsInfiniteData | undefined => {
   if (!old) return old;
 
