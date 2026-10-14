@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createCommentApi } from '@/features/create-comment/create-comment-api.ts';
-import type { PostsPage } from '@/entities/post/types.ts';
+import { createCommentApi } from '@/features/create-comment/create-comment-api';
+import { postsQueries } from '@/features/post-feed/posts-query';
+import { updatePostCommentsCount } from '@/features/post-feed/update-posts-cache';
 
 export const useCreateComment = () => {
   const queryClient = useQueryClient();
@@ -12,18 +13,9 @@ export const useCreateComment = () => {
         queryKey: ['comments', params.postId],
       });
 
-      queryClient.setQueriesData<PostsPage>({ queryKey: ['posts'] }, (old) => {
-        if (!old) return old;
-
-        return {
-          ...old,
-          items: old.items.map((post) =>
-            post.id === params.postId
-              ? { ...post, commentsCount: post.commentsCount + 1 }
-              : post,
-          ),
-        };
-      });
+      queryClient.setQueryData(postsQueries.infinite().queryKey, (old) =>
+        updatePostCommentsCount(old, params.postId, +1),
+      );
     },
   });
 };

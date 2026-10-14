@@ -1,25 +1,20 @@
 import TrashCanIcon from '@/shared/assets/icons/trashcan.svg?react';
 import './delete-post-button.css';
-import { useDeletePost } from '@/features/delete-post/use-delete-post.ts';
-import { DeletePostModal } from '@/features/delete-post/ui/delete-post-modal.tsx';
-import { useModal } from '@/shared/lib/hooks/use-modal.ts';
+import { useDeletePost } from '@/features/delete-post/use-delete-post';
+import { DeletePostModal } from '@/features/delete-post/ui/delete-post-modal';
+import { useModal } from '@/shared/lib/hooks/use-modal';
 
 export interface DeletePostButtonProps {
   postId: number;
-  onDelete: (postId: number) => void;
 }
 
-export const DeletePostButton = ({
-  postId,
-  onDelete,
-}: DeletePostButtonProps) => {
+export const DeletePostButton = ({ postId }: DeletePostButtonProps) => {
   const { mutate: deletePost, isPending } = useDeletePost();
   const { isOpen, open, close } = useModal();
 
   const handleDelete = () => {
     deletePost(postId, {
       onSuccess: () => {
-        onDelete(postId);
         close();
       },
     });
@@ -34,9 +29,11 @@ export const DeletePostButton = ({
         isPending={isPending}
       />
       <button
+        type="button"
         className="delete-post-button"
         disabled={isPending}
         onClick={open}
+        aria-label="Delete post"
       >
         <TrashCanIcon />
       </button>
