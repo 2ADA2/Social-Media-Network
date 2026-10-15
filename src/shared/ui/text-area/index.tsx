@@ -1,6 +1,6 @@
 import { type InputHTMLAttributes, type ReactNode } from 'react';
 import './textarea.css';
-import { ShowInputInfo } from '@/shared/ui/show-input-info/show-input-info';
+import { ShowInputInfo } from '@/shared/ui/show-input-info';
 
 interface InputProps extends InputHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -21,7 +21,6 @@ export const TextArea = ({
   ...props
 }: InputProps) => {
   const isFilled = value.length > FILLED_LIMIT;
-  console.log(errorMessage);
 
   return (
     <label

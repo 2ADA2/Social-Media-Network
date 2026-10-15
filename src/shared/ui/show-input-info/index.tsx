@@ -7,11 +7,14 @@ interface ShowInputInfoProps {
 }
 
 export const ShowInputInfo = ({ error, info, icon }: ShowInputInfoProps) => {
-  console.log(error, info);
   if (error) {
     return (
-      <div className="info error-info">
-        <InfoIcon className="ignore" />
+      <div
+        className="info error-info"
+        aria-live="polite"
+        data-testid="input-info"
+      >
+        <InfoIcon className="ignore" aria-hidden={true} />
         <small>{error}</small>
       </div>
     );
@@ -19,8 +22,8 @@ export const ShowInputInfo = ({ error, info, icon }: ShowInputInfoProps) => {
 
   if (info) {
     return (
-      <div className="info">
-        {icon || <InfoIcon className="ignore" />}
+      <div className="info" data-testid="input-info">
+        {icon || <InfoIcon className="ignore" aria-hidden={true} />}
         <small> {info} </small>
       </div>
     );
