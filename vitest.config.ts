@@ -1,8 +1,20 @@
 import { defineConfig } from 'vitest/config';
 import { playwright } from '@vitest/browser-playwright';
+import { resolve } from 'path';
+import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
+  plugins: [
+    react(),
+    svgr({
+      include: '**/*.svg?react',
+    }),
+  ],
   test: {
+    alias: {
+      '@': resolve(import.meta.dirname, 'src'),
+    },
     browser: {
       enabled: true,
       instances: [{ browser: 'chromium' }],
