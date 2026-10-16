@@ -19,7 +19,7 @@ import { useModal } from '@/shared/lib/hooks/use-modal.ts';
 import { UpdateProfileImageModal } from '@/pages/profile/profile-info/edit-profile/modals/update-profile-image-modal.tsx';
 import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
 import { Avatar } from '@/shared/ui/avatar';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { ConfirmPasswordModal } from '@/pages/profile/profile-info/edit-profile/modals/confirm-password-modal.tsx';
 
 export const EditProfile = () => {
@@ -57,11 +57,16 @@ export const EditProfile = () => {
     formState: { dirtyFields },
     reset,
     watch,
+    trigger,
   } = useForm<EditProfileSchema>({
     resolver: zodResolver(schema),
     defaultValues,
     mode: 'onChange',
   });
+
+  useEffect(() => {
+    trigger();
+  }, [i18n.language, trigger]);
 
   const emailValue = watch('email');
 

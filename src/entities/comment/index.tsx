@@ -7,22 +7,13 @@ import { useUser } from '@/entities/user/model/use-user.tsx';
 import { useTranslation } from 'react-i18next';
 import { formatRelativeTime } from '@/shared/lib/localization/format-relative-time.ts';
 
-interface CommentComponentProps extends CommentInterface {
-  onDelete: () => void;
-}
-
-export const Comment = (data: CommentComponentProps) => {
+export const Comment = (data: CommentInterface) => {
   const { t, i18n } = useTranslation('main');
   const { mutate: deleteComment, isPending } = useDeleteComment();
   const { user } = useUser();
 
   const handleDelete = () => {
-    deleteComment(
-      { commentId: data.id, postId: data.postId },
-      {
-        onSuccess: data.onDelete,
-      },
-    );
+    deleteComment({ commentId: data.id, postId: data.postId });
   };
 
   const avatarUrl = data?.author?.profileImage ?? '';

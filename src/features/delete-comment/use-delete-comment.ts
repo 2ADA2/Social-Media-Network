@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { deleteCommentRequest } from './delete-comment-api';
 import { useNotifications } from '@/app/providers/notifications-context/useNotifications';
-import { useTranslation } from 'react-i18next';
-import type { PostsPage } from '@/entities/post/types.ts';
+import { postsQueries } from '@/features/post-feed/posts-query';
+import { updatePostCommentsCount } from '@/features/post-feed/update-posts-cache';
 
 interface DeleteCommentVariables {
   commentId: number;
@@ -19,25 +20,12 @@ export const useDeleteComment = () => {
       deleteCommentRequest(commentId),
     onSuccess: (_, { postId }) => {
       queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+
+      queryClient.setQueryData(postsQueries.infinite().queryKey, (old) =>
+        updatePostCommentsCount(old, postId, -1),
+      );
+
       add({ message: t('comment.deleteSuccess') });
-
-      queryClient.setQueriesData<PostsPage>({ queryKey: ['posts'] }, (old) => {
-        if (!old) return old;
-
-        return {
-          ...old,
-          items: old.items.map((post) => {
-            if (post.id === postId) {
-              return {
-                ...post,
-                commentsCount: Math.max(0, post.commentsCount - 1),
-              };
-            }
-
-            return post;
-          }),
-        };
-      });
     },
     onError: () => {
       add({ message: t('comment.deleteError'), type: 'error' });

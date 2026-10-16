@@ -1,4 +1,4 @@
-import { queryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 import { graphqlClient } from '@/shared/api/graphql-client';
 import type { Post, PostsPage } from '@/entities/post/types';
 import { gql } from 'graphql-request';
@@ -100,10 +100,19 @@ const fetchPost = async (id: number): Promise<Post | null> => {
 };
 
 export const postsQueries = {
-  list: (limit = POSTS_LIMIT, offset = 0) =>
-    queryOptions({
-      queryKey: ['posts', { limit, offset }],
-      queryFn: () => fetchPosts(limit, offset),
+  infinite: () =>
+    infiniteQueryOptions({
+      queryKey: ['posts'],
+      queryFn: ({ pageParam }) => fetchPosts(POSTS_LIMIT, pageParam),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, allPages) => {
+        const loaded = allPages.reduce(
+          (sum, page) => sum + page.items.length,
+          0,
+        );
+
+        return loaded < lastPage.total ? loaded : undefined;
+      },
       staleTime: CACHE_TIME,
       gcTime: CACHE_TIME,
     }),

@@ -1,4 +1,3 @@
-import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import HeartIcon from '@/shared/assets/icons/heart.svg?react';
 import CommentIcon from '@/shared/assets/icons/comment.svg?react';
@@ -29,34 +28,30 @@ import { PostComments } from '@/entities/post/post-comments.tsx';
 import { animated, useSpring, useTransition } from '@react-spring/web';
 import { formatRelativeTime } from '@/shared/lib/localization/format-relative-time.ts';
 import { DeletePostButton } from '@/features/delete-post';
+import { useState } from 'react';
 
 const MAX_COMMENTS_HEIGHT = 1000;
 
 interface PostProps {
   post: PostType;
-  onDelete: (postId: number) => void;
 }
 
 const checkLiked = (likes: { id: number }[], userId: number) => {
-  if (userId === -1) {
-    return false;
-  }
-
+  if (userId === -1) return false;
   return likes.some((user) => user.id === userId);
 };
 
-export const Post = ({ post, onDelete }: PostProps) => {
+export const Post = ({ post }: PostProps) => {
   const { t, i18n } = useTranslation('main');
   const { isAuth } = useAuth();
-
+  const [showComments, setShowComments] = useState(false);
   const currentUserId = Number(useAppSelector(selectUserId)) || -1;
+
   const [liked, setLiked] = useState(
     checkLiked(post.likedByUsers, currentUserId),
   );
-  const [likes, setLikes] = useState(post.likesCount);
-
-  const [showComments, setShowComments] = useState(false);
-  const [comments, setComments] = useState(post.commentsCount);
+  const likes = post.likesCount;
+  const comments = post.commentsCount;
 
   const { mutate: toggleLike, isPending: isLiking } = useLikePost();
 
@@ -73,26 +68,14 @@ export const Post = ({ post, onDelete }: PostProps) => {
   });
 
   const handleLike = () => {
-    if (!isAuth || isLiking) {
-      return;
-    }
-
-    toggleLike({ postId: post.id, liked: liked });
-    setLikes((prev) => (liked ? prev - 1 : prev + 1));
-    setLiked((prev) => !prev);
+    setLiked(!liked);
+    if (!isAuth || isLiking) return;
+    toggleLike({ postId: post.id, liked });
   };
 
   const toggleComments = () => {
     setShowComments((prev) => !prev);
   };
-
-  const addComment = useCallback(() => {
-    setComments((prev) => prev + 1);
-  }, []);
-
-  const deleteComment = useCallback(() => {
-    setComments((prev) => Math.max(0, prev - 1));
-  }, []);
 
   const date = formatRelativeTime(post.creationDate, i18n.language);
 
@@ -100,7 +83,7 @@ export const Post = ({ post, onDelete }: PostProps) => {
     <StyledPost>
       <PostHeader>
         {isAuth && currentUserId === post.authorId && (
-          <DeletePostButton postId={post.id} onDelete={onDelete} />
+          <DeletePostButton postId={post.id} />
         )}
         <Avatar
           src={post.author.profileImage || ''}
@@ -166,11 +149,7 @@ export const Post = ({ post, onDelete }: PostProps) => {
           (style, item) =>
             item && (
               <animated.div style={{ ...style, overflow: 'hidden' }}>
-                <PostComments
-                  postId={post.id}
-                  onAdd={addComment}
-                  onDelete={deleteComment}
-                />
+                <PostComments postId={post.id} />
               </animated.div>
             ),
         )}

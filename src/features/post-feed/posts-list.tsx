@@ -1,71 +1,38 @@
+import { useCallback } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { Post } from '@/entities/post';
 import { Loader } from '@/shared/ui/loader';
-import { usePosts } from '@/features/post-feed/usePosts.ts';
-import { useIntersectionObserver } from '@/shared/lib/hooks/use-intersection-observer.ts';
-import { useEffect, useState, useCallback } from 'react';
-import type { Post as PostType } from '@/entities/post/types.ts';
-import './posts-list.css';
 import { CreatePost } from '@/features/create-post';
-import { useQueryClient } from '@tanstack/react-query';
-import { postsQueries } from '@/features/post-feed/posts-query.ts';
-import { useTranslation } from 'react-i18next';
-import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
-
-const LIMIT = 20;
+import { usePosts } from '@/features/post-feed/usePosts';
+import { postsQueries } from '@/features/post-feed/posts-query';
+import { useIntersectionObserver } from '@/shared/lib/hooks/use-intersection-observer';
+import './posts-list.css';
 
 export const PostsList = () => {
   const queryClient = useQueryClient();
-  const [posts, setPosts] = useState<PostType[]>([]);
-  const [offset, setOffset] = useState(0);
-  const { t } = useTranslation('main');
-  const { add } = useNotifications();
-  const { data, isPending, isError, error, isFetching } = usePosts(
-    LIMIT,
-    offset,
-  );
 
-  useEffect(() => {
-    if (!data) {
-      return;
-    }
+  const {
+    data,
+    isPending,
+    isError,
+    error,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = usePosts();
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setPosts((prev) => {
-      return [...prev, ...data.items];
-    });
-  }, [offset, isPending]);
-
-  const hasMore = data ? posts.length < data.total : false;
+  const posts = data?.pages.flatMap((page) => page.items) ?? [];
 
   const loadPosts = useCallback(() => {
-    if (isFetching || !hasMore) {
-      return;
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-    setOffset((prev) => prev + LIMIT);
-  }, [hasMore, isFetching]);
-
-  const deletePost = (postId: number) => {
-    setPosts((posts) => posts.filter((post) => post.id !== postId));
-  };
-
-  const addPost = async (postId: number) => {
-    try {
-      const newPost = await queryClient.fetchQuery(postsQueries.byId(postId));
-
-      if (!newPost) {
-        add({ message: t('post.addError'), type: 'error' });
-        return;
-      }
-
-      setPosts((prev) => {
-        if (prev.some((p) => p.id === postId)) return prev;
-        return [newPost, ...prev];
-      });
-    } catch (error) {
-      console.error('Failed to add post to feed:', error);
-      add({ message: t('post.addError'), type: 'error' });
-    }
+  const handlePostCreated = () => {
+    queryClient.invalidateQueries({
+      queryKey: postsQueries.infinite().queryKey,
+    });
   };
 
   const ref = useIntersectionObserver({ onIntersect: loadPosts });
@@ -80,13 +47,13 @@ export const PostsList = () => {
 
   return (
     <>
-      <CreatePost onAdd={addPost} />
+      <CreatePost onAdd={handlePostCreated} />
       <div className="posts-container">
         {posts.map((post) => (
-          <Post key={post.id} post={post} onDelete={deletePost} />
+          <Post key={post.id} post={post} />
         ))}
-        {data && !isFetching && <div ref={ref}></div>}
-        {hasMore && <Loader isBlock={false} />}
+        {!isFetchingNextPage && hasNextPage && <div ref={ref} />}
+        {isFetchingNextPage && <Loader isBlock={false} />}
       </div>
     </>
   );

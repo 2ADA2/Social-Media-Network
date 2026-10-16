@@ -9,38 +9,33 @@ import React from 'react';
 
 interface PostCommentsProps {
   postId: number;
-  onAdd: () => void;
-  onDelete: () => void;
 }
 
-export const PostComments = React.memo(
-  ({ postId, onAdd, onDelete }: PostCommentsProps) => {
-    const {
-      data: comments = [],
-      isPending,
-      isError,
-    } = useQuery(commentsQueries.forPost(postId));
-    const usersMap = useCommentAuthors(comments);
+export const PostComments = React.memo(({ postId }: PostCommentsProps) => {
+  const {
+    data: comments = [],
+    isPending,
+    isError,
+  } = useQuery(commentsQueries.forPost(postId));
+  const usersMap = useCommentAuthors(comments);
 
-    if (isPending) {
-      return <Loader isBlock={false} />;
-    }
+  if (isPending) {
+    return <Loader isBlock={false} />;
+  }
 
-    return (
-      <>
-        <PostCommentsContainer>
-          {isError && <div>Cannot get comments</div>}
-          {comments.map((comment) => (
-            <Comment
-              key={comment.id}
-              {...comment}
-              onDelete={onDelete}
-              author={usersMap.get(comment.authorId) ?? null}
-            />
-          ))}
-        </PostCommentsContainer>
-        <CreateComment postId={postId} onAdd={onAdd} />
-      </>
-    );
-  },
-);
+  return (
+    <>
+      <PostCommentsContainer>
+        {isError && <div>Cannot get comments</div>}
+        {comments.map((comment) => (
+          <Comment
+            key={comment.id}
+            {...comment}
+            author={usersMap.get(comment.authorId) ?? null}
+          />
+        ))}
+      </PostCommentsContainer>
+      <CreateComment postId={postId} />
+    </>
+  );
+});

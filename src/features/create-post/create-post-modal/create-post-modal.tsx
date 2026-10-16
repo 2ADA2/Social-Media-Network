@@ -59,14 +59,14 @@ export const CreatePostModal = ({
     }
 
     if (!ALLOWED_TYPES.includes(selectedFile.type)) {
-      add({ message: t('createPostModal.fileTypeError') });
+      add({ message: t('createPostModal.fileTypeError'), type: 'error' });
       e.target.value = '';
       setFile(null);
       return;
     }
 
     if (selectedFile.size > MAX_SIZE) {
-      add({ message: t('createPostModal.fileSizeError') });
+      add({ message: t('createPostModal.fileSizeError'), type: 'error' });
       e.target.value = '';
       setFile(null);
       return;

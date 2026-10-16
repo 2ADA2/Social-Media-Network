@@ -17,9 +17,7 @@ export const Notifications = ({ onDelete }: NotificationsProps) => {
   return createPortal(
     <div
       className="notifications-container"
-      role="status"
-      aria-live="polite"
-      aria-atomic="false"
+      role="log"
       aria-label={t('notifications.region')}
     >
       {notifications.slice(0, NOTIFICATIONS_LIMIT).map((e) => (
