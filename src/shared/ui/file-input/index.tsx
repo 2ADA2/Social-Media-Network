@@ -1,4 +1,8 @@
-import React, { type ChangeEvent, type InputHTMLAttributes, useRef } from 'react';
+import React, {
+  type ChangeEvent,
+  type InputHTMLAttributes,
+  useRef,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import './file-input.css';
 import DownloadIcon from '@/shared/assets/icons/download-file.svg?react';
@@ -10,7 +14,15 @@ export interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
   maxSize?: number;
 }
 
-export const FileInput = ({ onChange, fileName = '', hasPDF = true, maxSize = 10, ...props }: FileInputProps) => {
+export const DEFAULT_MAX_SIZE = 10;
+
+export const FileInput = ({
+  onChange,
+  fileName = '',
+  hasPDF = true,
+  maxSize = DEFAULT_MAX_SIZE,
+  ...props
+}: FileInputProps) => {
   const { t } = useTranslation('common');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -51,7 +63,9 @@ export const FileInput = ({ onChange, fileName = '', hasPDF = true, maxSize = 10
     onChange?.(fakeEvent);
   };
 
-  const formats = hasPDF ? t('fileInput.formatsWithPdf') : t('fileInput.formats');
+  const formats = hasPDF
+    ? t('fileInput.formatsWithPdf')
+    : t('fileInput.formats');
 
   return (
     <label
@@ -60,8 +74,16 @@ export const FileInput = ({ onChange, fileName = '', hasPDF = true, maxSize = 10
       onDrop={handleDrop}
       tabIndex={0}
       onKeyDown={handleKeyDown}
+      data-testid="file-input-label"
     >
-      <input type="file" {...props} onChange={onChange} ref={inputRef} />
+      <input
+        data-testid="file-input"
+        type="file"
+        {...props}
+        onChange={onChange}
+        ref={inputRef}
+        aria-label={fileName || t('fileInput.selectFile')}
+      />
 
       <div className="file-input-container">
         {fileName && (

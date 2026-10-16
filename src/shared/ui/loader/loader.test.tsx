@@ -18,7 +18,7 @@ describe('Loader component', () => {
   });
 
   test('Loader isBlock=true (default)', async () => {
-    const screen = await render(<Loader isBlock />);
+    const screen = await render(<Loader />);
 
     await expect.element(screen.getByTestId('loader')).toHaveClass('loader');
   });

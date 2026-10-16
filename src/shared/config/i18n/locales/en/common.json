@@ -40,5 +40,8 @@
   "navbar": {
     "label": "Navigation menu",
     "close": "Close menu"
+  },
+  "loader": {
+    "loading": "Loading"
   }
 }

@@ -7,7 +7,8 @@ Globals.assign({
 
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
-    t: (key: string) => key,
+    t: (key: string, options?: Record<string, number | string>) =>
+      options ? key + ' ' + JSON.stringify(options) : key,
     i18n: {
       changeLanguage: vi.fn(),
       language: 'en',

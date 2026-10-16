@@ -68,9 +68,9 @@ export const Post = ({ post }: PostProps) => {
   });
 
   const handleLike = () => {
-    setLiked(!liked);
     if (!isAuth || isLiking) return;
     toggleLike({ postId: post.id, liked });
+    setLiked(!liked);
   };
 
   const toggleComments = () => {
