@@ -8,10 +8,10 @@ export interface NotificationProps {
   message: string;
   type?: 'success' | 'error';
   onClose: () => void;
-  id: number;
+  id?: number;
 }
 
-const TIMEOUT = 5000;
+export const TIMEOUT = 5000;
 const REMOVE_TIMEOUT = 400;
 
 export const Notification = ({
@@ -48,12 +48,14 @@ export const Notification = ({
     setTimeout(() => onCloseRef.current(), REMOVE_TIMEOUT);
   };
 
+  const role = type === 'success' ? 'status' : 'alert';
+
   return transitions((style, item) =>
     item ? (
       <animated.div
         className={`notification notification-${type}`}
         style={style}
-        role={type === 'error' ? 'alert' : 'status'}
+        role={role}
       >
         <p>{message}</p>
         <button
