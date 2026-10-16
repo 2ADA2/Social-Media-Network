@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import TrashCanIcon from '@/shared/assets/icons/trashcan.svg?react';
 import './delete-post-button.css';
 import { useDeletePost } from '@/features/delete-post/use-delete-post';
@@ -9,6 +10,7 @@ export interface DeletePostButtonProps {
 }
 
 export const DeletePostButton = ({ postId }: DeletePostButtonProps) => {
+  const { t } = useTranslation('main');
   const { mutate: deletePost, isPending } = useDeletePost();
   const { isOpen, open, close } = useModal();
 
@@ -33,9 +35,9 @@ export const DeletePostButton = ({ postId }: DeletePostButtonProps) => {
         className="delete-post-button"
         disabled={isPending}
         onClick={open}
-        aria-label="Delete post"
+        aria-label={t('post.delete')}
       >
-        <TrashCanIcon />
+        <TrashCanIcon aria-hidden="true" />
       </button>
     </>
   );
