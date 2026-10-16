@@ -24,12 +24,21 @@ describe('Input component', () => {
     await expect.element(screen.getByRole('textbox')).toHaveValue(inputValue);
   });
 
-  test('Input renders with init label', async () => {
+  test('Input renders with label', async () => {
     const screen = await render(
       <Input value={inputValue} label={inputLabel} onChange={vi.fn()} />,
     );
 
     await expect.element(screen.getByText(inputLabel)).toBeVisible();
+  });
+
+  test('Input renders with icon', async () => {
+    const icon = <svg />;
+    const screen = await render(
+      <Input value={inputValue} onChange={vi.fn()} icon={icon} />,
+    );
+
+    await expect.element(screen.getByTestId('input-label-icon')).toBeVisible();
   });
 
   test('Input works with onChange', async () => {

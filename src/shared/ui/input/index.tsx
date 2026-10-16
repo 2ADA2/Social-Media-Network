@@ -29,7 +29,11 @@ export const Input = ({
   return (
     <label htmlFor={id} className={`input-label ${error ? 'error' : ''}`}>
       <div>
-        {icon && <div className="input-icon">{icon}</div>}
+        {icon && (
+          <div className="input-icon" data-testid="input-label-icon">
+            {icon}
+          </div>
+        )}
         <span>{label}</span>
         <div className="input-status">
           {isOk && <CheckIcon data-testid="input-ok-icon" />}
