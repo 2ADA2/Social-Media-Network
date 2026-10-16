@@ -10,7 +10,7 @@ interface InputProps extends InputHTMLAttributes<HTMLTextAreaElement> {
   errorMessage?: string;
 }
 
-const FILLED_LIMIT = 50;
+export const FILLED_LIMIT = 50;
 
 export const TextArea = ({
   icon,
@@ -25,6 +25,7 @@ export const TextArea = ({
   return (
     <label
       className={`textarea-label ${errorMessage ? 'error' : ''} ${isFilled ? 'filled' : ''}`}
+      data-testid="textarea-label"
     >
       <div>
         {icon && <div className="textarea-icon">{icon}</div>}
