@@ -32,7 +32,7 @@
     "fileSizeError": "no more than {{size}} MB",
     "noFile": "You need to choose a new photo",
     "success": "Profile image updated successfully",
-    "error": "Cannot update your profile page: {{message}}"
+    "error": "Cannot update your profile img: {{message}}"
   },
   "stats": {
     "likes": "Likes",

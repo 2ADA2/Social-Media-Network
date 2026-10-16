@@ -28,12 +28,17 @@
     width: 60px;
     height: 60px;
     margin-bottom: 24px;
+
+    path {
+      fill: var(--color-primary);
+    }
   }
 
-  button,a{
+  button,
+  a {
     padding: 0 4px;
-    background:none;
-    border:none;
+    background: none;
+    border: none;
     color: var(--color-primary);
     cursor: pointer;
     font-weight: bold;
@@ -59,7 +64,7 @@
       line-height: 130%;
     }
 
-    summary{
+    summary {
       cursor: pointer;
       user-select: none;
     }
@@ -82,7 +87,9 @@
       height: 120px;
     }
 
-    details, summary, pre {
+    details,
+    summary,
+    pre {
       height: 36px;
     }
 

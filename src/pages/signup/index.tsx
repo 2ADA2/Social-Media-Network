@@ -15,27 +15,33 @@ import {
 import { useAuth } from '@/features/auth/use-auth';
 import { useTranslation } from 'react-i18next';
 import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
+import { useState } from 'react';
 
 const SignUp = () => {
   const { t } = useTranslation('auth');
   const { signup } = useAuth();
   const { add } = useNotifications();
+  const [isPending, setIsPending] = useState(false);
 
   const { control, handleSubmit } = useForm<SignUpFormData>({
     resolver: zodResolver(signupSchema),
     defaultValues: { email: '', password: '' },
-    mode: 'onChange',
+    mode: 'onTouched',
   });
 
   const onSubmit = async (data: SignUpFormData) => {
     try {
+      setIsPending(true);
       await signup(data);
       add({ message: t('signUp.success') });
     } catch (e) {
+      const error = e instanceof Error ? e.message : String(e);
       add({
-        message: t('signUp.error', { message: String(e) }),
+        message: t('signUp.error', { message: String(error) }),
         type: 'error',
       });
+    } finally {
+      setIsPending(false);
     }
   };
 
@@ -59,7 +65,7 @@ const SignUp = () => {
             <Controller
               name="email"
               control={control}
-              render={({ field, fieldState: { error } }) => (
+              render={({ field, fieldState: { error, isTouched } }) => (
                 <Input
                   {...field}
                   label={t('signUp.email')}
@@ -67,7 +73,7 @@ const SignUp = () => {
                   placeholder={t('signUp.emailPlaceholder')}
                   icon={<MailIcon />}
                   error={error?.message}
-                  custom
+                  custom={isTouched}
                 />
               )}
             />
@@ -75,20 +81,22 @@ const SignUp = () => {
             <Controller
               name="password"
               control={control}
-              render={({ field, fieldState: { error } }) => (
+              render={({ field, fieldState: { error, isTouched } }) => (
                 <PasswordInput
                   {...field}
                   label={t('signUp.password')}
                   placeholder={t('signUp.passwordPlaceholder')}
                   icon={<KeyboardIcon />}
                   error={error?.message}
-                  custom
+                  custom={isTouched}
                 />
               )}
             />
           </div>
 
-          <Button type="submit">{t('signUp.submit')}</Button>
+          <Button type="submit" disabled={isPending}>
+            {t('signUp.submit')}
+          </Button>
         </form>
 
         <small>

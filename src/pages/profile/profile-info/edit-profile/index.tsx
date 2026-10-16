@@ -18,6 +18,7 @@ import { useUpdateProfile } from '@/features/edit-profile/use-update-profile.ts'
 import { useModal } from '@/shared/lib/hooks/use-modal.ts';
 import { UpdateProfileImageModal } from '@/pages/profile/profile-info/edit-profile/update-profile-image-modal';
 import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
+import { Avatar } from '@/shared/ui/avatar';
 
 export const EditProfile = () => {
   const { t } = useTranslation('profile');
@@ -55,7 +56,7 @@ export const EditProfile = () => {
     <section className="edit-profile">
       <h2>{t('editProfile.title')}</h2>
       <div className="profile-row profile-avatar">
-        <img src={user!.avatar} alt="your avatar" />
+        <Avatar size={92} src={user!.avatar} alt="your avatar" />
         <div className="user-info">
           <div>
             {user!.name} {user!.surname}

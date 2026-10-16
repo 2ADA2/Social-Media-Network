@@ -5,6 +5,7 @@ import { FileInput } from '@/shared/ui/file-input';
 import { StyledButton } from '@/features/create-post/create-post.styles.ts';
 import { useUpdateAvatar } from '@/features/edit-profile/use-update-avatar.ts';
 import { Modal } from '@/shared/ui/modal';
+import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
 
 const MAX_SIZE_MB = 2;
 const MAX_SIZE = MAX_SIZE_MB * 1024 * 1024;
@@ -22,6 +23,7 @@ export const UpdateProfileImageModal = ({
   const { t } = useTranslation('profile');
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState('');
+  const { add } = useNotifications();
 
   const { mutate: updateAvatar, isPending } = useUpdateAvatar();
 
@@ -35,14 +37,17 @@ export const UpdateProfileImageModal = ({
     }
 
     if (!ALLOWED_TYPES.includes(selectedFile.type)) {
-      alert(t('updateAvatar.fileTypeError'));
+      add({ message: t('updateAvatar.fileTypeError'), type: 'error' });
       e.target.value = '';
       setFile(null);
       return;
     }
 
     if (selectedFile.size > MAX_SIZE) {
-      alert(t('updateAvatar.fileSizeError', { size: MAX_SIZE_MB }));
+      add({
+        message: t('updateAvatar.fileSizeError', { size: MAX_SIZE_MB }),
+        type: 'error',
+      });
       e.target.value = '';
       setFile(null);
       return;
@@ -54,16 +59,19 @@ export const UpdateProfileImageModal = ({
 
   const updateProfileImage = () => {
     if (!file) {
-      alert(t('updateAvatar.noFile'));
+      add({ message: t('updateAvatar.noFile'), type: 'error' });
       return;
     }
     updateAvatar(file, {
       onSuccess: () => {
-        alert(t('updateAvatar.success'));
+        add({ message: t('updateAvatar.success') });
         onClose();
       },
       onError: (error) => {
-        alert(t('updateAvatar.error', { message: error.message }));
+        add({
+          message: t('updateAvatar.error', { message: error.message }),
+          type: 'error',
+        });
       },
     });
   };
@@ -71,7 +79,13 @@ export const UpdateProfileImageModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <StyledTitle>{t('updateAvatar.title')}</StyledTitle>
-      <FileInput name="image" fileName={fileName} onChange={changeFile} />
+      <FileInput
+        name="image"
+        hasPDF={false}
+        maxSize={MAX_SIZE_MB}
+        fileName={fileName}
+        onChange={changeFile}
+      />
       <StyledButton
         disabled={isPending}
         type="submit"
