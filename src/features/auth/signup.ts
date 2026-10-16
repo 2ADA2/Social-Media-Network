@@ -3,6 +3,8 @@ import type { User } from '@/entities/user';
 interface SignupParams {
   email: string;
   password: string;
+  firstName: string;
+  secondName: string;
 }
 
 interface SignupResponse {
@@ -10,7 +12,9 @@ interface SignupResponse {
   user: User;
 }
 
-export const signupRequest = async (params: SignupParams): Promise<SignupResponse> => {
+export const signupRequest = async (
+  params: SignupParams,
+): Promise<SignupResponse> => {
   const res = await fetch('/api/signup', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

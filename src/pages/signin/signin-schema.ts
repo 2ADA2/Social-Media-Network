@@ -1,12 +1,16 @@
 import { z } from 'zod';
-import i18n from '@/shared/config/i18n';
+import type { TFunction } from 'i18next';
 
-export const signInSchema = z.object({
-  email: z
-    .string()
-    .min(1, i18n.t('validation.emailRequired', { ns: 'auth' }))
-    .email(i18n.t('validation.emailInvalid', { ns: 'auth' })),
-  password: z.string(),
-});
+export const createSignInSchema = (t: TFunction<'auth'>) =>
+  z.object({
+    email: z
+      .string()
+      .min(1, t('validation.emailRequired'))
+      .email(t('validation.emailInvalid')),
+    password: z
+      .string()
+      .min(1, t('validation.passwordRequired'))
+      .min(8, t('validation.passwordMin')),
+  });
 
-export type SignInFormData = z.infer<typeof signInSchema>;
+export type SignInFormData = z.infer<ReturnType<typeof createSignInSchema>>;

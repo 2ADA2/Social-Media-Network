@@ -8,23 +8,25 @@ import { ROUTES } from '@/shared/config/routes.ts';
 import { PasswordInput } from '@/shared/ui/password-input';
 import { useAuth } from '@/features/auth/use-auth.tsx';
 import {
+  createSignInSchema,
   type SignInFormData,
-  signInSchema,
 } from '@/pages/signin/signin-schema.ts';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
 import { useNotifications } from '@/app/providers/notifications-context/useNotifications.ts';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const SignIn = () => {
-  const { t } = useTranslation('auth');
+  const { t, i18n } = useTranslation('auth');
   const { signin } = useAuth();
   const { add } = useNotifications();
   const [isPending, setIsPending] = useState(false);
 
+  const schema = useMemo(() => createSignInSchema(t), [t, i18n.language]);
+
   const { control, handleSubmit } = useForm<SignInFormData>({
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(schema),
     defaultValues: { email: '', password: '' },
     mode: 'onTouched',
   });
