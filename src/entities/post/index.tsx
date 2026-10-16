@@ -45,10 +45,11 @@ export const Post = ({ post }: PostProps) => {
   const { t, i18n } = useTranslation('main');
   const { isAuth } = useAuth();
   const [showComments, setShowComments] = useState(false);
-
   const currentUserId = Number(useAppSelector(selectUserId)) || -1;
 
-  const liked = checkLiked(post.likedByUsers, currentUserId);
+  const [liked, setLiked] = useState(
+    checkLiked(post.likedByUsers, currentUserId),
+  );
   const likes = post.likesCount;
   const comments = post.commentsCount;
 
@@ -67,6 +68,7 @@ export const Post = ({ post }: PostProps) => {
   });
 
   const handleLike = () => {
+    setLiked(!liked);
     if (!isAuth || isLiking) return;
     toggleLike({ postId: post.id, liked });
   };

@@ -1,26 +1,8 @@
 import type { InfiniteData } from '@tanstack/react-query';
-import type { PostsPage, Post } from '@/entities/post/types';
+import type { PostsPage } from '@/entities/post/types';
 import type { LikeStatus } from '@/features/like-post/like-post-api';
 
 type PostsInfiniteData = InfiniteData<PostsPage>;
-
-export const prependPost = (
-  old: PostsInfiniteData | undefined,
-  newPost: Post,
-): PostsInfiniteData | undefined => {
-  if (!old) return old;
-
-  const [firstPage, ...rest] = old.pages;
-  if (!firstPage) return old;
-
-  const alreadyExists = firstPage.items.some((p) => p.id === newPost.id);
-  if (alreadyExists) return old;
-
-  return {
-    ...old,
-    pages: [{ ...firstPage, items: [newPost, ...firstPage.items] }, ...rest],
-  };
-};
 
 export const removePost = (
   old: PostsInfiniteData | undefined,
