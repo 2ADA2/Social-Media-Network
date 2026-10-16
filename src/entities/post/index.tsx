@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import HeartIcon from '@/shared/assets/icons/heart.svg?react';
 import CommentIcon from '@/shared/assets/icons/comment.svg?react';
@@ -27,6 +27,7 @@ import { useAppSelector } from '@/app/store/hooks.ts';
 import { selectUserId } from '@/entities/user/model/selectors.ts';
 import { PostComments } from '@/entities/post/post-comments.tsx';
 import { animated, useSpring, useTransition } from '@react-spring/web';
+import { formatRelativeTime } from '@/shared/lib/localization/format-relative-time.ts';
 
 const MAX_COMMENTS_HEIGHT = 1000;
 
@@ -83,9 +84,15 @@ export const Post = ({ post }: PostProps) => {
     setShowComments((prev) => !prev);
   };
 
-  const addComment = () => {
+  const addComment = useCallback(() => {
     setComments((prev) => prev + 1);
-  };
+  }, []);
+
+  const deleteComment = useCallback(() => {
+    setComments((prev) => Math.min(0, prev - 1));
+  }, []);
+
+  const date = formatRelativeTime(post.creationDate, i18n.language);
 
   return (
     <StyledPost>
@@ -99,9 +106,7 @@ export const Post = ({ post }: PostProps) => {
           <div>
             {post.author.firstName} {post.author.secondName}
           </div>
-          <PostDate>
-            {new Date(post.creationDate).toLocaleDateString()}
-          </PostDate>
+          <PostDate>{date}</PostDate>
         </HeaderData>
       </PostHeader>
 
@@ -155,11 +160,15 @@ export const Post = ({ post }: PostProps) => {
         transitions(
           (style, item) =>
             item && (
-              <animated.div style={{ ...style, overflow: 'hidden' }}>
-                <PostComments postId={post.id} onAdd={addComment} />
+              <animated.div style={ { ...style, overflow: 'hidden' } }>
+                <PostComments
+                  postId={ post.id }
+                  onAdd={ addComment }
+                  onDelete={ deleteComment }
+                />
               </animated.div>
             ),
-        )}
+        ) }
     </StyledPost>
   );
 };

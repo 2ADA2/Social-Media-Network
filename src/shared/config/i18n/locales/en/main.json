@@ -16,7 +16,10 @@
     "successTitle": "Success",
     "successMessage": "You commented the post",
     "errorTitle": "Error",
-    "errorMessage": "Cannot add your comment"
+    "errorMessage": "Cannot add your comment",
+    "delete": "Delete comment",
+    "deleteSuccess": "Comment deleted",
+    "deleteError": "Cannot delete comment"
   },
   "createPost": {
     "placeholder": "What's happening?",

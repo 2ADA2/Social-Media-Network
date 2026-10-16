@@ -18,7 +18,10 @@
     "successTitle": "Успех",
     "successMessage": "Комментарий добавлен",
     "errorTitle": "Ошибка",
-    "errorMessage": "Не удалось добавить комментарий"
+    "errorMessage": "Не удалось добавить комментарий",
+    "delete": "Удалить комментарий",
+    "deleteSuccess": "Комментарий удалён",
+    "deleteError": "Не удалось удалить комментарий"
   },
   "createPost": {
     "placeholder": "Что нового?",

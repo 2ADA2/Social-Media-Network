@@ -35,7 +35,7 @@ export const PostsList = () => {
     }
 
     setOffset((prev) => prev + LIMIT);
-  }, [isFetching, hasMore]);
+  }, [hasMore, isFetching]);
 
   const ref = useIntersectionObserver({ onIntersect: loadPosts });
 
