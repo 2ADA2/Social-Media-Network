@@ -12,6 +12,7 @@ export default defineConfig({
     }),
   ],
   test: {
+    setupFiles: ['./vitest.setup.ts'],
     alias: {
       '@': resolve(import.meta.dirname, 'src'),
     },
@@ -33,6 +34,7 @@ export default defineConfig({
         'src/**/*.d.ts',
         'src/main.tsx',
         'src/**/index.ts',
+        'src/shard/config/**',
       ],
       provider: 'v8',
       thresholds: {

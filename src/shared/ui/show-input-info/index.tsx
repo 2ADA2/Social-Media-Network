@@ -4,15 +4,22 @@ interface ShowInputInfoProps {
   error?: string;
   info?: string;
   icon?: React.ReactNode;
+  id?: string;
 }
 
-export const ShowInputInfo = ({ error, info, icon }: ShowInputInfoProps) => {
+export const ShowInputInfo = ({
+  error,
+  info,
+  icon,
+  id,
+}: ShowInputInfoProps) => {
   if (error) {
     return (
       <div
         className="info error-info"
         aria-live="polite"
         data-testid="input-info"
+        id={id}
       >
         <InfoIcon className="ignore" aria-hidden={true} />
         <small>{error}</small>
