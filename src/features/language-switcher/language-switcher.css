@@ -1,6 +1,19 @@
 .language-switcher {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
+  padding: 0 8px;
+  font-size: 14px;
+  width: 200px;
+  height: 42px;
+  color: var(--color-primary);
+  background: var(--bg-primary);
+  border: 2px solid var(--border-primary);
+  cursor: pointer;
+  outline: none;
+
+  option {
+    padding: 16px 0;
+  }
+}
+
+.language-switcher:focus {
+  border-color: var(--color-accent);
 }

@@ -33,7 +33,7 @@ export const PostsList = () => {
     setPosts((prev) => {
       return [...prev, ...data.items];
     });
-  }, [data]);
+  }, [offset, isPending]);
 
   const hasMore = data ? posts.length < data.total : false;
 
@@ -71,11 +71,7 @@ export const PostsList = () => {
   const ref = useIntersectionObserver({ onIntersect: loadPosts });
 
   if (isPending && !posts.length) {
-    return (
-      <div className="posts-list-loader-container">
-        <Loader />
-      </div>
-    );
+    return <Loader />;
   }
 
   if (isError) {
@@ -89,7 +85,7 @@ export const PostsList = () => {
         {posts.map((post) => (
           <Post key={post.id} post={post} onDelete={deletePost} />
         ))}
-        {!isFetching && <div ref={ref}></div>}
+        {data && !isFetching && <div ref={ref}></div>}
         {hasMore && <Loader isBlock={false} />}
       </div>
     </>

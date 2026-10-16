@@ -1,4 +1,5 @@
 .delete-post-button {
+  opacity: 0;
   position: absolute;
   top: 0;
   right: 0;
@@ -22,4 +23,8 @@
   svg path {
     fill: var(--color-muted);
   }
+}
+
+.delete-post-button:focus {
+  opacity: 1;
 }
