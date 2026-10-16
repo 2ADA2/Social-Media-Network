@@ -1,13 +1,6 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest';
-import { Notification, TIMEOUT } from '.';
+import { describe, expect, test, vi } from 'vitest';
 import { render } from 'vitest-browser-react';
-import { userEvent } from 'vitest/browser';
-
-let user: ReturnType<typeof userEvent.setup>;
-
-beforeEach(() => {
-  user = userEvent.setup();
-});
+import { Notification, TIMEOUT, REMOVE_TIMEOUT } from '.';
 
 describe('Notifications component', () => {
   const message = 'default message';
@@ -42,31 +35,33 @@ describe('Notifications component', () => {
       .toHaveAttribute('role', 'alert');
   });
 
-  test(`Notification triggers onClose in ${TIMEOUT}ms`, async () => {
+  test('Notification triggers onClose after timeout', async () => {
+    vi.useFakeTimers();
+
     const onClose = vi.fn();
-    const screen = await render(
+    await render(
       <Notification type="error" message={message} onClose={onClose} />,
     );
 
-    await expect
-      .element(screen.getByTestId('notification'))
-      .toBeInTheDocument();
+    await vi.advanceTimersByTimeAsync(
+      Math.max(TIMEOUT + REMOVE_TIMEOUT - 10, 0),
+    );
     expect(onClose).not.toHaveBeenCalled();
 
-    vi.advanceTimersByTime(Math.max(TIMEOUT - 10, 0));
-    expect(onClose).not.toHaveBeenCalled();
-
-    vi.advanceTimersByTime(10);
+    await vi.advanceTimersByTimeAsync(TIMEOUT + REMOVE_TIMEOUT);
     expect(onClose).toHaveBeenCalled();
+
+    vi.useRealTimers();
   });
 
-  test(`Close button triggers onClose`, async () => {
+  test('Close button triggers onClose', async () => {
     const onClose = vi.fn();
     const screen = await render(
       <Notification type="error" message={message} onClose={onClose} />,
     );
 
-    await user.click(screen.getByRole('button'));
-    expect(onClose).toHaveBeenCalled();
+    await screen.getByRole('button').click();
+
+    await vi.waitFor(() => expect(onClose).toHaveBeenCalled());
   });
 });

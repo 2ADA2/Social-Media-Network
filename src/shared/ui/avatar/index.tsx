@@ -8,7 +8,7 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLImageElement> {
   className?: string;
 }
 
-const DEFAULT_AVATAR = '/assets/default-avatar.jpg';
+export const DEFAULT_AVATAR = '/assets/default-avatar.jpg';
 
 export const Avatar = ({
   src,

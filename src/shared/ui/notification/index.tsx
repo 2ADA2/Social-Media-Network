@@ -12,7 +12,7 @@ export interface NotificationProps {
 }
 
 export const TIMEOUT = 5000;
-const REMOVE_TIMEOUT = 400;
+export const REMOVE_TIMEOUT = 400;
 
 export const Notification = ({
   message,
@@ -56,6 +56,7 @@ export const Notification = ({
         className={`notification notification-${type}`}
         style={style}
         role={role}
+        data-testid="notification"
       >
         <p>{message}</p>
         <button
