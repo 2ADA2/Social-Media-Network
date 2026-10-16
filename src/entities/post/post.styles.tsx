@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const StyledPost = styled.article`
   box-sizing: border-box;
@@ -56,11 +56,13 @@ export const PostControl = styled.footer<{ $auth: boolean }>`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  ${({ $auth }) => !$auth && css`
-    .cover-button {
-      cursor: default;
-    }
-  `}
+  ${({ $auth }) =>
+    !$auth &&
+    css`
+      .cover-button {
+        cursor: default;
+      }
+    `}
 `;
 
 export const ControlContainer = styled.div`
@@ -87,14 +89,14 @@ export const StyledSVG = styled.div<{ $active: boolean }>`
     width: 18px;
 
     height: 18px;
-    ${ props =>
-        props.$active &&
-        css`
-          fill: red;
-        ` };
+    ${(props) =>
+      props.$active &&
+      css`
+        fill: red;
+      `};
 
     path {
-      stroke: ${ ({ $active }) => ($active ? 'red' : 'var(--color-primary)') };
+      stroke: ${({ $active }) => ($active ? 'red' : 'var(--color-primary)')};
     }
   }
 `;
@@ -114,6 +116,10 @@ export const PostCommentsContainer = styled.ol`
   counter-reset: item;
   padding: 0;
   margin: 0;
+  margin-bottom: 16px;
+  max-height: 500px;
+  overflow-y: auto;
+  scrollbar-color: var(--bg-border) transparent;
 
   li {
     counter-increment: item;
@@ -127,9 +133,7 @@ export const PostCommentsContainer = styled.ol`
   }
 
   li::before {
-    content: "#" counter(item) ". ";
+    content: '#' counter(item) '. ';
     color: var(--color-primary);
   }
 `;
-
-

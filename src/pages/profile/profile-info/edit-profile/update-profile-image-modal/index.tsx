@@ -1,12 +1,10 @@
-import { useBlockScroll } from "@/shared/lib/hooks/block-scroll/use-block-scroll.tsx";
-import { type ChangeEvent, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import {
-  StyledCreatePostModal, StyledTitle,
-} from "@/features/create-post/create-post-modal/create-post-modal.styles.ts";
-import { FileInput } from "@/shared/ui/file-input";
-import { StyledButton } from "@/features/create-post/create-post.styles.ts";
-import { useUpdateAvatar } from "@/features/edit-profile/use-update-avatar.ts";
+import { type ChangeEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { StyledTitle } from '@/features/create-post/create-post-modal/create-post-modal.styles.ts';
+import { FileInput } from '@/shared/ui/file-input';
+import { StyledButton } from '@/features/create-post/create-post.styles.ts';
+import { useUpdateAvatar } from '@/features/edit-profile/use-update-avatar.ts';
+import { Modal } from '@/shared/ui/modal';
 
 const MAX_SIZE_MB = 2;
 const MAX_SIZE = MAX_SIZE_MB * 1024 * 1024;
@@ -17,21 +15,15 @@ export interface CreateModalProps {
   onClose: () => void;
 }
 
-export const UpdateProfileImageModal = ({ isOpen, onClose }: CreateModalProps) => {
+export const UpdateProfileImageModal = ({
+  isOpen,
+  onClose,
+}: CreateModalProps) => {
   const { t } = useTranslation('profile');
-  const { blockScroll, unblockScroll } = useBlockScroll();
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState('');
 
   const { mutate: updateAvatar, isPending } = useUpdateAvatar();
-
-  useEffect(() => {
-    if (isOpen) {
-      blockScroll();
-    }
-
-    return unblockScroll;
-  }, [isOpen]);
 
   const changeFile = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] ?? null;
@@ -77,11 +69,16 @@ export const UpdateProfileImageModal = ({ isOpen, onClose }: CreateModalProps) =
   };
 
   return (
-    <StyledCreatePostModal isOpen={ isOpen } onClose={ onClose }>
-      <StyledTitle>{ t('updateAvatar.title') }</StyledTitle>
-      <FileInput name='image' hasPDF={ false } maxSize={ MAX_SIZE_MB } fileName={ fileName } onChange={ changeFile }/>
-      <StyledButton disabled={ isPending } type='submit'
-                    onClick={ updateProfileImage }>{ t('updateAvatar.submit') }</StyledButton>
-    </StyledCreatePostModal>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <StyledTitle>{t('updateAvatar.title')}</StyledTitle>
+      <FileInput name="image" fileName={fileName} onChange={changeFile} />
+      <StyledButton
+        disabled={isPending}
+        type="submit"
+        onClick={updateProfileImage}
+      >
+        {t('updateAvatar.submit')}
+      </StyledButton>
+    </Modal>
   );
 };

@@ -26,5 +26,19 @@
   },
   "passwordInput": {
     "defaultInfo": "Ваш пароль надёжный"
+  },
+  "notifications": {
+    "region": "Уведомления"
+  },
+  "notification": {
+    "close": "Закрыть уведомление"
+  },
+  "modal": {
+    "defaultTitle": "Диалог",
+    "close": "Закрыть модальное окно"
+  },
+  "navbar": {
+    "label": "Меню навигации",
+    "close": "Закрыть меню"
   }
 }

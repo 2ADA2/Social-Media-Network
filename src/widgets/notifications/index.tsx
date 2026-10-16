@@ -1,18 +1,37 @@
-import { createPortal } from "react-dom";
-import "./notifications.css";
-import { Notification } from "@/shared/ui/notification";
-import { useNotifications } from "@/app/providers/notifications-context/useNotifications.ts";
+import { createPortal } from 'react-dom';
+import { useTranslation } from 'react-i18next';
+import './notifications.css';
+import { Notification } from '@/shared/ui/notification';
+import { useNotifications } from '@/app/providers/notifications-context/useNotifications';
 
 const NOTIFICATIONS_LIMIT = 5;
 
-export const Notifications = () => {
+interface NotificationsProps {
+  onDelete: (id: number) => void;
+}
+
+export const Notifications = ({ onDelete }: NotificationsProps) => {
+  const { t } = useTranslation('common');
   const { notifications } = useNotifications();
 
   return createPortal(
-    <div className='notifications-container'>
-      { notifications.slice(0, NOTIFICATIONS_LIMIT).map((e) => (
-        <Notification { ...e } key={ e.id }/>
-      )) }
+    <div
+      className="notifications-container"
+      role="status"
+      aria-live="polite"
+      aria-atomic="false"
+      aria-label={t('notifications.region')}
+    >
+      {notifications.slice(0, NOTIFICATIONS_LIMIT).map((e) => (
+        <Notification
+          key={e.id}
+          message={e.message}
+          type={e.type}
+          onClose={() => onDelete(e.id)}
+          id={e.id}
+        />
+      ))}
     </div>,
-    document.body);
+    document.body,
+  );
 };
