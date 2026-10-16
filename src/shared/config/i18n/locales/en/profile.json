@@ -61,16 +61,19 @@
     "emailRequired": "Email is required",
     "emailInvalid": "Email is not valid",
     "descriptionMax": "Reached the {{count}} text limit",
-    "firstNameMax": "First name must be at most {{count}} characters"
+    "firstNameMax": "First name must be at most {{count}} characters",
+    "secondNameMax": "Second name must be at most {{count}} characters",
+    "firstNameRequired": "First name is required",
+    "secondNameRequired": "Second name is required"
   },
   "confirmPassword": {
-    "emailTaken": "This email is already taken",
-    "validationError": "Please check the entered data",
     "title": "Confirm password",
     "password": "Current password",
     "passwordPlaceholder": "Enter current password",
     "submit": "Confirm",
     "required": "Password is required",
-    "wrongPassword": "Wrong password"
+    "wrongPassword": "Wrong password",
+    "emailTaken": "This email is already taken",
+    "validationError": "Please check the entered data"
   }
 }
