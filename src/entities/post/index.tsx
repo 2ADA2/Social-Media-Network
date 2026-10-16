@@ -28,11 +28,13 @@ import { selectUserId } from '@/entities/user/model/selectors.ts';
 import { PostComments } from '@/entities/post/post-comments.tsx';
 import { animated, useSpring, useTransition } from '@react-spring/web';
 import { formatRelativeTime } from '@/shared/lib/localization/format-relative-time.ts';
+import { DeletePostButton } from '@/features/delete-post';
 
 const MAX_COMMENTS_HEIGHT = 1000;
 
 interface PostProps {
   post: PostType;
+  onDelete: (postId: number) => void;
 }
 
 const checkLiked = (likes: { id: number }[], userId: number) => {
@@ -43,7 +45,7 @@ const checkLiked = (likes: { id: number }[], userId: number) => {
   return likes.some((user) => user.id === userId);
 };
 
-export const Post = ({ post }: PostProps) => {
+export const Post = ({ post, onDelete }: PostProps) => {
   const { t, i18n } = useTranslation('main');
   const { isAuth } = useAuth();
 
@@ -97,6 +99,9 @@ export const Post = ({ post }: PostProps) => {
   return (
     <StyledPost>
       <PostHeader>
+        {isAuth && currentUserId === post.authorId && (
+          <DeletePostButton postId={post.id} onDelete={onDelete} />
+        )}
         <Avatar
           src={post.author.profileImage || ''}
           alt={`Post ${post.id}`}
@@ -160,15 +165,15 @@ export const Post = ({ post }: PostProps) => {
         transitions(
           (style, item) =>
             item && (
-              <animated.div style={ { ...style, overflow: 'hidden' } }>
+              <animated.div style={{ ...style, overflow: 'hidden' }}>
                 <PostComments
-                  postId={ post.id }
-                  onAdd={ addComment }
-                  onDelete={ deleteComment }
+                  postId={post.id}
+                  onAdd={addComment}
+                  onDelete={deleteComment}
                 />
               </animated.div>
             ),
-        ) }
+        )}
     </StyledPost>
   );
 };
