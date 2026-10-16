@@ -33,7 +33,7 @@ describe('Input component', () => {
   });
 
   test('Input renders with icon', async () => {
-    const icon = <svg />;
+    const icon = <svg data-testid="input-label-icon" />;
     const screen = await render(
       <Input value={inputValue} onChange={vi.fn()} icon={icon} />,
     );

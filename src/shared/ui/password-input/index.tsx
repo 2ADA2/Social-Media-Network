@@ -1,4 +1,9 @@
-import { type InputHTMLAttributes, type ReactNode, useState } from 'react';
+import {
+  type InputHTMLAttributes,
+  type ReactNode,
+  useId,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import CheckIcon from '@/shared/assets/icons/check.svg?react';
 import CrossIcon from '@/shared/assets/icons/cross.svg?react';
@@ -26,27 +31,40 @@ export const PasswordInput = ({
   ...props
 }: InputProps) => {
   const { t } = useTranslation('common');
-  const isOk = custom && !error && props.value;
   const [isShow, setIsShow] = useState(false);
 
+  const id = useId();
+  const errorId = `${id}-error`;
+
   const changeShow = () => setIsShow(!isShow);
+  const isOk = custom && !error && props.value;
 
   return (
-    <label className={`input-label ${error ? 'error' : ''}`}>
+    <label htmlFor={id} className={`input-label ${error ? 'error' : ''}`}>
       <div>
         {icon && <div className="input-icon">{icon}</div>}
         <span>{label}</span>
         <div className="input-status">
-          {isOk && <CheckIcon />}
-          {error && <CrossIcon />}
+          {isOk && <CheckIcon data-testid="password-input-ok-icon" />}
+          {error && <CrossIcon data-testid="password-input-cross-icon" />}
         </div>
       </div>
 
       <div className="password-container">
-        <input {...props} type={isShow ? 'text' : 'password'} />
+        <input
+          {...props}
+          id={id}
+          type={isShow ? 'text' : 'password'}
+          aria-invalid={!!error}
+          aria-describedby={error ? errorId : undefined}
+        />
 
         <div className="password-eye">
-          <button type="button" onClick={changeShow}>
+          <button
+            type="button"
+            onClick={changeShow}
+            data-testid="hide-password-button"
+          >
             {isShow ? <EyeIcon /> : <EyeCrossedIcon />}
           </button>
         </div>
@@ -54,6 +72,7 @@ export const PasswordInput = ({
 
       {(error || isOk) && (
         <ShowInputInfo
+          id={errorId}
           error={error}
           info={info || t('passwordInput.defaultInfo')}
           icon={<LikeIcon />}
