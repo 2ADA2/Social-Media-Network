@@ -5,8 +5,8 @@ import { userEvent } from 'vitest/browser';
 
 const buttonText = 'button text';
 
-describe('CoverButton component', () => {
-  test('CoverButton renders with children', async () => {
+describe('Button component', () => {
+  test('Button renders with children', async () => {
     const screen = await render(<Button>{buttonText}</Button>);
 
     await expect.element(screen.getByText(buttonText)).toBeVisible();
