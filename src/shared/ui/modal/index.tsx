@@ -8,7 +8,7 @@ import { useFocusTrap } from '@/shared/lib/hooks/use-focus-trap.ts';
 import { useBlockScroll } from '@/shared/lib/hooks/use-block-scroll.ts';
 
 export interface ModalProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
   className?: string;
@@ -31,6 +31,7 @@ export const Modal = ({
     if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      console.log(e.key);
       if (e.key === 'Escape') {
         onClose();
       }
@@ -56,6 +57,7 @@ export const Modal = ({
             style={{ opacity: style.opacity }}
           >
             <animated.div
+              data-testid="modal"
               className={'modal-window ' + className}
               style={style}
               tabIndex={-1}
@@ -69,6 +71,7 @@ export const Modal = ({
                 className="modal-close"
                 onClick={onClose}
                 aria-label={t('modal.close')}
+                data-testid="modal-close"
               >
                 <CrossIcon />
               </button>
