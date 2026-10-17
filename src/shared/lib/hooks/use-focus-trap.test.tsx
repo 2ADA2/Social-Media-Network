@@ -60,7 +60,7 @@ describe('useFocusTrap hook', () => {
     );
   });
 
-  test('focuses container when there are no focusable elements', async () => {
+  test('focuses container when there are no focusable elements and stays in focus', async () => {
     const EmptyComponent = () => {
       const ref = useRef<HTMLDivElement>(null);
       useFocusTrap(ref, true);
@@ -73,6 +73,10 @@ describe('useFocusTrap hook', () => {
     };
 
     const screen = await render(<EmptyComponent />);
+
+    expect(document.activeElement).toBe(screen.getByTestId('empty').element());
+
+    await user.keyboard('{Tab}');
 
     expect(document.activeElement).toBe(screen.getByTestId('empty').element());
   });

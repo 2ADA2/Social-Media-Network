@@ -51,7 +51,10 @@ describe('useIntersectionObserver hook', () => {
 
     await render(<TestComponent />);
 
-    intersectCallback([{ isIntersecting: true }]);
+    intersectCallback?.(
+      [{ isIntersecting: true } as IntersectionObserverEntry],
+      {} as IntersectionObserver,
+    );
 
     expect(onIntersect).toHaveBeenCalled();
   });
@@ -66,7 +69,10 @@ describe('useIntersectionObserver hook', () => {
 
     await render(<TestComponent />);
 
-    intersectCallback([{ isIntersecting: false }]);
+    intersectCallback?.(
+      [{ isIntersecting: false } as IntersectionObserverEntry],
+      {} as IntersectionObserver,
+    );
 
     expect(onIntersect).not.toHaveBeenCalled();
   });

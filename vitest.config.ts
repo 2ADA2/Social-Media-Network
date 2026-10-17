@@ -38,10 +38,10 @@ export default defineConfig({
       ],
       provider: 'v8',
       thresholds: {
-        lines: 20,
-        functions: 20,
-        branches: 20,
-        statements: 20,
+        lines: 70,
+        functions: 70,
+        branches: 70,
+        statements: 70,
 
         'src/shared/ui/**/*.{ts,tsx}': {
           lines: 90,
