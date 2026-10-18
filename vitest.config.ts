@@ -12,6 +12,9 @@ export default defineConfig({
     }),
   ],
   test: {
+    env: {
+      TZ: 'UTC',
+    },
     setupFiles: ['./vitest.setup.ts'],
     alias: {
       '@': resolve(import.meta.dirname, 'src'),
