@@ -26,10 +26,7 @@ vi.mock('@/features/auth/use-auth', () => ({
 }));
 
 vi.mock('@/entities/user/model/use-user', () => ({
-  useUser: vi.fn(() => ({
-    user: null,
-    setUser: vi.fn(),
-  })),
+  useUser: vi.fn(),
 }));
 
 beforeEach(() => {

@@ -47,7 +47,11 @@ export const NavBar = ({ setNavBar, isOpen }: NavBarProps) => {
   return transitions((style, item) =>
     item ? (
       <div className="nav-wrapper">
-        <div className="nav-background" onClick={setNavBar} />
+        <div
+          className="nav-background"
+          onClick={setNavBar}
+          data-testid="nav-background"
+        />
         <animated.nav
           className="navbar"
           style={{ transform: style.transform }}
