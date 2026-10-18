@@ -3,7 +3,8 @@
     "signIn": "Sign in",
     "signUp": "Sign up",
     "profile": "Profile",
-    "statistics": "Statistics"
+    "statistics": "Statistics",
+    "menu": "menu"
   },
   "fileInput": {
     "selectFile": "Select a file",

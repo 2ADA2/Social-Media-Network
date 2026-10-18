@@ -3,7 +3,8 @@
     "signIn": "Войти",
     "signUp": "Зарегистрироваться",
     "profile": "Профиль",
-    "statistics": "Статистика"
+    "statistics": "Статистика",
+    "menu": "Меню"
   },
   "fileInput": {
     "selectFile": "Выберите файл",

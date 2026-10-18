@@ -16,6 +16,22 @@ vi.mock('react-i18next', () => ({
   }),
 }));
 
+vi.mock('@/features/auth/use-auth', () => ({
+  useAuth: () => ({
+    isAuthenticated: false,
+    user: null,
+    login: vi.fn(),
+    logout: vi.fn(),
+  }),
+}));
+
+vi.mock('@/entities/user/model/use-user', () => ({
+  useUser: vi.fn(() => ({
+    user: null,
+    setUser: vi.fn(),
+  })),
+}));
+
 beforeEach(() => {
   vi.useFakeTimers();
 });
