@@ -110,7 +110,7 @@ export const CreatePostModal = ({
               {...field}
               icon={<MailIcon />}
               label={t('createPostModal.titleLabel')}
-              name="titile"
+              name="title"
               error={error?.message}
               placeholder={t('createPostModal.titlePlaceholder')}
             />

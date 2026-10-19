@@ -5,6 +5,13 @@ Globals.assign({
   skipAnimation: true,
 });
 
+vi.mock('@/shared/config/i18n', () => ({
+  default: {
+    t: (key: string, options?: Record<string, number | string>) =>
+      options ? key + ' ' + JSON.stringify(options) : key,
+  },
+}));
+
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string, options?: Record<string, number | string>) =>
@@ -14,6 +21,10 @@ vi.mock('react-i18next', () => ({
       language: 'en',
     },
   }),
+  initReactI18next: {
+    type: '3rdParty',
+    init: vi.fn(),
+  },
 }));
 
 vi.mock('@/features/auth/use-auth', () => ({
