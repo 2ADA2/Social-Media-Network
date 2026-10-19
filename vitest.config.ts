@@ -5,6 +5,14 @@ import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
+  optimizeDeps: {
+    include: [
+      'react-dom/client',
+      'vitest-browser-react',
+      '@react-spring/web',
+      '@tanstack/react-query',
+    ],
+  },
   plugins: [
     react(),
     svgr({
@@ -12,6 +20,7 @@ export default defineConfig({
     }),
   ],
   test: {
+    isolate: true,
     env: {
       TZ: 'UTC',
     },
