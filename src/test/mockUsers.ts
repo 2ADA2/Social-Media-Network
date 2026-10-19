@@ -1,8 +1,23 @@
 import type { PublicUser } from '@/entities/comment/types';
+import type { UserResponse } from '@/entities/user';
 import type {
   CommunityResponse,
   SuggestedPeopleResponse,
 } from '@/features/sidebar/types';
+
+export const mockUserResponse: UserResponse = {
+  id: 1,
+  username: 'helenahills',
+  email: 'helena.hills@social.com',
+  profileImage: '/assets/user-helena.png',
+  bio: 'Travel and design enthusiast.',
+  firstName: 'Helena',
+  secondName: 'Hills',
+  description: 'Frontend developer',
+  lastLogin: '2026-09-21T15:58:02.314Z',
+  creationDate: '2026-08-27T02:05:25.834Z',
+  modifiedDate: '2026-09-08T09:48:52.088Z',
+};
 
 export const userAlice: PublicUser = {
   id: 2,
