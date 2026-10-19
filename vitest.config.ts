@@ -1,8 +1,8 @@
-import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
 import { resolve } from 'path';
-import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   optimizeDeps: {
@@ -28,6 +28,14 @@ export default defineConfig({
     alias: {
       '@': resolve(import.meta.dirname, 'src'),
     },
+    exclude: [
+      'tests/**',
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/cypress/**',
+      '**/.{idea,git,cache,output,temp}/**',
+      '**/{karma,rollup,webpack,vite,vitest}.config.*',
+    ],
     browser: {
       enabled: true,
       instances: [{ browser: 'chromium' }],
@@ -41,6 +49,7 @@ export default defineConfig({
     coverage: {
       include: ['src/**/*.{ts,tsx}'],
       exclude: [
+        'tests/**',
         'src/**/*.styles.ts',
         'src/**/*.test.{ts,tsx}',
         'src/**/*.d.ts',

@@ -26,7 +26,7 @@ const format: FormatFunction = (value, formatKey, lng) => {
 };
 
 const options: InitOptions = {
-  fallbackLng: 'ru',
+  fallbackLng: 'en',
   supportedLngs: ['en', 'ru'],
   defaultNS: 'common',
   resources: {
@@ -56,10 +56,7 @@ const options: InitOptions = {
   },
 } as InitOptions;
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init(options);
+i18n.use(LanguageDetector).use(initReactI18next).init(options);
 
 i18n.on('languageChanged', (lng) => {
   document.documentElement.lang = lng;
