@@ -1,6 +1,12 @@
-import { test as setup } from '@playwright/test';
+import test, { test as setup } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
+
+const dbPath = path.resolve(process.cwd(), '.pglite-data');
+
+test.beforeAll(async () => {
+  fs.rmSync(dbPath, { recursive: true, force: true });
+});
 
 const authFile = 'playwright/.auth/user.json';
 
