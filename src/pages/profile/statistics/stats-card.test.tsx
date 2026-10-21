@@ -3,53 +3,36 @@ import { render } from 'vitest-browser-react';
 import { StatsCard } from './stats-card';
 
 describe('StatsCard', () => {
-  test('renders title, value and percents', async () => {
+  test('Shows title, value and positive percents', async () => {
     const screen = await render(
-      <StatsCard title="stats.likes" value={5} percents={10} />,
+      <StatsCard title="title" value={5} percents={10} />,
     );
 
-    await expect.element(screen.getByText('stats.likes')).toBeVisible();
+    await expect.element(screen.getByText('title')).toBeVisible();
     await expect.element(screen.getByText('5')).toBeVisible();
     await expect
       .element(screen.getByText('+10% stats.weekOverWeek'))
       .toBeVisible();
   });
 
-  test('renders plus sign for positive percents', async () => {
+  test('Shows negative percents', async () => {
     const screen = await render(
-      <StatsCard title="stats.likes" value={5} percents={10} />,
+      <StatsCard title="title" value={0} percents={-100} />,
     );
 
     await expect
-      .element(screen.getByText('+10% stats.weekOverWeek'))
+      .element(screen.getByText('-100% stats.weekOverWeek'))
       .toBeVisible();
   });
 
-  test('renders minus sign for negative percents', async () => {
+  test('Shows zero percents', async () => {
     const screen = await render(
-      <StatsCard title="stats.likes" value={5} percents={-10} />,
-    );
-
-    await expect
-      .element(screen.getByText('-10% stats.weekOverWeek'))
-      .toBeVisible();
-  });
-
-  test('renders 0 for zero percents', async () => {
-    const screen = await render(
-      <StatsCard title="stats.likes" value={5} percents={0} />,
-    );
-
-    await expect
-      .element(screen.getByText('+0% stats.weekOverWeek'))
-      .toBeVisible();
-  });
-
-  test('renders 0 when value is 0', async () => {
-    const screen = await render(
-      <StatsCard title="stats.likes" value={0} percents={10} />,
+      <StatsCard title="title" value={0} percents={0} />,
     );
 
     await expect.element(screen.getByText('0')).toBeVisible();
+    await expect
+      .element(screen.getByText('+0% stats.weekOverWeek'))
+      .toBeVisible();
   });
 });

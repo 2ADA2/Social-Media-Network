@@ -40,7 +40,7 @@ describe('ProfileInfo', () => {
     } as unknown as ReturnType<typeof useAuth>);
   });
 
-  test('renders all sections with swtichers', async () => {
+  test('Renders all sections with swtichers', async () => {
     const screen = await render(<ProfileInfo />);
 
     await expect.element(screen.getByTestId('edit-profile')).toBeVisible();
@@ -48,7 +48,7 @@ describe('ProfileInfo', () => {
     await expect.element(screen.getByTestId('language-switcher')).toBeVisible();
   });
 
-  test('calls logout on button click', async () => {
+  test('Calls logout on button click', async () => {
     const screen = await render(<ProfileInfo />);
 
     await user.click(screen.getByRole('button', { name: 'actions.logout' }));

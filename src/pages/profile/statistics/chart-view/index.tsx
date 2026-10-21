@@ -61,6 +61,7 @@ const ChartView = React.memo(
             width="95%"
             height="80%"
             className="chart"
+            data-testid="chart-likes"
           />
         </div>
 
@@ -73,6 +74,7 @@ const ChartView = React.memo(
             width="95%"
             height="80%"
             className="chart"
+            data-testid="chart-comments"
           />
         </div>
       </div>

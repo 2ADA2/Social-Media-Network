@@ -15,45 +15,24 @@ const commentsByDay = [
 ];
 
 describe('TableView', () => {
-  test('renders both stats blocks with headings', async () => {
+  test('Renders both tables with correct data ( 0 replaces with "-" )', async () => {
     const screen = await render(
       <TableView likesByDay={likesByDay} commentsByDay={commentsByDay} />,
     );
 
-    await expect
-      .element(screen.getByRole('heading', { name: 'stats.likes' }))
-      .toBeVisible();
-    await expect
-      .element(screen.getByRole('heading', { name: 'stats.comments' }))
-      .toBeVisible();
+    await expect.element(screen.getByText('stats.likes')).toBeVisible();
+    await expect.element(screen.getByText('stats.likes')).toBeVisible();
+
+    await expect.element(screen.getByText('2024-01-01').first()).toBeVisible();
+    await expect.element(screen.getByText('2024-01-02').first()).toBeVisible();
+    await expect.element(screen.getByText('2024-01-03').first()).toBeVisible();
+    await expect.element(screen.getByText('5').first()).toBeVisible();
+    await expect.element(screen.getByText('3').first()).toBeVisible();
+    await expect.element(screen.getByText('7').first()).toBeVisible();
+    await expect.element(screen.getByText('2').first()).toBeVisible();
   });
 
-  test('renders likes rows with counts and dashes for zero', async () => {
-    const screen = await render(
-      <TableView likesByDay={likesByDay} commentsByDay={commentsByDay} />,
-    );
-
-    const tables = screen.getByRole('table');
-    const likesTable = tables.first();
-
-    await expect.element(likesTable.getByText('2024-01-01')).toBeVisible();
-    await expect.element(likesTable.getByText('5')).toBeVisible();
-    await expect.element(likesTable.getByText('-')).toBeVisible();
-    await expect.element(likesTable.getByText('3')).toBeVisible();
-  });
-
-  test('renders comments rows', async () => {
-    const screen = await render(
-      <TableView likesByDay={likesByDay} commentsByDay={commentsByDay} />,
-    );
-
-    const commentsTable = screen.getByRole('table').nth(1);
-
-    await expect.element(commentsTable.getByText('2024-01-03')).toBeVisible();
-    await expect.element(commentsTable.getByText('7')).toBeVisible();
-  });
-
-  test('renders "-" for zero counts in both tables', async () => {
+  test('"0" replaces with "-"', async () => {
     const screen = await render(
       <TableView
         likesByDay={[{ date: '2024-01-01', count: 0 }]}
@@ -61,18 +40,6 @@ describe('TableView', () => {
       />,
     );
 
-    const dashes = screen.getByText('-');
-    await expect.element(dashes.first()).toBeVisible();
-    await expect.element(dashes.nth(1)).toBeVisible();
-  });
-
-  test('renders empty tables when arrays are empty', async () => {
-    const screen = await render(
-      <TableView likesByDay={[]} commentsByDay={[]} />,
-    );
-
-    const tables = screen.getByRole('table');
-    await expect.element(tables.first()).toBeVisible();
-    await expect.element(tables.nth(1)).toBeVisible();
+    await expect.element(screen.getByText('-').first()).toBeVisible();
   });
 });

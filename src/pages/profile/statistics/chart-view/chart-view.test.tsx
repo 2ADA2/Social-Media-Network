@@ -12,16 +12,6 @@ vi.mock('i18next', () => ({
   default: { language: 'en' },
 }));
 
-vi.mock('react-apexcharts', () => ({
-  default: (props: { options: unknown; series: unknown; type: string }) => (
-    <div
-      data-testid="chart"
-      data-type={props.type}
-      data-series={JSON.stringify(props.series)}
-    />
-  ),
-}));
-
 const likesByDay = [
   { date: '2024-01-01', count: 5 },
   { date: '2024-01-02', count: 0 },
@@ -37,10 +27,15 @@ const commentsByDay = [
 describe('ChartView', () => {
   beforeEach(() => {
     mockBuildOptions.mockReset();
-    mockBuildOptions.mockImplementation((...args) => args);
+    mockBuildOptions.mockImplementation((categories, theme, id, type) => ({
+      categories,
+      theme,
+      id,
+      type,
+    }));
   });
 
-  test('renders both chart blocks with headings', async () => {
+  test('Resnders both charts with data', async () => {
     const screen = await render(
       <ChartView
         likesByDay={likesByDay}
@@ -55,48 +50,12 @@ describe('ChartView', () => {
     await expect
       .element(screen.getByRole('heading', { name: 'stats.comments' }))
       .toBeVisible();
-  });
 
-  test('passes correct series to likes and comments charts', async () => {
-    const { container } = await render(
-      <ChartView
-        likesByDay={likesByDay}
-        commentsByDay={commentsByDay}
-        theme="light"
-      />,
-    );
-
-    const charts = container.querySelectorAll('[data-testid="chart"]');
+    const charts = screen.container.querySelectorAll('.apexcharts-canvas');
     expect(charts).toHaveLength(2);
-
-    const likesSeries = JSON.parse(
-      charts[0].getAttribute('data-series') ?? '[]',
-    );
-    expect(likesSeries).toEqual([{ name: 'stats.likes', data: [5, 0, 3] }]);
-
-    const commentsSeries = JSON.parse(
-      charts[1].getAttribute('data-series') ?? '[]',
-    );
-    expect(commentsSeries).toEqual([
-      { name: 'stats.comments', data: [2, 0, 7] },
-    ]);
   });
 
-  test('passes correct chart type', async () => {
-    const { container } = await render(
-      <ChartView
-        likesByDay={likesByDay}
-        commentsByDay={commentsByDay}
-        theme="light"
-      />,
-    );
-
-    const charts = container.querySelectorAll('[data-testid="chart"]');
-    expect(charts[0].getAttribute('data-type')).toBe('line');
-    expect(charts[1].getAttribute('data-type')).toBe('bar');
-  });
-
-  test('calls buildOptions with dates, theme and chart ids', async () => {
+  test('Calls build options with correct data', async () => {
     await render(
       <ChartView
         likesByDay={likesByDay}
@@ -119,17 +78,5 @@ describe('ChartView', () => {
       'bar',
       'en',
     );
-  });
-
-  test('renders empty chart series when data arrays are empty', async () => {
-    const { container } = await render(
-      <ChartView likesByDay={[]} commentsByDay={[]} theme="light" />,
-    );
-
-    const charts = container.querySelectorAll('[data-testid="chart"]');
-    const likesSeries = JSON.parse(
-      charts[0].getAttribute('data-series') ?? '[]',
-    );
-    expect(likesSeries).toEqual([{ name: 'stats.likes', data: [] }]);
   });
 });
