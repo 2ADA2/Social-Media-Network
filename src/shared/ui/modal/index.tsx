@@ -31,7 +31,6 @@ export const Modal = ({
     if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log(e.key);
       if (e.key === 'Escape') {
         onClose();
       }

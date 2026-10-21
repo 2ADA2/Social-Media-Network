@@ -89,7 +89,7 @@ describe('CreateComment', () => {
   test('shows error when comment exceeds 200 characters', async () => {
     const screen = await render(<CreateComment postId={1} />);
 
-    await user.type(screen.getByTestId('textarea'), 'a'.repeat(201));
+    await screen.getByTestId('textarea').fill('a'.repeat(300));
     await screen.getByTestId('submit').click();
 
     await expect

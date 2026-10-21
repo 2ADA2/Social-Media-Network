@@ -17,7 +17,6 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   icon?: ReactNode;
   info?: string;
-
   custom?: boolean;
   error?: string;
 }
