@@ -61,9 +61,7 @@ const SignUp = () => {
 
         <form
           className="auth-form"
-          onSubmit={handleSubmit(onSubmit, (errors) =>
-            console.log('Validation errors:', errors),
-          )}
+          onSubmit={handleSubmit(onSubmit)}
           noValidate
         >
           <Controller
