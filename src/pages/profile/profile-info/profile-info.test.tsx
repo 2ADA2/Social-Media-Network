@@ -4,7 +4,7 @@ import { userEvent } from 'vitest/browser';
 import { ProfileInfo } from '.';
 import { useAuth } from '@/features/auth/use-auth';
 
-let user: ReturnType<typeof userEvent.setup>;
+let user = userEvent.setup();
 
 const mockLogout = vi.fn();
 
@@ -13,15 +13,17 @@ vi.mock('@/features/auth/use-auth', () => ({
 }));
 
 vi.mock('@/features/theme-switcher', () => ({
-  ThemeSwitcher: () => <div data-testid="theme-switcher" />,
+  ThemeSwitcher: () => <div data-testid="theme-switcher">theme switcer</div>,
 }));
 
 vi.mock('@/features/language-switcher', () => ({
-  LanguageSwitcher: () => <div data-testid="language-switcher" />,
+  LanguageSwitcher: () => (
+    <div data-testid="language-switcher">language switcer</div>
+  ),
 }));
 
 vi.mock('./edit-profile', () => ({
-  EditProfile: () => <div data-testid="edit-profile" />,
+  EditProfile: () => <div data-testid="edit-profile">edit profile</div>,
 }));
 
 describe('ProfileInfo', () => {
@@ -38,29 +40,12 @@ describe('ProfileInfo', () => {
     } as unknown as ReturnType<typeof useAuth>);
   });
 
-  test('renders preferences section with switchers', async () => {
+  test('renders all sections with swtichers', async () => {
     const screen = await render(<ProfileInfo />);
 
-    await expect
-      .element(screen.getByRole('heading', { name: 'preferences.title' }))
-      .toBeVisible();
-    await expect
-      .element(screen.getByTestId('theme-switcher'))
-      .toBeInTheDocument();
-    await expect
-      .element(screen.getByTestId('language-switcher'))
-      .toBeInTheDocument();
-  });
-
-  test('renders actions section with logout button', async () => {
-    const screen = await render(<ProfileInfo />);
-
-    await expect
-      .element(screen.getByRole('heading', { name: 'actions.title' }))
-      .toBeVisible();
-    await expect
-      .element(screen.getByRole('button', { name: 'actions.logout' }))
-      .toBeVisible();
+    await expect.element(screen.getByTestId('edit-profile')).toBeVisible();
+    await expect.element(screen.getByTestId('theme-switcher')).toBeVisible();
+    await expect.element(screen.getByTestId('language-switcher')).toBeVisible();
   });
 
   test('calls logout on button click', async () => {

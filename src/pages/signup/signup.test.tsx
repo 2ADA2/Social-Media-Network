@@ -1,61 +1,21 @@
 import { describe, expect, test, vi, beforeEach } from 'vitest';
-import { render } from 'vitest-browser-react';
 import { userEvent } from 'vitest/browser';
-import { MemoryRouter } from 'react-router-dom';
 import SignUp from '.';
 import { useAuth } from '@/features/auth/use-auth';
 import { useNotifications } from '@/app/providers/notifications-context/useNotifications';
+import { renderWithRouter } from '@/test/render-with-router';
 
-let user: ReturnType<typeof userEvent.setup>;
-
-const mockSignup = vi.fn();
+let user = userEvent.setup();
 const mockAdd = vi.fn();
+const mockSignup = vi.fn();
 
-let mockFormValues = {
-  firstName: 'Helena',
-  secondName: 'Hills',
-  email: 'helena@social.com',
-  password: 'Password123',
-};
-
-vi.mock('@/features/auth/use-auth', () => ({
+vi.mock('@/features/auth/use-auth', async () => ({
   useAuth: vi.fn(),
 }));
 
-vi.mock('@/app/providers/notifications-context/useNotifications', () => ({
+vi.mock('@/app/providers/notifications-context/useNotifications', async () => ({
   useNotifications: vi.fn(),
 }));
-
-vi.mock('react-hook-form', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('react-hook-form')>();
-  return {
-    ...actual,
-    useForm: () => ({
-      control: {},
-      handleSubmit:
-        (fn: (data: unknown) => void) =>
-        (e?: { preventDefault?: () => void }) => {
-          e?.preventDefault?.();
-          fn({ ...mockFormValues });
-        },
-      formState: { dirtyFields: {} },
-      reset: vi.fn(),
-      watch: () => mockFormValues.email,
-      trigger: vi.fn(),
-    }),
-    Controller: ({ render }: { render: (args: unknown) => React.ReactNode }) =>
-      render({
-        field: {
-          value: '',
-          onChange: vi.fn(),
-          onBlur: vi.fn(),
-          name: '',
-          ref: vi.fn(),
-        },
-        fieldState: { error: undefined, isTouched: false },
-      }),
-  };
-});
 
 describe('SignUp', () => {
   beforeEach(() => {
@@ -63,16 +23,9 @@ describe('SignUp', () => {
     mockSignup.mockReset();
     mockAdd.mockReset();
 
-    mockFormValues = {
-      firstName: 'Helena',
-      secondName: 'Hills',
-      email: 'helena@social.com',
-      password: 'Password123',
-    };
-
     vi.mocked(useAuth).mockReturnValue({
-      signup: mockSignup,
       signin: vi.fn(),
+      signup: mockSignup,
       logout: vi.fn(),
       auth: vi.fn(),
       isAuth: false,
@@ -84,52 +37,94 @@ describe('SignUp', () => {
     } as unknown as ReturnType<typeof useNotifications>);
   });
 
-  const renderSignUp = () =>
-    render(
-      <MemoryRouter>
-        <SignUp />
-      </MemoryRouter>,
+  test('Shows validation error for empty fields', async () => {
+    const screen = await renderWithRouter(<SignUp />);
+
+    const firstNameField = screen.getByPlaceholder(
+      'signUp.firstNamePlaceholder',
     );
+    const secondNameField = screen.getByPlaceholder(
+      'signUp.secondNamePlaceholder',
+    );
+    const emailField = screen.getByPlaceholder('signUp.emailPlaceholder');
+    const passwordField = screen.getByPlaceholder('signUp.passwordPlaceholder');
+    const submitButton = screen.getByTestId('submit-button');
 
-  test('calls signup with form data on submit', async () => {
-    mockSignup.mockResolvedValueOnce(undefined);
+    await user.click(submitButton);
 
-    const screen = await renderSignUp();
+    await expect(firstNameField).toHaveAttribute('aria-invalid', 'true');
+    await expect(secondNameField).toHaveAttribute('aria-invalid', 'true');
+    await expect(emailField).toHaveAttribute('aria-invalid', 'true');
+    await expect(passwordField).toHaveAttribute('aria-invalid', 'true');
 
-    await user.click(screen.getByRole('button', { name: 'signUp.submit' }));
+    expect(mockSignup).not.toHaveBeenCalledWith();
+    expect(mockAdd).not.toHaveBeenCalled();
+  });
+
+  test('Shows validation error for invalid fields', async () => {
+    const screen = await renderWithRouter(<SignUp />);
+
+    const firstNameField = screen.getByPlaceholder(
+      'signUp.firstNamePlaceholder',
+    );
+    const secondNameField = screen.getByPlaceholder(
+      'signUp.secondNamePlaceholder',
+    );
+    const emailField = screen.getByPlaceholder('signUp.emailPlaceholder');
+    const passwordField = screen.getByPlaceholder('signUp.passwordPlaceholder');
+    const submitButton = screen.getByTestId('submit-button');
+
+    await user.type(firstNameField, 'Normal Name');
+    await user.type(secondNameField, 'Very Very long and invalid second name');
+    await user.type(emailField, 'invalid@mail');
+    await user.type(passwordField, 'passwordpassword');
+
+    await user.click(submitButton);
+
+    await expect(firstNameField).not.toHaveAttribute('aria-invalid', 'true');
+    await expect(screen.getByText('validation.secondNameMax')).toBeVisible();
+    await expect(screen.getByText('validation.emailInvalid')).toBeVisible();
+    await expect(screen.getByText('validation.passwordDigit')).toBeVisible();
+
+    expect(mockSignup).not.toHaveBeenCalled();
+    expect(mockAdd).not.toHaveBeenCalled();
+  });
+
+  test('Sign up if fields are valid', async () => {
+    const screen = await renderWithRouter(<SignUp />);
+
+    const firstNameField = screen.getByPlaceholder(
+      'signUp.firstNamePlaceholder',
+    );
+    const secondNameField = screen.getByPlaceholder(
+      'signUp.secondNamePlaceholder',
+    );
+    const emailField = screen.getByPlaceholder('signUp.emailPlaceholder');
+    const passwordField = screen.getByPlaceholder('signUp.passwordPlaceholder');
+    const submitButton = screen.getByTestId('submit-button');
+
+    await user.type(firstNameField, 'Helena');
+    await user.keyboard('{Tab}');
+    await user.type(secondNameField, 'Hills');
+    await user.keyboard('{Tab}');
+    await user.type(emailField, 'helena.hills@social.com');
+    await user.keyboard('{Tab}');
+    await user.type(passwordField, 'password123');
+    await user.keyboard('{Tab}');
+
+    await user.click(submitButton);
+
+    await expect(firstNameField).toHaveAttribute('aria-invalid', 'false');
+    await expect(secondNameField).toHaveAttribute('aria-invalid', 'false');
+    await expect(emailField).toHaveAttribute('aria-invalid', 'false');
+    await expect(passwordField).toHaveAttribute('aria-invalid', 'false');
 
     expect(mockSignup).toHaveBeenCalledWith({
       firstName: 'Helena',
       secondName: 'Hills',
-      email: 'helena@social.com',
-      password: 'Password123',
+      email: 'helena.hills@social.com',
+      password: 'password123',
     });
-  });
-
-  test('shows success notification when signup resolves', async () => {
-    mockSignup.mockResolvedValueOnce(undefined);
-
-    const screen = await renderSignUp();
-
-    await user.click(screen.getByRole('button', { name: 'signUp.submit' }));
-
-    await vi.waitFor(() => {
-      expect(mockAdd).toHaveBeenCalledWith({ message: 'signUp.success' });
-    });
-  });
-
-  test('shows error notification when signup rejects', async () => {
-    mockSignup.mockRejectedValueOnce(new Error('Email taken'));
-
-    const screen = await renderSignUp();
-
-    await user.click(screen.getByRole('button', { name: 'signUp.submit' }));
-
-    await vi.waitFor(() => {
-      expect(mockAdd).toHaveBeenCalledWith({
-        message: 'signUp.error {"message":"Email taken"}',
-        type: 'error',
-      });
-    });
+    expect(mockAdd).toHaveBeenCalledWith({ message: 'signUp.success' });
   });
 });

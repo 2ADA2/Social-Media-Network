@@ -61,7 +61,7 @@ const SignUp = () => {
 
         <form
           className="auth-form"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit, (error) => console.log(error))}
           noValidate
         >
           <Controller
@@ -125,7 +125,11 @@ const SignUp = () => {
             />
           </div>
 
-          <Button type="submit" disabled={isPending}>
+          <Button
+            type="submit"
+            disabled={isPending}
+            data-testid="submit-button"
+          >
             {t('signUp.submit')}
           </Button>
         </form>
