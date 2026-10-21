@@ -127,7 +127,7 @@ describe('Post', () => {
   test('shows comments when clicking comments button', async () => {
     const screen = await render(<Post post={createPost()} />);
 
-    await screen.getByRole('button', { name: /post\.comments/i }).click();
+    await screen.getByRole('button', { name: 'post.commentsButton' }).click();
 
     await expect.element(screen.getByTestId('post-comments')).toBeVisible();
   });
