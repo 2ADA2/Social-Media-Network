@@ -6,7 +6,8 @@
   },
   "preferences": {
     "title": "Preferences",
-    "darkTheme": "Dark theme"
+    "darkTheme": "Dark theme",
+    "switchTheme": "Switch theme"
   },
   "actions": {
     "title": "Actions",

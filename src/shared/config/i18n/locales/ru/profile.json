@@ -6,7 +6,8 @@
   },
   "preferences": {
     "title": "Настройки",
-    "darkTheme": "Тёмная тема"
+    "darkTheme": "Тёмная тема",
+    "switchTheme": "Сменить тему"
   },
   "actions": {
     "title": "Действия",
