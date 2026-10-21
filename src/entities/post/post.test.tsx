@@ -99,7 +99,7 @@ describe('Post', () => {
   test('calls like when clicking like button', async () => {
     const screen = await render(<Post post={createPost()} />);
 
-    await screen.getByRole('button', { name: /post\.likes/i }).click();
+    await screen.getByRole('button', { name: 'post.likeButton' }).click();
 
     expect(mockLike).toHaveBeenCalledWith({ postId: 1, liked: false });
   });
