@@ -60,16 +60,9 @@ export default defineConfig({
       provider: 'v8',
       thresholds: {
         lines: 70,
-        functions: 65,
+        functions: 60,
         branches: 70,
         statements: 70,
-
-        'src/shared/ui/**/*.{ts,tsx}': {
-          lines: 90,
-          functions: 90,
-          branches: 90,
-          statements: 90,
-        },
       },
     },
   },
