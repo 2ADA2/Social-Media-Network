@@ -137,10 +137,9 @@ describe('CreatePostModal', () => {
       <CreatePostModal isOpen onClose={mockOnClose} onAdd={mockOnAdd} />,
     );
 
-    await user.type(
-      screen.getByRole('textbox', { name: 'createPostModal.titleLabel' }),
-      'very long text'.repeat(10),
-    );
+    await screen
+      .getByRole('textbox', { name: 'createPostModal.titleLabel' })
+      .fill('very long text'.repeat(10));
 
     await user.click(
       screen.getByRole('button', { name: 'createPostModal.submit' }),

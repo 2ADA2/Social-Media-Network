@@ -55,10 +55,6 @@ vi.mock('@/pages/profile/statistics/stats-card', () => ({
 }));
 
 vi.mock('@/pages/profile/statistics/table-view', () => ({
-  TableView: () => <div data-testid="table-view" />,
-}));
-
-vi.mock('@/pages/profile/statistics/table-view', () => ({
   TableView: () => <div data-testid="table-view">Table View</div>,
 }));
 
