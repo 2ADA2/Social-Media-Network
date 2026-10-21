@@ -9,7 +9,9 @@
     "loginToSeeComments": "You have to login to see the comments",
     "deleteSuccess": "Post deleted",
     "deleteError": "Cannot delete post",
-    "delete": "Delete post"
+    "delete": "Delete post",
+    "likeButton": "Like post",
+    "commentsButton": "View comments"
   },
   "comment": {
     "label": "Add a comment",
