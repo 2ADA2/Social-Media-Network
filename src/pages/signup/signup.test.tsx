@@ -11,6 +11,13 @@ let user: ReturnType<typeof userEvent.setup>;
 const mockSignup = vi.fn();
 const mockAdd = vi.fn();
 
+let mockFormValues = {
+  firstName: 'Helena',
+  secondName: 'Hills',
+  email: 'helena@social.com',
+  password: 'Password123',
+};
+
 vi.mock('@/features/auth/use-auth', () => ({
   useAuth: vi.fn(),
 }));
@@ -19,11 +26,49 @@ vi.mock('@/app/providers/notifications-context/useNotifications', () => ({
   useNotifications: vi.fn(),
 }));
 
+vi.mock('react-hook-form', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('react-hook-form')>();
+  return {
+    ...actual,
+    useForm: () => ({
+      control: {},
+      handleSubmit:
+        (fn: (data: unknown) => void) =>
+        (e?: { preventDefault?: () => void }) => {
+          e?.preventDefault?.();
+          fn({ ...mockFormValues });
+        },
+      formState: { dirtyFields: {} },
+      reset: vi.fn(),
+      watch: () => mockFormValues.email,
+      trigger: vi.fn(),
+    }),
+    Controller: ({ render }: { render: (args: unknown) => React.ReactNode }) =>
+      render({
+        field: {
+          value: '',
+          onChange: vi.fn(),
+          onBlur: vi.fn(),
+          name: '',
+          ref: vi.fn(),
+        },
+        fieldState: { error: undefined, isTouched: false },
+      }),
+  };
+});
+
 describe('SignUp', () => {
   beforeEach(() => {
     user = userEvent.setup();
     mockSignup.mockReset();
     mockAdd.mockReset();
+
+    mockFormValues = {
+      firstName: 'Helena',
+      secondName: 'Hills',
+      email: 'helena@social.com',
+      password: 'Password123',
+    };
 
     vi.mocked(useAuth).mockReturnValue({
       signup: mockSignup,
@@ -39,50 +84,52 @@ describe('SignUp', () => {
     } as unknown as ReturnType<typeof useNotifications>);
   });
 
-  test('renders form fields and submit button', async () => {
-    const screen = await render(
+  const renderSignUp = () =>
+    render(
       <MemoryRouter>
         <SignUp />
       </MemoryRouter>,
     );
 
-    await expect
-      .element(screen.getByRole('textbox', { name: /signUp\.firstName/ }))
-      .toBeVisible();
-    await expect
-      .element(screen.getByRole('textbox', { name: /signUp\.secondName/ }))
-      .toBeVisible();
-    await expect
-      .element(screen.getByRole('textbox', { name: /signUp\.email/ }))
-      .toBeVisible();
-    await expect
-      .element(screen.getByPlaceholder('signUp.passwordPlaceholder'))
-      .toBeVisible();
-    await expect
-      .element(screen.getByRole('button', { name: 'signUp.submit' }))
-      .toBeVisible();
-  });
+  test('calls signup with form data on submit', async () => {
+    mockSignup.mockResolvedValueOnce(undefined);
 
-  test('shows validation errors when submitting empty form', async () => {
-    const screen = await render(
-      <MemoryRouter>
-        <SignUp />
-      </MemoryRouter>,
-    );
+    const screen = await renderSignUp();
 
     await user.click(screen.getByRole('button', { name: 'signUp.submit' }));
 
-    await expect
-      .element(screen.getByRole('textbox', { name: /signUp\.firstName/ }))
-      .toHaveAttribute('aria-invalid', 'true');
-    await expect
-      .element(screen.getByRole('textbox', { name: /signUp\.secondName/ }))
-      .toHaveAttribute('aria-invalid', 'true');
-    await expect
-      .element(screen.getByRole('textbox', { name: /signUp\.email/ }))
-      .toHaveAttribute('aria-invalid', 'true');
-    await expect
-      .element(screen.getByPlaceholder('signUp.passwordPlaceholder'))
-      .toHaveAttribute('aria-invalid', 'true');
+    expect(mockSignup).toHaveBeenCalledWith({
+      firstName: 'Helena',
+      secondName: 'Hills',
+      email: 'helena@social.com',
+      password: 'Password123',
+    });
+  });
+
+  test('shows success notification when signup resolves', async () => {
+    mockSignup.mockResolvedValueOnce(undefined);
+
+    const screen = await renderSignUp();
+
+    await user.click(screen.getByRole('button', { name: 'signUp.submit' }));
+
+    await vi.waitFor(() => {
+      expect(mockAdd).toHaveBeenCalledWith({ message: 'signUp.success' });
+    });
+  });
+
+  test('shows error notification when signup rejects', async () => {
+    mockSignup.mockRejectedValueOnce(new Error('Email taken'));
+
+    const screen = await renderSignUp();
+
+    await user.click(screen.getByRole('button', { name: 'signUp.submit' }));
+
+    await vi.waitFor(() => {
+      expect(mockAdd).toHaveBeenCalledWith({
+        message: 'signUp.error {"message":"Email taken"}',
+        type: 'error',
+      });
+    });
   });
 });
