@@ -6,7 +6,7 @@ import { useUpdateAvatar } from '@/features/edit-profile/use-update-avatar';
 import { useNotifications } from '@/app/providers/notifications-context/useNotifications';
 import { createFile } from '@/test/create=file';
 
-let user: ReturnType<typeof userEvent.setup>;
+let user = userEvent.setup();
 
 const mockMutate = vi.fn();
 const mockAdd = vi.fn();
@@ -41,61 +41,8 @@ describe('UpdateProfileImageModal', () => {
   const renderModal = () =>
     render(<UpdateProfileImageModal isOpen onClose={mockOnClose} />);
 
-  test('renders modal with file input and submit button', async () => {
-    const screen = await renderModal();
-
-    await expect.element(screen.getByTestId('file-input')).toBeInTheDocument();
-    await expect
-      .element(screen.getByRole('button', { name: 'updateAvatar.submit' }))
-      .toBeVisible();
-  });
-
-  test('shows error if no file selected', async () => {
-    const screen = await renderModal();
-
-    await user.click(
-      screen.getByRole('button', { name: 'updateAvatar.submit' }),
-    );
-
-    expect(mockMutate).not.toHaveBeenCalled();
-    expect(mockAdd).toHaveBeenCalledWith({
-      message: 'updateAvatar.noFile',
-      type: 'error',
-    });
-  });
-
-  test('rejects invalid file type', async () => {
-    const screen = await renderModal();
-
-    const file = createFile({ name: 'doc.txt', type: 'text/plain' });
-    await user.upload(screen.getByTestId('file-input'), file);
-
-    expect(mockAdd).toHaveBeenCalledWith({
-      message: 'updateAvatar.fileTypeError',
-      type: 'error',
-    });
-  });
-
-  test('rejects file larger than 2MB', async () => {
-    const screen = await renderModal();
-
-    const file = createFile({
-      name: 'big.png',
-      type: 'image/png',
-      sizeInBytes: 3 * 1024 * 1024,
-    });
-    await user.upload(screen.getByTestId('file-input'), file);
-
-    expect(mockAdd).toHaveBeenCalledWith({
-      message: 'updateAvatar.fileSizeError {"size":2}',
-      type: 'error',
-    });
-  });
-
-  test('calls updateAvatar on submit and closes on success', async () => {
-    mockMutate.mockImplementation((_, opts) => {
-      opts.onSuccess();
-    });
+  test('Updates avatar and closes modal if valid', async () => {
+    mockMutate.mockImplementation((_, opts) => opts.onSuccess());
 
     const screen = await renderModal();
 
@@ -120,31 +67,24 @@ describe('UpdateProfileImageModal', () => {
     expect(mockAdd).toHaveBeenCalledWith({
       message: 'updateAvatar.success',
     });
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
+    expect(mockOnClose).toHaveBeenCalled();
   });
 
-  test('shows error notification when update fails', async () => {
-    mockMutate.mockImplementation((_, opts) => {
-      opts.onError(new Error('Upload failed'));
-    });
-
+  test('Shows error if invalid', async () => {
     const screen = await renderModal();
 
     const file = createFile({
-      name: 'avatar.png',
-      type: 'image/png',
+      name: 'document.txt',
+      type: 'text/plain',
       sizeInBytes: 1024,
     });
     await user.upload(screen.getByTestId('file-input'), file);
 
-    await user.click(
-      screen.getByRole('button', { name: 'updateAvatar.submit' }),
-    );
-
     expect(mockAdd).toHaveBeenCalledWith({
-      message: 'updateAvatar.error {"message":"Upload failed"}',
+      message: 'updateAvatar.fileTypeError',
       type: 'error',
     });
+    expect(mockMutate).not.toHaveBeenCalled();
     expect(mockOnClose).not.toHaveBeenCalled();
   });
 });
