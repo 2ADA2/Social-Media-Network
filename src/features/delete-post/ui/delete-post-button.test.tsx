@@ -45,7 +45,6 @@ describe('DeletePost button and modal', () => {
     const screen = await render(<DeletePostButton postId={1} />);
     await user.click(screen.getByRole('button', { name: 'post.delete' }));
     await user.click(screen.getByRole('button', { name: 'deletePost.submit' }));
-    console.log(mutateFn.mock.calls);
     expect(mutateFn).toHaveBeenCalledWith(
       1,
       expect.objectContaining({
