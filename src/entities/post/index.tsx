@@ -68,8 +68,8 @@ export const Post = ({ post }: PostProps) => {
   });
 
   const handleLike = () => {
-    setLiked(!liked);
     if (!isAuth || isLiking) return;
+    setLiked((prev) => !prev);
     toggleLike({ postId: post.id, liked });
   };
 
@@ -105,7 +105,11 @@ export const Post = ({ post }: PostProps) => {
       <Description>{post.content}</Description>
 
       <PostControl $auth={isAuth}>
-        <CoverButton onClick={handleLike}>
+        <CoverButton
+          onClick={handleLike}
+          aria-pressed={liked}
+          aria-label={t('post.likeButton')}
+        >
           <ControlContainer>
             <StyledSVG $active={liked}>
               <animated.div
@@ -125,7 +129,10 @@ export const Post = ({ post }: PostProps) => {
           </ControlContainer>
         </CoverButton>
 
-        <CoverButton onClick={toggleComments}>
+        <CoverButton
+          onClick={toggleComments}
+          aria-label={t('post.commentsButton')}
+        >
           <ControlContainer>
             <StyledSVG $active={false}>
               <CommentIcon />

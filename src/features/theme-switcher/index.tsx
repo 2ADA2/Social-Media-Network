@@ -1,12 +1,18 @@
-import { Toggle } from "@/shared/ui/toggle";
-import { useThemeStore } from "@/app/store/theme-store.ts";
+import { Toggle } from '@/shared/ui/toggle';
+import { useThemeStore } from '@/app/store/theme-store.ts';
+import { useTranslation } from 'react-i18next';
 
 export const ThemeSwitcher = () => {
-  const { theme, toggleTheme } = useThemeStore(state => state);
+  const { t } = useTranslation('profile');
+  const { theme, toggleTheme } = useThemeStore((state) => state);
 
-  const checked = theme === "dark";
+  const checked = theme === 'dark';
 
   return (
-    <Toggle checked={ checked } onChange={ toggleTheme }/>
+    <Toggle
+      checked={checked}
+      onChange={toggleTheme}
+      label={t('preferences.switchTheme')}
+    />
   );
 };

@@ -125,7 +125,11 @@ const SignUp = () => {
             />
           </div>
 
-          <Button type="submit" disabled={isPending}>
+          <Button
+            type="submit"
+            disabled={isPending}
+            data-testid="submit-button"
+          >
             {t('signUp.submit')}
           </Button>
         </form>

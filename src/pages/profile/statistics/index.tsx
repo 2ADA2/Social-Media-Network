@@ -89,7 +89,11 @@ export const Statistics = () => {
 
       <div className="stats-toggle">
         <span>{t('stats.tableView')}</span>
-        <Toggle checked={enableChartView} onChange={switchChartView} />
+        <Toggle
+          checked={enableChartView}
+          onChange={switchChartView}
+          label={t('stats.switchView')}
+        />
         <span>{t('stats.enableChartView')}</span>
       </div>
 

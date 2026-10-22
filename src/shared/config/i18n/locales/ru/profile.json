@@ -6,7 +6,8 @@
   },
   "preferences": {
     "title": "Настройки",
-    "darkTheme": "Тёмная тема"
+    "darkTheme": "Тёмная тема",
+    "switchTheme": "Сменить тему"
   },
   "actions": {
     "title": "Действия",
@@ -49,7 +50,8 @@
     "weekOverWeek": "по сравнению с прошлой неделей",
     "lastWeek": "Последняя неделя",
     "day": "День",
-    "count": "Количество"
+    "count": "Количество",
+    "switchView": "Сменить вид"
   },
   "validation": {
     "usernameStart": "Имя пользователя должно начинаться с @",

@@ -1,13 +1,15 @@
-import React, { type ButtonHTMLAttributes } from "react";
-import "./button.css";
+import React, { type ButtonHTMLAttributes } from 'react';
+import './button.css';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode,
+  children: React.ReactNode;
   className?: string;
 }
 
-export const Button = ({ children, className = "", ...props }: ButtonProps) => {
+export const Button = ({ children, className = '', ...props }: ButtonProps) => {
   return (
-    <button type = "button" className={ `btn ${ className }` }{ ...props }>{ children }</button>
-);
+    <button type="button" className={`btn ${className}`} {...props}>
+      {children}
+    </button>
+  );
 };

@@ -5,14 +5,16 @@ interface SigninParams {
   password: string;
 }
 
-interface SigninResponse {
+export interface SigninResponse {
   user: User;
   token: string;
   refreshToken: string;
   expiresIn: number;
 }
 
-export const signinRequest = async (params: SigninParams): Promise<SigninResponse> => {
+export const signinRequest = async (
+  params: SigninParams,
+): Promise<SigninResponse> => {
   const res = await fetch('/api/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

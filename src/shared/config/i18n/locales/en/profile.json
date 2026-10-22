@@ -6,7 +6,8 @@
   },
   "preferences": {
     "title": "Preferences",
-    "darkTheme": "Dark theme"
+    "darkTheme": "Dark theme",
+    "switchTheme": "Switch theme"
   },
   "actions": {
     "title": "Actions",
@@ -52,7 +53,8 @@
     "weekOverWeek": "week over week",
     "lastWeek": "Last week",
     "day": "Day",
-    "count": "Count"
+    "count": "Count",
+    "switchView": "Switch view"
   },
   "validation": {
     "usernameStart": "Username must start with @",

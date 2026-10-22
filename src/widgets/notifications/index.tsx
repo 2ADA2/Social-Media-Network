@@ -4,7 +4,7 @@ import './notifications.css';
 import { Notification } from '@/shared/ui/notification';
 import { useNotifications } from '@/app/providers/notifications-context/useNotifications';
 
-const NOTIFICATIONS_LIMIT = 5;
+export const NOTIFICATIONS_LIMIT = 5;
 
 interface NotificationsProps {
   onDelete: (id: number) => void;
